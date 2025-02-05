@@ -11,12 +11,12 @@ export const DashboardContent = () => {
       <div>{session.data?.user.email}</div>
       <div>{session.data?.user.name}</div>
       <Image
+        priority
         className="rounded-full"
         src={session.data?.user.image as string}
         alt="logo"
         width={80}
         height={80}
-        loading="lazy"
       />
     </div>
   );
