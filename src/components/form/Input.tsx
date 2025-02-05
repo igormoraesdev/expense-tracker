@@ -1,0 +1,43 @@
+import { AiTwotoneEye, AiTwotoneEyeInvisible } from "react-icons/ai";
+
+import { InputHTMLAttributes, ReactElement, useState } from "react";
+
+type CustomInputProps = InputHTMLAttributes<HTMLInputElement> & {
+  label: string;
+  icon?: ReactElement;
+};
+
+export function CustomInput({ label, icon, ...rest }: CustomInputProps) {
+  const isPassword = rest.type === "password";
+  const [showPassword, setShowPassword] = useState(false);
+  return (
+    <div>
+      <label className="text-sm text-primary">{label}</label>
+      <div className="w-full relative flex items-center">
+        <input
+          className="w-full py-2 rounded-sm bg-background placeholder:text-foreground-faded border border-border-faded transition duration-300 ease focus:outline-none focus:border-primary pl-4 pr-9 placeholder:text-xs"
+          {...rest}
+          type={showPassword ? "text" : rest.type}
+        />
+        {icon && (
+          <div className="absolute right-3 text-center transition-all disabled:pointer-events-none disabled:opacity-50">
+            {icon}
+          </div>
+        )}
+        {isPassword && (
+          <button
+            onClick={() => setShowPassword((prev) => !prev)}
+            className="absolute right-3 text-center transition-all disabled:pointer-events-none disabled:opacity-50"
+            type="button"
+          >
+            {showPassword ? (
+              <AiTwotoneEye className="w-4 h-4 text-primary" />
+            ) : (
+              <AiTwotoneEyeInvisible className="w-4 h-4 text-primary" />
+            )}
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
