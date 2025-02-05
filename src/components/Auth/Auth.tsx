@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import { useMemo, useState } from "react";
-import { RegisterForm } from "./RegisterForm";
 import { SigninForm } from "./SiginForm";
+import { SignupForm } from "./SignupForm";
 
 export function Auth() {
   const [tab, setTab] = useState("signin");
@@ -11,7 +11,7 @@ export function Auth() {
   const renderTabs = useMemo(() => {
     const condition = {
       signin: <SigninForm onChangeTab={setTab} />,
-      signup: <RegisterForm onChangeTab={setTab} />,
+      signup: <SignupForm onChangeTab={setTab} />,
     };
     return condition[tab as keyof typeof condition];
   }, [tab]);

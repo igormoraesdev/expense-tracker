@@ -8,11 +8,11 @@ import {
 import { CustomInput } from "../form/Input";
 import { Button } from "../ui/button";
 
-type RegisterFormProps = {
+type SignupFormProps = {
   onChangeTab: (val: string) => void;
 };
 
-export function RegisterForm({ onChangeTab }: RegisterFormProps) {
+export function SignupForm({ onChangeTab }: SignupFormProps) {
   return (
     <form>
       <div className="flex items-center gap-4 mb-8">
