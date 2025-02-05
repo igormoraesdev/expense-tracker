@@ -52,13 +52,13 @@ const authOptions = {
       }
       return true;
     },
-    async session(sessionParam: any) {
-      sessionParam.user.id = sessionParam.token.sub!;
-      return sessionParam;
-    },
   },
   jwt: {
     maxAge: 60 * 60 * 24 * 30,
+  },
+  secret: process.env.NEXTAUTH_SECRET,
+  pages: {
+    signIn: "/auth",
   },
 };
 
