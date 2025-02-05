@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import { useMemo, useState } from "react";
-import { SigninForm } from "./SiginForm";
-import { SignupForm } from "./SignupForm";
+import { SigninForm } from "./components/SiginForm";
+import { SignupForm } from "./components/SignupForm";
 
 export function Auth() {
   const [tab, setTab] = useState("signin");

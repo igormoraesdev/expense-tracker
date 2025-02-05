@@ -1,6 +1,7 @@
 "use server";
 import { db } from "@/drizzle";
 import { users } from "@/drizzle/schema/users";
+import bcrypt from "bcrypt";
 import { eq } from "drizzle-orm";
 import NextAuth, { Account, User } from "next-auth";
 import { AdapterUser } from "next-auth/adapters";
@@ -30,6 +31,33 @@ const authOptions = {
     }),
   ],
   callbacks: {
+    async authorize(credentials: { email: string; password: string }) {
+      if (!credentials?.email || !credentials?.password) {
+        throw new Error("Email e senha são obrigatórios");
+      }
+
+      const user = await db.query.users.findFirst({
+        where: (user, { eq }) => eq(user.email, credentials.email),
+      });
+
+      if (!user) {
+        throw new Error("Usuário não encontrado");
+      }
+
+      const isValidPassword = await bcrypt.compare(
+        credentials.password,
+        user.password
+      );
+      if (!isValidPassword) {
+        throw new Error("Senha incorreta");
+      }
+
+      return {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+      };
+    },
     async signIn({
       user,
       account,

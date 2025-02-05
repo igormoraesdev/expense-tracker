@@ -1,4 +1,5 @@
 import { SessionProviderComponent } from "@/components/SessionProvider";
+import { Toaster } from "@/components/ui/toaster";
 import type { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -30,6 +31,7 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Toaster />
         <SessionProviderComponent session={session}>
           {children}
         </SessionProviderComponent>

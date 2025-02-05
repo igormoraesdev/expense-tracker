@@ -2,9 +2,9 @@
 import { AiOutlineMail } from "react-icons/ai";
 
 import { login } from "@/lib/actions/auth";
-import { CustomInput } from "../form/Input";
-import { Button } from "../ui/button";
-import { Icons } from "../ui/icon";
+import { Button } from "../../ui/button";
+import { CustomInput } from "../../ui/form/Input";
+import { Icons } from "../../ui/icon";
 
 type SigninFormProps = {
   onChangeTab: (val: string) => void;
