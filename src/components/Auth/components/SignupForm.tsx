@@ -1,9 +1,10 @@
 "use client";
 import { useToast } from "@/hooks/use-toast";
-import { SignupFormSchema, SignupFormType } from "@/lib/types/signup";
+import { SignupFormSchema } from "@/lib/validation/signup";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 
+import { useRegister } from "@/hooks/api/auth/useRegister";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import {
@@ -12,7 +13,7 @@ import {
   AiOutlineSmile,
 } from "react-icons/ai";
 import { Button } from "../../ui/button";
-import { CustomInput } from "../../ui/form/Input";
+import { CustomInput } from "../../ui/form/CustomInput";
 
 type SignupFormProps = {
   onChangeTab: (val: string) => void;
@@ -22,21 +23,18 @@ export function SignupForm({ onChangeTab }: SignupFormProps) {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<SignupFormType>({
     resolver: zodResolver(SignupFormSchema),
     mode: "all",
   });
   const { toast } = useToast();
   const router = useRouter();
+  const { mutateAsync, isPending } = useRegister();
 
   const handleCreateUser = async (dataForm: SignupFormType) => {
     try {
-      await fetch("/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(dataForm),
-      });
+      await mutateAsync(dataForm);
 
       toast({
         description: "User created successfully",
@@ -63,14 +61,17 @@ export function SignupForm({ onChangeTab }: SignupFormProps) {
 
   return (
     <form onSubmit={handleSubmit(handleCreateUser)}>
-      <div className="flex items-center gap-4 mb-8">
-        <button
-          onClick={() => onChangeTab("signin")}
-          className="text-primary font-semibold hover:underline ml-1 whitespace-nowrap"
-        >
-          <AiOutlineArrowLeft size={24} />
-        </button>
-        <h3 className="text-gray-800 text-3xl font-extrabold">Register</h3>
+      <div className="mb-8">
+        <div className="flex items-center gap-4 mb-8">
+          <button
+            onClick={() => onChangeTab("signin")}
+            className="text-primary font-semibold hover:underline ml-1 whitespace-nowrap"
+          >
+            <AiOutlineArrowLeft size={24} />
+          </button>
+          <h3 className="text-gray-800 text-3xl font-extrabold">Register</h3>
+        </div>
+        <p className="text-sm mt-4 text-gray-800">Create your account</p>
       </div>
       <div className="flex flex-col gap-5">
         <CustomInput
@@ -98,8 +99,10 @@ export function SignupForm({ onChangeTab }: SignupFormProps) {
           error={errors.password}
         />
         <Button
+          disabled={!isValid}
+          isLoading={isPending}
           type="submit"
-          className="w-full shadow-xl py-2.5 px-4 text-sm tracking-wide rounded-md text-white bg-primaryfocus:outline-none"
+          className="w-full shadow-xl p-6 text-sm tracking-wide rounded-md text-white bg-primaryfocus:outline-none"
         >
           Create account
         </Button>

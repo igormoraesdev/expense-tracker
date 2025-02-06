@@ -1,9 +1,16 @@
 "use client";
 import { AiOutlineMail } from "react-icons/ai";
 
-import { login } from "@/lib/actions/auth";
+import { useToast } from "@/hooks/use-toast";
+import { SigninFormSchema } from "@/lib/validation/signin";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signIn } from "next-auth/react";
+
+import { useSignin } from "@/hooks/api/auth/useSignin";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
 import { Button } from "../../ui/button";
-import { CustomInput } from "../../ui/form/Input";
+import { CustomInput } from "../../ui/form/CustomInput";
 import { Icons } from "../../ui/icon";
 
 type SigninFormProps = {
@@ -11,8 +18,48 @@ type SigninFormProps = {
 };
 
 export function SigninForm({ onChangeTab }: SigninFormProps) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm<SigninFormType>({
+    resolver: zodResolver(SigninFormSchema),
+    mode: "all",
+  });
+
+  const { toast } = useToast();
+  const router = useRouter();
+  const { mutateAsync, isPending } = useSignin();
+
+  const handleSignin = async (dataForm: SigninFormType) => {
+    try {
+      const user = await mutateAsync(dataForm);
+
+      toast({
+        description: "Signin successfully",
+        className: "bg-green-500 text-white",
+      });
+
+      const signInRes = await signIn("credentials", {
+        name: user.name,
+        email: user.email,
+        password: user.password,
+        redirect: false,
+      });
+
+      if (signInRes?.ok) {
+        router.push("/dashboard");
+      }
+    } catch (error: any) {
+      toast({
+        className: "bg-red-500 text-white",
+        description: error.message,
+      });
+    }
+  };
+
   return (
-    <form>
+    <form onSubmit={handleSubmit(handleSignin)}>
       <div className="mb-8">
         <h3 className="text-gray-800 text-3xl font-extrabold">Sign in</h3>
         <p className="text-sm mt-4 text-gray-800">
@@ -27,14 +74,26 @@ export function SigninForm({ onChangeTab }: SigninFormProps) {
       </div>
       <div className="flex flex-col gap-5">
         <CustomInput
+          {...register("email")}
           label="Email"
           placeholder="email@example.com"
+          name="email"
+          error={errors.email}
           icon={<AiOutlineMail className="text-primary" />}
         />
-        <CustomInput type="password" label="Password" placeholder="Password" />
+        <CustomInput
+          {...register("password")}
+          type="password"
+          label="Password"
+          placeholder="Password"
+          name="password"
+          error={errors.password}
+        />
         <Button
-          type="button"
-          className="w-full shadow-xl py-2.5 px-4 text-sm tracking-wide rounded-md text-white bg-primaryfocus:outline-none"
+          disabled={!isValid}
+          isLoading={isPending}
+          type="submit"
+          className=" w-full shadow-xl p-6 text-sm tracking-wide rounded-md text-white bg-primaryfocus:outline-none"
         >
           Sign in
         </Button>
@@ -47,7 +106,12 @@ export function SigninForm({ onChangeTab }: SigninFormProps) {
       </div>
 
       <div className="space-x-6 flex justify-center">
-        <Button onClick={() => login()} variant="ghost" className="p-5">
+        <Button
+          type="button"
+          onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+          variant="ghost"
+          className="p-5"
+        >
           <Icons.google />
           Sign In with Google
         </Button>

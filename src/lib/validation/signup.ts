@@ -1,10 +1,4 @@
-import { z, ZodType } from "zod"; // Add new import
-
-export type SignupFormType = {
-  name: string;
-  email: string;
-  password: string;
-};
+import { z, ZodType } from "zod";
 
 export const SignupFormSchema: ZodType<SignupFormType> = z.object({
   name: z.string().min(3, { message: "Name is too short" }),
