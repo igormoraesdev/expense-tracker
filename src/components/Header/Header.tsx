@@ -20,10 +20,9 @@ export const Header = () => {
     .join("");
 
   return (
-    <header className="flex items-center justify-between w-full px-6 py-4 bg-white border-b-2">
-      <div className="flex items-center gap-4">
-        <Image src="/icon.svg" alt="Logo" width={50} height={50} />
-        <p className="font-bold text-xl">Expense Tracker</p>
+    <header className="flex items-center justify-between sm:justify-end w-full px-6 py-4 bg-white border-b-2 border-indigo-100">
+      <div className="sm:hidden flex items-center justify-center gap-4 h-[100px] px-6 py-4">
+        <Image src="/logo.svg" alt="Logo" width={162} height={50} />
       </div>
       <DropdownMenu>
         <DropdownMenuTrigger className="size-12 outline-none">
@@ -41,7 +40,10 @@ export const Header = () => {
         <DropdownMenuContent>
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/auth" })}>
+          <DropdownMenuItem
+            className="focus:bg-indigo-100 focus:text-indigo-700"
+            onClick={() => signOut({ callbackUrl: "/auth" })}
+          >
             Logout
           </DropdownMenuItem>
         </DropdownMenuContent>
