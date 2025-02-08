@@ -32,7 +32,7 @@ export const Header = () => {
               src={session.data?.user.image as string}
               alt="Avatar"
             />
-            <AvatarFallback className="flex items-center justify-center rounded-full h-full w-full bg-gray-800 text-white">
+            <AvatarFallback className="flex items-center justify-center rounded-full h-full w-full bg-indigo-700 text-white">
               {nameSplited}
             </AvatarFallback>
           </Avatar>
