@@ -62,10 +62,10 @@ export function SignupForm({ onChangeTab }: SignupFormProps) {
   return (
     <form onSubmit={handleSubmit(handleCreateUser)}>
       <div className="mb-8">
-        <div className="flex items-center gap-4 mb-8">
+        <div className="flex items-center gap-4">
           <button
             onClick={() => onChangeTab("signin")}
-            className="text-primary font-semibold hover:underline ml-1 whitespace-nowrap"
+            className="text-indigo-700 font-semibold hover:underline ml-1 whitespace-nowrap"
           >
             <AiOutlineArrowLeft size={24} />
           </button>
@@ -80,7 +80,7 @@ export function SignupForm({ onChangeTab }: SignupFormProps) {
           placeholder="Name"
           name="name"
           error={errors.name}
-          icon={<AiOutlineSmile className="text-primary" />}
+          icon={<AiOutlineSmile className="text-indigo-700" />}
         />
         <CustomInput
           {...register("email")}
@@ -88,7 +88,7 @@ export function SignupForm({ onChangeTab }: SignupFormProps) {
           placeholder="email@example.com"
           name="email"
           error={errors.email}
-          icon={<AiOutlineMail className="text-primary" />}
+          icon={<AiOutlineMail className="text-indigo-700" />}
         />
         <CustomInput
           {...register("password")}
@@ -102,7 +102,7 @@ export function SignupForm({ onChangeTab }: SignupFormProps) {
           disabled={!isValid}
           isLoading={isPending}
           type="submit"
-          className="w-full shadow-xl p-6 text-sm tracking-wide rounded-md text-white bg-primaryfocus:outline-none"
+          className="w-full shadow-xl p-6 text-sm tracking-wide rounded-md text-white bg-indigo-700 focus:outline-none"
         >
           Create account
         </Button>

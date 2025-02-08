@@ -23,7 +23,7 @@ export function Sidebar() {
   return (
     <div className="flex flex-col h-full w-full">
       <div className="flex items-center justify-center gap-4 h-[100px] px-6 py-4">
-        <Image src="/logo.svg" alt="Logo" width={162} height={50} />
+        <Image src="/images/logo.svg" alt="Logo" width={162} height={50} />
       </div>
       <div className="flex flex-col gap-4 px-6 py-4">
         {items.map((item, index) => (

@@ -14,11 +14,11 @@ export function CustomInput({ label, icon, error, ...rest }: CustomInputProps) {
   const [showPassword, setShowPassword] = useState(false);
   return (
     <div>
-      <label className="text-sm text-primary">{label}</label>
+      <label className="text-sm text-indigo-700">{label}</label>
       <div className="w-full relative flex items-center">
         <input
           {...rest}
-          className="w-full py-2 rounded-sm bg-background placeholder:text-foreground-faded border border-border-faded transition duration-300 ease focus:outline-none focus:border-primary pl-4 pr-9 placeholder:text-xs"
+          className="w-full py-2 rounded-sm bg-background placeholder:text-foreground-faded border border-border-faded transition duration-300 ease focus:outline-none focus:border-indigo-700 pl-4 pr-9 placeholder:text-xs"
           type={showPassword ? "text" : rest.type}
         />
         {icon && (
@@ -33,9 +33,9 @@ export function CustomInput({ label, icon, error, ...rest }: CustomInputProps) {
             type="button"
           >
             {showPassword ? (
-              <AiTwotoneEye className="w-4 h-4 text-primary" />
+              <AiTwotoneEye className="w-4 h-4 text-indigo-700" />
             ) : (
-              <AiTwotoneEyeInvisible className="w-4 h-4 text-primary" />
+              <AiTwotoneEyeInvisible className="w-4 h-4 text-indigo-700" />
             )}
           </button>
         )}

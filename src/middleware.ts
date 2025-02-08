@@ -14,6 +14,16 @@ export default async function middleware(
 ) {
   const token = await getToken({ req });
   const isAuthenticated = !!token;
+  const { pathname } = req.nextUrl;
+
+  if (
+    pathname.startsWith("/_next/") ||
+    pathname.startsWith("/images/") ||
+    pathname.startsWith("/favicon.ico") ||
+    pathname.startsWith("/api/public")
+  ) {
+    return NextResponse.next();
+  }
 
   if (req.nextUrl.pathname.startsWith("/auth") && isAuthenticated) {
     return NextResponse.redirect(new URL("/dashboard", req.url));
