@@ -20,8 +20,8 @@ export const Header = () => {
     .join("");
 
   return (
-    <header className="flex items-center justify-between sm:justify-end w-full px-6 py-4 bg-white border-b-2 border-indigo-100">
-      <div className="sm:hidden flex items-center justify-center gap-4 h-[100px] px-6 py-4">
+    <header className="flex items-center justify-between md:justify-end w-full px-6 py-4 bg-white border-b-2 border-indigo-100">
+      <div className="md:hidden flex items-center justify-center gap-4 h-[100px] px-6 py-4">
         <Image src="/images/logo.svg" alt="Logo" width={162} height={50} />
       </div>
       <DropdownMenu>

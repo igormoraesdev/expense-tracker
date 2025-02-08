@@ -9,8 +9,9 @@ export default {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        logo: "url('/logo.svg')",
+      fontFamily: {
+        inter: ['"Inter"', "sans-serif"],
+        dmmono: ['"DM_Mono"', "sans-serif"],
       },
       colors: {
         background: "hsl(var(--background))",
