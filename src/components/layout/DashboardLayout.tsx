@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "react";
-import { Header } from "../Header/Header";
-import { Sidebar } from "../Sidebar/Sidebar";
+import { Header } from "./Header";
+import { Sidebar } from "./Sidebar";
 
 export const DashboardLayout = ({ children }: PropsWithChildren) => {
   return (

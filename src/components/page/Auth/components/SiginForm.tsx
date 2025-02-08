@@ -6,12 +6,12 @@ import { SigninFormSchema } from "@/lib/validation/signin";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 
+import { Button } from "@/components/ui/button";
+import { CustomInput } from "@/components/ui/form/CustomInput";
+import { Icons } from "@/components/ui/icon";
 import { useSignin } from "@/hooks/api/auth/useSignin";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { Button } from "../../ui/button";
-import { CustomInput } from "../../ui/form/CustomInput";
-import { Icons } from "../../ui/icon";
 
 type SigninFormProps = {
   onChangeTab: (val: string) => void;

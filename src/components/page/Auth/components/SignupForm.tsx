@@ -4,6 +4,8 @@ import { SignupFormSchema } from "@/lib/validation/signup";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 
+import { Button } from "@/components/ui/button";
+import { CustomInput } from "@/components/ui/form/CustomInput";
 import { useRegister } from "@/hooks/api/auth/useRegister";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -12,8 +14,6 @@ import {
   AiOutlineMail,
   AiOutlineSmile,
 } from "react-icons/ai";
-import { Button } from "../../ui/button";
-import { CustomInput } from "../../ui/form/CustomInput";
 
 type SignupFormProps = {
   onChangeTab: (val: string) => void;
