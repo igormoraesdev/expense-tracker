@@ -3,3 +3,13 @@ export enum StatusEnum {
   Pending = "pending",
   Late = "late",
 }
+
+export enum CategoryEnum {
+  Utilities = "utilities",
+  Phone = "phone",
+  House = "house",
+  CreditCard = "creditcard",
+  Food = "food",
+  Health = "health",
+  Other = "other",
+}

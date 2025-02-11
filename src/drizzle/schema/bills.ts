@@ -1,4 +1,4 @@
-import { StatusEnum } from "@/lib/entities/bills/enum";
+import { CategoryEnum, StatusEnum } from "@/lib/entities/bills/enum";
 import {
   decimal,
   pgEnum,
@@ -15,6 +15,16 @@ export const statusEnum = pgEnum("status", [
   StatusEnum.Late,
 ]);
 
+export const categoryEnum = pgEnum("category", [
+  CategoryEnum.CreditCard,
+  CategoryEnum.Utilities,
+  CategoryEnum.Phone,
+  CategoryEnum.House,
+  CategoryEnum.Food,
+  CategoryEnum.Health,
+  CategoryEnum.Other,
+]);
+
 export const bills = pgTable("bills", {
   id: uuid("id").defaultRandom().primaryKey(),
   userId: uuid("user_id").references(() => users.id, { onDelete: "cascade" }),
@@ -22,6 +32,7 @@ export const bills = pgTable("bills", {
   dueDate: timestamp("due_date").notNull(),
   amount: decimal("amount", { precision: 10, scale: 2 }).notNull(),
   status: statusEnum("status").default(StatusEnum.Pending),
+  category: categoryEnum("category").default(CategoryEnum.Utilities),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
