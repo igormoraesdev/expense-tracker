@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { CreditCard, LayoutDashboard } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const items = [
   {
@@ -18,7 +19,8 @@ const items = [
 ];
 
 export function Sidebar() {
-  const isActive = (url: string) => window?.location?.pathname === url;
+  const pathname = usePathname();
+  const isActive = (url: string) => pathname === url;
 
   return (
     <div className="flex flex-col h-full w-full">
