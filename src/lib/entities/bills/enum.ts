@@ -1,15 +1,31 @@
 export enum StatusEnum {
-  Paid = "paid",
-  Pending = "pending",
-  Late = "late",
+  Paid = "Paid",
+  Pending = "Pending",
+  Expired = "Expired",
 }
 
+export const statusList = [
+  StatusEnum.Paid,
+  StatusEnum.Pending,
+  StatusEnum.Expired,
+];
+
 export enum CategoryEnum {
-  Utilities = "utilities",
-  Phone = "phone",
-  House = "house",
-  CreditCard = "creditcard",
-  Food = "food",
-  Health = "health",
-  Other = "other",
+  Utilities = "Utilities",
+  Phone = "Phone",
+  House = "House",
+  Card = "Card",
+  Food = "Food",
+  Health = "Health",
+  Other = "Other",
 }
+
+export const categoryList = [
+  CategoryEnum.Card,
+  CategoryEnum.Utilities,
+  CategoryEnum.Phone,
+  CategoryEnum.House,
+  CategoryEnum.Food,
+  CategoryEnum.Health,
+  CategoryEnum.Other,
+];

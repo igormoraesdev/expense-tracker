@@ -1,5 +1,5 @@
 {
-  "id": "f22e4067-d5bd-42c0-bb0f-8bfe70660bb1",
+  "id": "0734d0c5-adc5-42db-a85c-5b1a8b388561",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -45,7 +45,15 @@
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": false,
-          "default": "'pending'"
+          "default": "'Pending'"
+        },
+        "category": {
+          "name": "category",
+          "type": "category",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Utilities'"
         },
         "created_at": {
           "name": "created_at",
@@ -219,13 +227,26 @@
     }
   },
   "enums": {
+    "public.category": {
+      "name": "category",
+      "schema": "public",
+      "values": [
+        "Card",
+        "Utilities",
+        "Phone",
+        "House",
+        "Food",
+        "Health",
+        "Other"
+      ]
+    },
     "public.status": {
       "name": "status",
       "schema": "public",
       "values": [
-        "paid",
-        "pending",
-        "late"
+        "Paid",
+        "Pending",
+        "Expired"
       ]
     },
     "public.notification_type": {

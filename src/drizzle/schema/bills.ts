@@ -12,11 +12,11 @@ import { users } from "./users";
 export const statusEnum = pgEnum("status", [
   StatusEnum.Paid,
   StatusEnum.Pending,
-  StatusEnum.Late,
+  StatusEnum.Expired,
 ]);
 
 export const categoryEnum = pgEnum("category", [
-  CategoryEnum.CreditCard,
+  CategoryEnum.Card,
   CategoryEnum.Utilities,
   CategoryEnum.Phone,
   CategoryEnum.House,

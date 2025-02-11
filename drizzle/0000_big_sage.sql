@@ -1,4 +1,5 @@
-CREATE TYPE "public"."status" AS ENUM('paid', 'pending', 'late');--> statement-breakpoint
+CREATE TYPE "public"."category" AS ENUM('Card', 'Utilities', 'Phone', 'House', 'Food', 'Health', 'Other');--> statement-breakpoint
+CREATE TYPE "public"."status" AS ENUM('Paid', 'Pending', 'Expired');--> statement-breakpoint
 CREATE TYPE "public"."notification_type" AS ENUM('email', 'whatsapp');--> statement-breakpoint
 CREATE TABLE "bills" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
@@ -6,7 +7,8 @@ CREATE TABLE "bills" (
 	"description" varchar(255) NOT NULL,
 	"due_date" timestamp NOT NULL,
 	"amount" numeric(10, 2) NOT NULL,
-	"status" "status" DEFAULT 'pending',
+	"status" "status" DEFAULT 'Pending',
+	"category" "category" DEFAULT 'Utilities',
 	"created_at" timestamp DEFAULT now(),
 	"updated_at" timestamp DEFAULT now()
 );

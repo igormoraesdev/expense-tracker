@@ -1,2 +1,0 @@
-CREATE TYPE "public"."category" AS ENUM('creditcard', 'utilities', 'phone', 'house', 'food', 'health', 'other');--> statement-breakpoint
-ALTER TABLE "bills" ADD COLUMN "category" "category" DEFAULT 'utilities';
