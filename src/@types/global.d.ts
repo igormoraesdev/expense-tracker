@@ -20,6 +20,14 @@ declare global {
   }
 
   type ResponseSignin = User;
+
+  interface CreateBillFormType {
+    description: string;
+    dueDate: Date;
+    amount: string;
+    status: StatusEnum;
+    category: CategoryEnum;
+  }
 }
 
 export {};

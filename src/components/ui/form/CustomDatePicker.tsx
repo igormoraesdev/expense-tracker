@@ -9,42 +9,62 @@ import {
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import React from "react";
+import React, { useEffect } from "react";
+import { ControllerRenderProps, FieldError } from "react-hook-form";
 
-export const CustomDatePicker = () => {
+type CustomDatePickerProps = {
+  label?: string;
+  error?: FieldError;
+  field?: Pick<ControllerRenderProps, "onChange" | "value">;
+};
+
+export const CustomDatePicker = ({
+  label,
+  field,
+  error,
+}: CustomDatePickerProps) => {
   const [date, setDate] = React.useState<Date | undefined>(new Date());
   const [isOpen, setisOpen] = React.useState(false);
 
   const handleSelectDate = (date: Date | undefined) => {
     setisOpen(false);
     setDate(date);
+    field?.onChange(date);
   };
+
+  useEffect(() => {
+    setDate(date);
+    field?.onChange(date);
+  }, []);
+
   return (
-    <Popover open={isOpen} onOpenChange={setisOpen}>
-      <PopoverTrigger asChild>
-        <Button
-          variant={"outline"}
-          className={cn(
-            "w-[248px] p-6 justify-start text-left",
-            !date && "text-muted-foreground"
-          )}
-        >
-          <CalendarIcon />
-          {date ? (
-            format(date, "PPP")
-          ) : (
-            <span className="font-bold">Pick a date</span>
-          )}
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-auto p-0" align="start">
-        <Calendar
-          mode="single"
-          selected={date}
-          onSelect={handleSelectDate}
-          initialFocus
-        />
-      </PopoverContent>
-    </Popover>
+    <div className="flex flex-col items-start gap-1">
+      <label className="text-sm text-indigo-700">{label}</label>
+      <Popover open={isOpen} onOpenChange={setisOpen}>
+        <PopoverTrigger asChild>
+          <Button
+            variant={"outline"}
+            className={cn(
+              "w-[248px] h-[41px] p-2 justify-start text-left font-normal",
+              !date && "text-muted-foreground"
+            )}
+          >
+            <CalendarIcon />
+            {date ? format(date, "PPP") : <span>Pick a date</span>}
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-auto p-0" align="start">
+          <Calendar
+            mode="single"
+            selected={field?.value || date}
+            onSelect={handleSelectDate}
+            initialFocus
+          />
+        </PopoverContent>
+      </Popover>
+      {error && (
+        <span className="mt-4 text-destructive text-xs">{error.message}</span>
+      )}
+    </div>
   );
 };
