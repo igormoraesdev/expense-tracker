@@ -99,7 +99,11 @@ export const ExpenseDialogAddBills = () => {
               />
             )}
           />
-          <Button disabled={!isValid} className="mt-6" type="submit">
+          <Button
+            disabled={!isValid}
+            className="mt-6 min-h-[41px]"
+            type="submit"
+          >
             Create bill
           </Button>
         </div>

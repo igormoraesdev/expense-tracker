@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useMemo, useState } from "react";
-import { SigninForm } from "./components/SiginForm";
+import { SigninForm } from "./components/SigninForm";
 import { SignupForm } from "./components/SignupForm";
 
 export function Auth() {

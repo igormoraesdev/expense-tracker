@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { CustomDatePicker } from "@/components/ui/form/CustomDatePicker";
 
-import { CircleDollarSign, SquarePlus } from "lucide-react";
+import { CircleDollarSign, Plus } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { ExpenseDialogAddBills } from "./components/ExpenseDialogAddBills";
 
@@ -31,9 +31,10 @@ export const DashboardContent = () => {
             <DialogTrigger asChild>
               <Button
                 variant="outline"
-                className="h-[140px] w-full max-w-[150px] rounded-2xl p-6 outline-none"
+                size={"icon"}
+                className="h-[50] w-full max-w-[50] rounded-full p-6 outline-none"
               >
-                <SquarePlus size={40} className="w-[40px] h-[40px]" />
+                <Plus size={24} className="w-[24px] h-[24px]" />
               </Button>
             </DialogTrigger>
           </div>

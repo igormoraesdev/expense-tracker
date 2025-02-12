@@ -5,6 +5,7 @@ import {
   ChangeEvent,
   InputHTMLAttributes,
   ReactElement,
+  useEffect,
   useState,
 } from "react";
 import { FieldError } from "react-hook-form";
@@ -37,6 +38,13 @@ export function CustomInput({
     rest.onChange?.(event);
     setValue(rawValue);
   };
+
+  useEffect(() => {
+    if (rest.value) {
+      setValue(rest.value as string);
+    }
+  }, [rest.value]);
+
   return (
     <div className="flex flex-col items-start gap-1">
       <label htmlFor={label} className="text-sm text-indigo-700">

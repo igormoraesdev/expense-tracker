@@ -1,5 +1,6 @@
 import { db } from "@/drizzle";
 import { users } from "@/drizzle/schema/users";
+import { getUserByEmail } from "@/lib/actions/users";
 import bcrypt from "bcrypt";
 import { NextResponse } from "next/server";
 
@@ -7,9 +8,7 @@ export async function POST(req: Request) {
   try {
     const { name, email, password } = await req.json();
 
-    const existingUser = await db.query.users.findFirst({
-      where: (user, { eq }) => eq(user.email, email),
-    });
+    const existingUser = await getUserByEmail(email);
 
     if (existingUser) {
       return NextResponse.json(

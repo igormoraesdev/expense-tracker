@@ -1,8 +1,8 @@
 "use server";
 import { db } from "@/drizzle";
 import { users } from "@/drizzle/schema/users";
+import { getUserByEmail } from "@/lib/actions/users";
 import bcrypt from "bcrypt";
-import { eq } from "drizzle-orm";
 import NextAuth, { Account, User } from "next-auth";
 import { AdapterUser } from "next-auth/adapters";
 import Credentials from "next-auth/providers/credentials";
@@ -36,9 +36,7 @@ const authOptions = {
         throw new Error("Email e senha são obrigatórios");
       }
 
-      const user = await db.query.users.findFirst({
-        where: (user, { eq }) => eq(user.email, credentials.email),
-      });
+      const user = await getUserByEmail(credentials.email as string);
 
       if (!user) {
         throw new Error("Usuário não encontrado");
@@ -53,7 +51,7 @@ const authOptions = {
       }
 
       return {
-        id: user.id,
+        userId: user.id,
         name: user.name,
         email: user.email,
       };
@@ -66,25 +64,50 @@ const authOptions = {
       account: Account | null;
     }) {
       if (account?.provider === "google") {
-        const existingUser = await db.query.users.findFirst({
-          where: eq(users.email, user.email!),
-        });
+        const existingUser = await getUserByEmail(user.email as string);
 
         if (!existingUser) {
-          await db.insert(users).values({
-            email: user.email!,
-            name: user.name!,
-            password: "",
-          });
+          const [newUser] = await db
+            .insert(users)
+            .values({
+              email: user.email!,
+              name: user.name!,
+              password: "",
+            })
+            .returning();
+
+          user.id = newUser.id;
+        } else {
+          user.id = existingUser.id;
         }
       }
       return true;
     },
+    async session({ session, token }: any) {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          userId: token.userId,
+        },
+      };
+    },
+    async jwt({ user, token, trigger, session }: any) {
+      if (trigger === "update") {
+        token.userId = session.userId;
+      }
+
+      if (user) {
+        return { ...token, userId: user.id };
+      }
+      return token;
+    },
   },
   jwt: {
     maxAge: 60 * 60 * 24 * 30,
+    secret: process.env.NEXTAUTH_SECRET,
+    encryption: true,
   },
-  secret: process.env.NEXTAUTH_SECRET,
   pages: {
     signIn: "/auth",
   },

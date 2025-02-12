@@ -1,13 +1,11 @@
-import { db } from "@/drizzle";
+import { getUserByEmail } from "@/lib/actions/users";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
     const { email } = await req.json();
 
-    const existingUser = await db.query.users.findFirst({
-      where: (user, { eq }) => eq(user.email, email),
-    });
+    const existingUser = await getUserByEmail(email);
 
     if (!existingUser) {
       return NextResponse.json({ message: "User not found" }, { status: 404 });
