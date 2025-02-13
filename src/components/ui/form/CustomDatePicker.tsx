@@ -23,12 +23,12 @@ export const CustomDatePicker = ({
   field,
   error,
 }: CustomDatePickerProps) => {
-  const [date, setDate] = React.useState<Date | undefined>(new Date());
+  const [date, setDate] = React.useState<Date>(new Date());
   const [isOpen, setisOpen] = React.useState(false);
 
   const handleSelectDate = (date: Date | undefined) => {
     setisOpen(false);
-    setDate(date);
+    setDate(date as Date);
     field?.onChange(date);
   };
 

@@ -5,7 +5,6 @@ import {
   ChangeEvent,
   InputHTMLAttributes,
   ReactElement,
-  useEffect,
   useState,
 } from "react";
 import { FieldError } from "react-hook-form";
@@ -27,7 +26,7 @@ export function CustomInput({
   ...rest
 }: CustomInputProps) {
   const isPassword = rest.type === "password";
-  const [value, setValue] = useState(rest.value || "");
+  const [value, setValue] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -38,12 +37,6 @@ export function CustomInput({
     rest.onChange?.(event);
     setValue(rawValue);
   };
-
-  useEffect(() => {
-    if (rest.value) {
-      setValue(rest.value as string);
-    }
-  }, [rest.value]);
 
   return (
     <div className="flex flex-col items-start gap-1">

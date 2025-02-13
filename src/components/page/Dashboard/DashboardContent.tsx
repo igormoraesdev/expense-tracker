@@ -5,13 +5,15 @@ import { CustomDatePicker } from "@/components/ui/form/CustomDatePicker";
 
 import { CircleDollarSign, Plus } from "lucide-react";
 import { useSession } from "next-auth/react";
+import { useState } from "react";
 import { ExpenseDialogAddBills } from "./components/ExpenseDialogAddBills";
 
 export const DashboardContent = () => {
   const session = useSession();
+  const [openDialog, setOpenDialog] = useState(false);
 
   return (
-    <Dialog>
+    <Dialog open={openDialog} onOpenChange={setOpenDialog}>
       <section className="bg-white w-full h-full p-8">
         <div className="flex flex-col gap-2 justify-center items-center md:justify-start md:items-start">
           <div className="w-full mb-6 flex flex-col gap-8 md:gap-0 md:flex-row items-center md:items-start justify-center md:justify-between">
@@ -40,7 +42,7 @@ export const DashboardContent = () => {
           </div>
         </div>
       </section>
-      <ExpenseDialogAddBills />
+      <ExpenseDialogAddBills onOpenDialog={setOpenDialog} />
     </Dialog>
   );
 };

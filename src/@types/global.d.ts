@@ -1,3 +1,5 @@
+import { bills } from "@/drizzle/schema/bills";
+
 declare global {
   interface User {
     id?: string;
@@ -28,6 +30,17 @@ declare global {
     status: StatusEnum;
     category: CategoryEnum;
   }
+
+  interface CreateBillsParam {
+    userId: string;
+    description: string;
+    dueDate: Date;
+    amount: number;
+    category: CategoryEnum;
+    status: CategoryEnum;
+  }
+
+  type Bills = typeof bills.$inferInsert;
 }
 
 export {};
