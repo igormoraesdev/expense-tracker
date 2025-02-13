@@ -3,10 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { CustomDatePicker } from "@/components/ui/form/CustomDatePicker";
 
-import { CircleDollarSign, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { ExpenseDialogAddBills } from "./components/ExpenseDialogAddBills";
+import { TotalSpend } from "./components/TotalSpend";
 
 export const DashboardContent = () => {
   const session = useSession();
@@ -21,15 +22,7 @@ export const DashboardContent = () => {
             <CustomDatePicker />
           </div>
           <div className="flex mb-6 flex-col md:flex-row items-center gap-6 w-full">
-            <div className="flex flex-row justify-between items-center p-6 border-2 border-indigo-200 rounded-2xl w-full max-w-[340px] h-[140px]">
-              <div>
-                <p className="mb-1 text-sm font-bold">Total spend this month</p>
-                <p className="text-4xl font-bold text-indigo-900">R$: 6.000</p>
-              </div>
-              <div className="flex items-center justify-center size-12 rounded-full bg-indigo-700">
-                <CircleDollarSign className="text-white" />
-              </div>
-            </div>
+            <TotalSpend />
             <DialogTrigger asChild>
               <Button
                 variant="outline"

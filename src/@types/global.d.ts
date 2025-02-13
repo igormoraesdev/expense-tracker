@@ -41,6 +41,11 @@ declare global {
   }
 
   type Bills = typeof bills.$inferInsert;
+
+  interface TotalSpendParams {
+    userId: string;
+    date: Date;
+  }
 }
 
 export {};

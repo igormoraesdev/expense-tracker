@@ -11,6 +11,13 @@ class BillsServiceClass {
     const response = await this.apiClient.post("/api/bills", data);
     return response.data;
   }
+
+  async getTotalSpend(params: TotalSpendParams): Promise<number> {
+    const response = await this.apiClient.get(
+      `/api/bills/total-spend?userId=${params.userId}&date=${params.date}`
+    );
+    return response.data;
+  }
 }
 
 export const BillsService = new BillsServiceClass();
