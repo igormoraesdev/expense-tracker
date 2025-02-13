@@ -16,12 +16,14 @@ type CustomDatePickerProps = {
   label?: string;
   error?: FieldError;
   field?: Pick<ControllerRenderProps, "onChange" | "value">;
+  isMonth?: boolean;
 };
 
 export const CustomDatePicker = ({
   label,
   field,
   error,
+  isMonth = false,
 }: CustomDatePickerProps) => {
   const [date, setDate] = React.useState<Date>(new Date());
   const [isOpen, setisOpen] = React.useState(false);
@@ -50,7 +52,17 @@ export const CustomDatePicker = ({
             )}
           >
             <CalendarIcon />
-            {date ? format(date, "PPP") : <span>Pick a date</span>}
+            {isMonth ? (
+              <>
+                {date ? (
+                  `${format(date, "MMMM")} - ${format(date, "yyyy")}`
+                ) : (
+                  <span>Pick a date</span>
+                )}
+              </>
+            ) : (
+              <>{date ? format(date, "PPP") : <span>Pick a date</span>}</>
+            )}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0" align="start">

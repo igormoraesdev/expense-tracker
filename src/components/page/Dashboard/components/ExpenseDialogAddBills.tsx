@@ -11,7 +11,7 @@ import { CustomSelect } from "@/components/ui/form/CustomSelect";
 import { useCreateBills } from "@/hooks/api/bills/useCreateBills";
 import { useToast } from "@/hooks/use-toast";
 import { categoryList, statusList } from "@/lib/entities/bills/enum";
-import { CreateBillsFormSchema } from "@/lib/validation/create-bills";
+import { CreateBillsFormSchema } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSession } from "next-auth/react";
 import { Dispatch, SetStateAction } from "react";

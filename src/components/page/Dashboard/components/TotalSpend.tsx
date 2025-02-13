@@ -3,13 +3,21 @@ import { useGetTotalSpend } from "@/hooks/api/bills/useGetTotalSpend";
 import { CircleDollarSign } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useMemo } from "react";
+import { useFormContext } from "react-hook-form";
 
 export const TotalSpend = () => {
   const session = useSession();
-  const { data, isPending } = useGetTotalSpend({
-    userId: session.data?.user.userId as string,
-    date: new Date(),
-  });
+  const { watch } = useFormContext();
+  const date = watch("date");
+  const { data, isPending } = useGetTotalSpend(
+    {
+      userId: session.data?.user.userId as string,
+      date,
+    },
+    {
+      enabled: !!session.data?.user.userId,
+    }
+  );
   const currencyData = useMemo(
     () =>
       data
@@ -17,7 +25,7 @@ export const TotalSpend = () => {
             style: "currency",
             currency: "BRL",
           }).format(data as number)
-        : "",
+        : "R$ 0,00",
     [data]
   );
 

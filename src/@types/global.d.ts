@@ -46,6 +46,10 @@ declare global {
     userId: string;
     date: Date;
   }
+
+  interface DashboardFormType {
+    date: Date;
+  }
 }
 
 export {};
