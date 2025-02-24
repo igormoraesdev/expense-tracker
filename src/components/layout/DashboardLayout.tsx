@@ -10,7 +10,9 @@ export const DashboardLayout = ({ children }: PropsWithChildren) => {
       </div>
       <div className="grid grid-rows-[100px_1fr] h-full w-full">
         <Header />
-        <div className="col-span-1">{children}</div>
+        <div className="col-span-1 h-full sm:h-[calc(100vh-100px)]">
+          {children}
+        </div>
       </div>
     </main>
   );

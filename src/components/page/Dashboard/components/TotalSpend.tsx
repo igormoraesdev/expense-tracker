@@ -30,18 +30,17 @@ export const TotalSpend = () => {
   );
 
   return (
-    <div className="flex flex-row justify-between items-center p-6 border-2 border-indigo-200 rounded-2xl w-full max-w-[340px] h-[140px]">
+    <div className="flex flex-row justify-between items-center p-6 border-2 border-indigo-200 rounded-2xl w-full max-w-[340px] h-[140px] shadow-xl">
       <div>
-        <p className="mb-1 text-sm font-bold">Total spend this month</p>
+        <p className="mb-1 text-sm font-medium">Total spend this month</p>
         {isPending ? (
           <Skeleton className="h-[36px] w-[195px] rounded-xl" />
         ) : (
-          <p className="text-3xl font-bold text-indigo-900">{currencyData}</p>
+          <p className="text-3xl font-medium text-indigo-900">{currencyData}</p>
         )}
       </div>
-      <div className="flex items-center justify-center size-12 rounded-full bg-indigo-700">
-        <CircleDollarSign className="text-white" />
-      </div>
+
+      <CircleDollarSign size={24} className="text-indigo-700" />
     </div>
   );
 };
