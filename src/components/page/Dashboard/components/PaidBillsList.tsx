@@ -5,13 +5,13 @@ import { Fragment } from "react";
 import { BillsCard } from "./BillCard";
 import { BillsCardSkeleton } from "./BillsCardSkeleton";
 
-export const PendingBillsList = () => {
+export const PaidBillsList = () => {
   const { bills, isLoading } = useDashboardData();
 
   if (Number(bills?.length) <= 0) {
     return (
       <div className="flex flex-col">
-        <h3 className="text-2xl font-bold mb-4">Pending Bills</h3>
+        <h3 className="text-2xl font-bold mb-4">Paid Bills</h3>
         <div className="flex flex-col max-h-[600px] overflow-y-scroll gap-6 py-2">
           <div className="flex items-center justify-center w-full h-full">
             <p className="text-xl text-indigo-900 font-bold">Empty list</p>
@@ -23,7 +23,7 @@ export const PendingBillsList = () => {
 
   return (
     <div className="flex flex-col">
-      <h3 className="text-2xl font-bold mb-4">Pending Bills</h3>
+      <h3 className="text-2xl font-bold mb-4">Paid Bills</h3>
       <div className="flex flex-col max-h-[600px] overflow-y-scroll gap-6 py-2">
         {isLoading ? (
           <>
@@ -34,9 +34,9 @@ export const PendingBillsList = () => {
         ) : (
           <Fragment>
             {bills
-              ?.filter((item) => item.status !== StatusEnum.Paid)
+              ?.filter((item) => item.status === StatusEnum.Paid)
               ?.map((bill) => (
-                <BillsCard isPaid={false} key={bill.id} bill={bill} />
+                <BillsCard isPaid key={bill.id} bill={bill} />
               ))}
           </Fragment>
         )}

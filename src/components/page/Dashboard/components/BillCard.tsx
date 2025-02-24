@@ -15,9 +15,10 @@ import { CategoryBadge } from "./CategoryBadge";
 
 type BillsCardProps = {
   bill: Bill;
+  isPaid: boolean;
 };
 
-export const BillsCard = ({ bill }: BillsCardProps) => {
+export const BillsCard = ({ bill, isPaid }: BillsCardProps) => {
   return (
     <div className="grid w-full p-6 sm:p-8 bg-indigo-100 border-2 border-gray-200 rounded-md gap-4">
       <div className="flex items-start sm:items-center justify-between">
@@ -27,7 +28,11 @@ export const BillsCard = ({ bill }: BillsCardProps) => {
           </div>
           <p className="text-sm sm:text-lg font-bold">{bill.description}</p>
         </div>
-        <p className="text-lg text-indigo-900 font-medium">
+        <p
+          className={`text-xl ${
+            isPaid ? "text-indigo-700" : "text-red-600"
+          } font-medium"`}
+        >
           {new Intl.NumberFormat("pt-BR", {
             style: "currency",
             currency: "BRL",
@@ -60,6 +65,9 @@ export const BillsCard = ({ bill }: BillsCardProps) => {
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
               <DropdownMenuGroup>
+                <DropdownMenuItem className="focus:bg-indigo-100 focus:text-indigo-700">
+                  Edit
+                </DropdownMenuItem>
                 <DropdownMenuItem className="focus:bg-indigo-100 focus:text-indigo-700">
                   Paid
                 </DropdownMenuItem>

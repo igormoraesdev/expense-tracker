@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 import { ExpenseDialogAddBills } from "./components/ExpenseDialogAddBills";
+import { PaidBillsList } from "./components/PaidBillsList";
 import { PendingBillsList } from "./components/PendingBillsList";
 import { TotalSpend } from "./components/TotalSpend";
 
@@ -61,6 +62,7 @@ export const DashboardContent = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full overflow-y-hidden">
               <PendingBillsList />
+              <PaidBillsList />
             </div>
           </div>
         </section>
