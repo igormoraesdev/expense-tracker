@@ -106,7 +106,10 @@ export const BillsCard = ({ bill }: BillsCardProps) => {
                 </DropdownMenuItem>
               )}
               {bill.status !== StatusEnum.Pending && (
-                <DropdownMenuItem className="focus:bg-indigo-100 focus:text-indigo-700">
+                <DropdownMenuItem
+                  onClick={() => handleUpdateStatus(bill, StatusEnum.Pending)}
+                  className="focus:bg-indigo-100 focus:text-indigo-700"
+                >
                   Pending
                 </DropdownMenuItem>
               )}
