@@ -68,7 +68,7 @@ export default function MonthPicker({
         </Button>
       </PopoverTrigger>
       <PopoverContent>
-        <div className="p-3">
+        <div className="p-3 bg-white">
           <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
             <div className="space-y-4 border-2 border-indigo-200 p-4 rounded-lg">
               <div className="relative flex items-center justify-center pt-1">
@@ -135,7 +135,10 @@ export default function MonthPicker({
                       role="gridcell"
                       tabIndex={-1}
                       type="button"
-                      onClick={() => onMonthChange(month)}
+                      onClick={() => {
+                        onMonthChange(month);
+                        setisOpen(false);
+                      }}
                     >
                       <time dateTime={format(month, "yyyy-MM-dd")}>
                         {format(month, "MMM")}
