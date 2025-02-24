@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { CreditCard, LayoutDashboard } from "lucide-react";
+import { Banknote, LayoutDashboard } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -14,7 +14,7 @@ const items = [
   {
     title: "Expenses",
     url: "/dashboard/expenses",
-    icon: CreditCard,
+    icon: Banknote,
   },
 ];
 

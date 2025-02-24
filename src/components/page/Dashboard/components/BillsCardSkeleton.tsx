@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
-export const BillsDueCardSkeleton = () => {
+export const BillsCardSkeleton = () => {
   return (
     <div className="grid w-full p-6 sm:p-8 border-2 border-gray-200 rounded-md gap-4">
       <div className="flex items-start sm:items-center justify-between">

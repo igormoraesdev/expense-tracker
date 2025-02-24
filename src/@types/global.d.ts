@@ -40,12 +40,14 @@ declare global {
     status: CategoryEnum;
   }
 
-  type Bills = typeof bills.$inferInsert;
+  type Bill = typeof bills.$inferInsert;
 
   interface TotalSpendParams {
     userId: string;
     date: Date;
   }
+
+  type BillsListParams = TotalSpendParams;
 
   interface DashboardFormType {
     date: Date;
