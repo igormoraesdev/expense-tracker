@@ -7,17 +7,51 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useUpdateBill } from "@/hooks/api/bills/useUpdateBill";
+import { useToast } from "@/hooks/use-toast";
 import { CategoryEnum, StatusEnum } from "@/lib/entities/bills/enum";
 import { format } from "date-fns";
 import { Ellipsis } from "lucide-react";
 import { BillBadge } from "./BillBadge";
 import { CategoryBadge } from "./CategoryBadge";
 
+import { useQueryClient } from "@tanstack/react-query";
+
 type BillsCardProps = {
   bill: Bill;
 };
 
 export const BillsCard = ({ bill }: BillsCardProps) => {
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+
+  const { mutateAsync } = useUpdateBill({
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["bills"] });
+    },
+  });
+
+  const handleUpdateStatus = async (bill: Bill, status: StatusEnum) => {
+    try {
+      const id = bill.id as string;
+
+      await mutateAsync({
+        billId: id,
+        bill: { ...bill, status, updatedAt: new Date() },
+      });
+      toast({
+        description: "Bill updated successfully",
+        className: "bg-green-500 text-white",
+        duration: 5000,
+      });
+    } catch (error: any) {
+      toast({
+        className: "bg-red-500 text-white",
+        description: error.message,
+      });
+    }
+  };
+
   return (
     <div className="grid w-full p-6 sm:p-8 bg-indigo-100 border-2 border-gray-200 rounded-md gap-4">
       <div className="flex items-start sm:items-center justify-between">
@@ -63,7 +97,10 @@ export const BillsCard = ({ bill }: BillsCardProps) => {
                 <DropdownMenuItem className="focus:bg-indigo-100 focus:text-indigo-700">
                   Edit
                 </DropdownMenuItem>
-                <DropdownMenuItem className="focus:bg-indigo-100 focus:text-indigo-700">
+                <DropdownMenuItem
+                  onClick={() => handleUpdateStatus(bill, StatusEnum.Paid)}
+                  className="focus:bg-indigo-100 focus:text-indigo-700"
+                >
                   Paid
                 </DropdownMenuItem>
                 {bill.status !== StatusEnum.Pending && (
@@ -72,7 +109,10 @@ export const BillsCard = ({ bill }: BillsCardProps) => {
                   </DropdownMenuItem>
                 )}
                 {bill.status !== StatusEnum.Expired && (
-                  <DropdownMenuItem className="focus:bg-indigo-100 focus:text-indigo-700">
+                  <DropdownMenuItem
+                    onClick={() => handleUpdateStatus(bill, StatusEnum.Expired)}
+                    className="focus:bg-indigo-100 focus:text-indigo-700"
+                  >
                     Expired
                   </DropdownMenuItem>
                 )}

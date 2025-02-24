@@ -52,6 +52,11 @@ declare global {
   interface DashboardFormType {
     date: Date;
   }
+
+  interface UpdateBillParam {
+    billId: string;
+    bill: Bill;
+  }
 }
 
 export {};

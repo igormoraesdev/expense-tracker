@@ -25,6 +25,11 @@ class BillsServiceClass {
     );
     return response.data;
   }
+
+  async updateBill(data: UpdateBillParam): Promise<Bill> {
+    const response = await this.apiClient.patch("/api/bills", data);
+    return response.data;
+  }
 }
 
 export const BillsService = new BillsServiceClass();

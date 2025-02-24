@@ -8,7 +8,10 @@ import { BillsCardSkeleton } from "./BillsCardSkeleton";
 export const PendingBillsList = () => {
   const { bills, isLoading } = useDashboardData();
 
-  if (Number(bills?.length) <= 0) {
+  if (
+    Number(bills?.filter((item) => item.status !== StatusEnum.Paid)?.length) <=
+    0
+  ) {
     return (
       <div className="flex flex-col">
         <h3 className="text-2xl font-bold mb-4">Pending Bills</h3>
