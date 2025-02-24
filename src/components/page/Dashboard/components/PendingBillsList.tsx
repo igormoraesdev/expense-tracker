@@ -14,7 +14,7 @@ export const PendingBillsList = () => {
       <div className="flex flex-col max-h-[600px] overflow-y-scroll gap-6 py-2">
         {isLoading ? (
           <>
-            {Array.from(new Array(2)).map((_, index) => (
+            {Array.from(new Array(1)).map((_, index) => (
               <BillsCardSkeleton key={`key-${index}`} />
             ))}
           </>
