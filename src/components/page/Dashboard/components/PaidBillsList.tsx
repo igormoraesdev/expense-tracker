@@ -11,7 +11,7 @@ export const PaidBillsList = () => {
   if (Number(bills?.length) <= 0) {
     return (
       <div className="flex flex-col">
-        <h3 className="text-2xl font-bold mb-4">Paid Bills</h3>
+        <h3 className="text-2xl font-bold">Paid Bills</h3>
         <div className="flex flex-col max-h-[600px] overflow-y-scroll gap-6 py-2">
           <div className="flex justify-center items-center w-full p-6 sm:p-8 bg-indigo-100 border-2 border-gray-200 rounded-md gap-4">
             <p className="text-sm sm:text-lg font-bold">Empty List</p>
@@ -23,8 +23,8 @@ export const PaidBillsList = () => {
 
   return (
     <div className="flex flex-col">
-      <h3 className="text-2xl font-bold mb-4">Paid Bills</h3>
-      <div className="flex flex-col max-h-[600px] overflow-y-scroll gap-6 py-2">
+      <h3 className="text-2xl font-bold">Paid Bills</h3>
+      <div className="flex flex-col max-h-[600px] overflow-y-scroll gap-6 py-4">
         {isLoading ? (
           <>
             {Array.from(new Array(1)).map((_, index) => (

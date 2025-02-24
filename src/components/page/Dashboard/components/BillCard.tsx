@@ -81,45 +81,46 @@ export const BillsCard = ({ bill }: BillsCardProps) => {
           <p className="text-sm sm:text-lg font-light">Status:</p>
           <BillBadge bill={bill} />
         </div>
-        {bill.status !== StatusEnum.Paid && (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild className="size-8 rounded-full">
-              <Button
-                variant="default"
-                size={"icon"}
-                className="p-1 outline-none justify-self-end"
-              >
-                <Ellipsis size={20} className="w-[24px] h-[24px]" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56">
-              <DropdownMenuGroup>
-                <DropdownMenuItem className="focus:bg-indigo-100 focus:text-indigo-700">
-                  Edit
-                </DropdownMenuItem>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild className="size-8 rounded-full">
+            <Button
+              variant="default"
+              size={"icon"}
+              className="p-1 outline-none justify-self-end"
+            >
+              <Ellipsis size={20} className="w-[24px] h-[24px]" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-56">
+            <DropdownMenuGroup>
+              <DropdownMenuItem className="focus:bg-indigo-100 focus:text-indigo-700">
+                Edit
+              </DropdownMenuItem>
+              {bill.status !== StatusEnum.Paid && (
                 <DropdownMenuItem
                   onClick={() => handleUpdateStatus(bill, StatusEnum.Paid)}
                   className="focus:bg-indigo-100 focus:text-indigo-700"
                 >
                   Paid
                 </DropdownMenuItem>
-                {bill.status !== StatusEnum.Pending && (
-                  <DropdownMenuItem className="focus:bg-indigo-100 focus:text-indigo-700">
-                    Pending
-                  </DropdownMenuItem>
-                )}
-                {bill.status !== StatusEnum.Expired && (
-                  <DropdownMenuItem
-                    onClick={() => handleUpdateStatus(bill, StatusEnum.Expired)}
-                    className="focus:bg-indigo-100 focus:text-indigo-700"
-                  >
-                    Expired
-                  </DropdownMenuItem>
-                )}
-              </DropdownMenuGroup>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        )}
+              )}
+              {bill.status !== StatusEnum.Pending && (
+                <DropdownMenuItem className="focus:bg-indigo-100 focus:text-indigo-700">
+                  Pending
+                </DropdownMenuItem>
+              )}
+              {bill.status !== StatusEnum.Expired && (
+                <DropdownMenuItem
+                  onClick={() => handleUpdateStatus(bill, StatusEnum.Expired)}
+                  className="focus:bg-indigo-100 focus:text-indigo-700"
+                >
+                  Expired
+                </DropdownMenuItem>
+              )}
+            </DropdownMenuGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </div>
   );
