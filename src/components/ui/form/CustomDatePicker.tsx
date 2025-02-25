@@ -9,7 +9,7 @@ import {
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import React, { useEffect } from "react";
+import React from "react";
 import { ControllerRenderProps, FieldError } from "react-hook-form";
 
 type CustomDatePickerProps = {
@@ -25,7 +25,7 @@ export const CustomDatePicker = ({
   error,
   isMonth = false,
 }: CustomDatePickerProps) => {
-  const [date, setDate] = React.useState<Date>(new Date());
+  const [date, setDate] = React.useState<Date>(field?.value || new Date());
   const [isOpen, setisOpen] = React.useState(false);
 
   const handleSelectDate = (date: Date | undefined) => {
@@ -33,11 +33,6 @@ export const CustomDatePicker = ({
     setDate(date as Date);
     field?.onChange(date);
   };
-
-  useEffect(() => {
-    setDate(date);
-    field?.onChange(date);
-  }, []);
 
   return (
     <div className="flex flex-col items-start gap-1">

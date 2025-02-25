@@ -26,16 +26,14 @@ export function CustomInput({
   ...rest
 }: CustomInputProps) {
   const isPassword = rest.type === "password";
-  const [value, setValue] = useState("");
+
   const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    let rawValue = event.target.value;
     if (masks) {
-      rawValue = Masks.formatNumber(rawValue, prefix);
+      event.target.value = Masks.formatNumber(event.target.value, prefix);
     }
     rest.onChange?.(event);
-    setValue(rawValue);
   };
 
   return (
@@ -47,7 +45,7 @@ export function CustomInput({
         <input
           id={label}
           {...rest}
-          value={value}
+          // value={value}
           onChange={handleChange}
           className="w-full py-2 rounded-sm bg-background placeholder:text-foreground-faded border border-border-faded transition duration-300 ease focus:outline-none focus:border-indigo-700 pl-4 pr-9 placeholder:text-sm"
           type={showPassword ? "text" : rest.type}

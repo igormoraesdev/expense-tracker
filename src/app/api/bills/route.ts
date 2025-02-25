@@ -59,15 +59,19 @@ export async function PATCH(req: Request) {
   try {
     const { billId, bill } = await req.json();
 
-    const updatedBill = await updateBillStatusById(billId, {
+    const payload = {
       ...bill,
-      updatedAt: new Date(bill.updatedAt),
-      createdAt: new Date(bill.createdAt),
+      amount: parseFloat(bill.amount),
+      updatedAt: new Date(),
       dueDate: new Date(bill.dueDate),
-    });
+    };
+    console.log(bill, payload);
+
+    const updatedBill = await updateBillStatusById(billId, payload);
 
     return NextResponse.json(updatedBill);
   } catch (error) {
+    console.log(error);
     return NextResponse.json(
       { message: "Error to update bills", error },
       { status: 500 }

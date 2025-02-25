@@ -29,6 +29,7 @@ declare global {
     amount: string;
     status: StatusEnum;
     category: CategoryEnum;
+    date?: Date;
   }
 
   interface CreateBillsParam {

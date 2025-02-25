@@ -16,12 +16,19 @@ import { BillBadge } from "./BillBadge";
 import { CategoryBadge } from "./CategoryBadge";
 
 import { useQueryClient } from "@tanstack/react-query";
+import { Dispatch, SetStateAction } from "react";
 
 type BillsCardProps = {
   bill: Bill;
+  onOpenDialog: Dispatch<SetStateAction<boolean>>;
+  onSelectBill: (val: Bill) => void;
 };
 
-export const BillsCard = ({ bill }: BillsCardProps) => {
+export const BillsCard = ({
+  bill,
+  onSelectBill,
+  onOpenDialog,
+}: BillsCardProps) => {
   const queryClient = useQueryClient();
   const { toast } = useToast();
 
@@ -50,6 +57,11 @@ export const BillsCard = ({ bill }: BillsCardProps) => {
         description: error.message,
       });
     }
+  };
+
+  const handleEditBill = (bill: Bill) => {
+    onOpenDialog(true);
+    onSelectBill(bill);
   };
 
   return (
@@ -94,7 +106,10 @@ export const BillsCard = ({ bill }: BillsCardProps) => {
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56">
             <DropdownMenuGroup>
-              <DropdownMenuItem className="focus:bg-indigo-100 focus:text-indigo-700">
+              <DropdownMenuItem
+                onClick={() => handleEditBill(bill)}
+                className="focus:bg-indigo-100 focus:text-indigo-700"
+              >
                 Edit
               </DropdownMenuItem>
               {bill.status !== StatusEnum.Paid && (

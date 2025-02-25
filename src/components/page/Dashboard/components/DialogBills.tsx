@@ -9,22 +9,30 @@ import { CustomDatePicker } from "@/components/ui/form/CustomDatePicker";
 import { CustomInput } from "@/components/ui/form/CustomInput";
 import { CustomSelect } from "@/components/ui/form/CustomSelect";
 import { useCreateBills } from "@/hooks/api/bills/useCreateBills";
+import { useUpdateBill } from "@/hooks/api/bills/useUpdateBill";
 import { useToast } from "@/hooks/use-toast";
 import { categoryList, statusList } from "@/lib/entities/bills/enum";
+import { Masks } from "@/lib/utils";
 import { CreateBillsFormSchema } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 
-type ExpenseDialogAddBillsProps = {
+type DialogBillsProps = {
   onOpenDialog: Dispatch<SetStateAction<boolean>>;
+  isEdit?: boolean;
+  bill?: Bill;
 };
 
-export const ExpenseDialogAddBills = ({
+export const DialogBills = ({
+  isEdit = false,
+  bill,
   onOpenDialog,
-}: ExpenseDialogAddBillsProps) => {
+}: DialogBillsProps) => {
+  const queryClient = useQueryClient();
   const {
     control,
     register,
@@ -36,7 +44,31 @@ export const ExpenseDialogAddBills = ({
     mode: "all",
   });
   const session = useSession();
-  const { mutateAsync, isPending } = useCreateBills();
+  const { mutateAsync, isPending } = useCreateBills({
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["bills"] });
+      reset({
+        amount: "",
+        description: "",
+        dueDate: undefined,
+        status: "",
+        category: "",
+      });
+    },
+  });
+  const { mutateAsync: mutateAsyncUpdateBill, isPending: isPendingUpdateBill } =
+    useUpdateBill({
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ["bills"] });
+        reset({
+          amount: "",
+          description: "",
+          dueDate: undefined,
+          status: "",
+          category: "",
+        });
+      },
+    });
   const { toast } = useToast();
 
   const handleCreateBill = async (data: CreateBillFormType) => {
@@ -51,20 +83,30 @@ export const ExpenseDialogAddBills = ({
         category: data.category,
         status: data.status,
       };
-      await mutateAsync(payload);
+
+      if (isEdit) {
+        const payload = {
+          billId: bill?.id as string,
+          bill: {
+            userId: session.data?.user.userId as string,
+            description: data.description,
+            dueDate: data.dueDate,
+            amount: data.amount.replace(/[^\d,]/g, "").replace(",", "."),
+            category: data.category,
+            status: data.status,
+          },
+        };
+        await mutateAsyncUpdateBill(payload);
+      } else {
+        await mutateAsync(payload);
+      }
 
       toast({
         description: "Bill created successfully",
         className: "bg-green-500 text-white",
         duration: 5000,
       });
-      reset({
-        amount: "",
-        description: "",
-        dueDate: undefined,
-        status: "",
-        category: "",
-      });
+
       onOpenDialog(false);
     } catch (error: any) {
       toast({
@@ -74,14 +116,32 @@ export const ExpenseDialogAddBills = ({
     }
   };
 
+  useEffect(() => {
+    if (bill) {
+      reset({
+        amount: Masks.formatNumber(bill.amount, "R$"),
+        dueDate: new Date(bill.dueDate),
+        description: bill.description,
+        status: bill.status,
+        category: bill.category,
+      });
+    }
+  }, [bill]);
+
+  const title = isEdit ? "Update bill" : "Create bill";
+  const subtitle = isEdit
+    ? "Update your bill to keep track of your finances"
+    : "Add your expenses to keep track of your finances";
+  const submitButton = isEdit ? "Update bill" : "Create bill";
+
+  const isLoading = isPending ?? isPendingUpdateBill;
+
   return (
     <DialogContent>
       <form onSubmit={handleSubmit(handleCreateBill)}>
         <DialogHeader className="flex items-start">
-          <DialogTitle>Create bills</DialogTitle>
-          <DialogDescription>
-            Add your expenses to keep track of your finances
-          </DialogDescription>
+          <DialogTitle>{title}</DialogTitle>
+          <DialogDescription>{subtitle}</DialogDescription>
         </DialogHeader>
         <div className="mt-6 flex flex-col gap-4">
           <Controller
@@ -139,12 +199,12 @@ export const ExpenseDialogAddBills = ({
             )}
           />
           <Button
-            isLoading={isPending}
+            isLoading={isLoading}
             disabled={!isValid}
             className="mt-6 min-h-[41px]"
             type="submit"
           >
-            Create bill
+            {submitButton}
           </Button>
         </div>
       </form>

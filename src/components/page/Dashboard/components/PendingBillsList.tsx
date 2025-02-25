@@ -1,11 +1,19 @@
 "use client";
 import { useDashboardData } from "@/hooks/useDashboardData";
 import { StatusEnum } from "@/lib/entities/bills/enum";
-import { Fragment } from "react";
+import { Dispatch, Fragment, SetStateAction } from "react";
 import { BillsCard } from "./BillCard";
 import { BillsCardSkeleton } from "./BillsCardSkeleton";
 
-export const PendingBillsList = () => {
+type PendingBillsListProps = {
+  onOpenDialog: Dispatch<SetStateAction<boolean>>;
+  onSelectBill: Dispatch<SetStateAction<Bill | undefined>>;
+};
+
+export const PendingBillsList = ({
+  onOpenDialog,
+  onSelectBill,
+}: PendingBillsListProps) => {
   const { bills, isLoading } = useDashboardData();
 
   if (
@@ -39,7 +47,12 @@ export const PendingBillsList = () => {
             {bills
               ?.filter((item) => item.status !== StatusEnum.Paid)
               ?.map((bill) => (
-                <BillsCard key={bill.id} bill={bill} />
+                <BillsCard
+                  onOpenDialog={onOpenDialog}
+                  onSelectBill={onSelectBill}
+                  key={bill.id}
+                  bill={bill}
+                />
               ))}
           </Fragment>
         )}

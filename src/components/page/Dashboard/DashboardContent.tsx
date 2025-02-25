@@ -10,9 +10,8 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
-import { ExpenseDialogAddBills } from "./components/ExpenseDialogAddBills";
-import { PaidBillsList } from "./components/PaidBillsList";
-import { PendingBillsList } from "./components/PendingBillsList";
+import { BillsGrid } from "./components/BillsGrid";
+import { DialogBills } from "./components/DialogBills";
 import { TotalSpend } from "./components/TotalSpend";
 
 export const DashboardContent = () => {
@@ -61,12 +60,11 @@ export const DashboardContent = () => {
               </DialogTrigger>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full overflow-y-hidden">
-              <PendingBillsList />
-              <PaidBillsList />
+              <BillsGrid />
             </div>
           </div>
         </section>
-        <ExpenseDialogAddBills onOpenDialog={setOpenDialog} />
+        <DialogBills onOpenDialog={setOpenDialog} />
       </Dialog>
     </FormProvider>
   );
