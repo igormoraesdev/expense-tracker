@@ -15,6 +15,7 @@ import { Ellipsis } from "lucide-react";
 import { BillBadge } from "./BillBadge";
 import { CategoryBadge } from "./CategoryBadge";
 
+import { useDeleteBill } from "@/hooks/api/bills/useDeleteBill";
 import { useQueryClient } from "@tanstack/react-query";
 import { Dispatch, SetStateAction } from "react";
 
@@ -33,6 +34,11 @@ export const BillsCard = ({
   const { toast } = useToast();
 
   const { mutateAsync } = useUpdateBill({
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["bills"] });
+    },
+  });
+  const { mutateAsync: mutateAsyncDelete } = useDeleteBill({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["bills"] });
     },
@@ -62,6 +68,22 @@ export const BillsCard = ({
   const handleEditBill = (bill: Bill) => {
     onOpenDialog(true);
     onSelectBill(bill);
+  };
+
+  const handleDeleteBill = async (bill: Bill) => {
+    try {
+      await mutateAsyncDelete(bill.id as string);
+      toast({
+        description: "Bill deleted successfully",
+        className: "bg-green-500 text-white",
+        duration: 5000,
+      });
+    } catch (error: any) {
+      toast({
+        className: "bg-red-500 text-white",
+        description: error.message,
+      });
+    }
   };
 
   return (
@@ -112,12 +134,18 @@ export const BillsCard = ({
               >
                 Edit
               </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => handleDeleteBill(bill)}
+                className="focus:bg-indigo-100 focus:text-indigo-700"
+              >
+                Delete
+              </DropdownMenuItem>
               {bill.status !== StatusEnum.Paid && (
                 <DropdownMenuItem
                   onClick={() => handleUpdateStatus(bill, StatusEnum.Paid)}
                   className="focus:bg-indigo-100 focus:text-indigo-700"
                 >
-                  Paid
+                  Status: Paid
                 </DropdownMenuItem>
               )}
               {bill.status !== StatusEnum.Pending && (
@@ -125,7 +153,7 @@ export const BillsCard = ({
                   onClick={() => handleUpdateStatus(bill, StatusEnum.Pending)}
                   className="focus:bg-indigo-100 focus:text-indigo-700"
                 >
-                  Pending
+                  Status: Pending
                 </DropdownMenuItem>
               )}
               {bill.status !== StatusEnum.Expired && (
@@ -133,7 +161,7 @@ export const BillsCard = ({
                   onClick={() => handleUpdateStatus(bill, StatusEnum.Expired)}
                   className="focus:bg-indigo-100 focus:text-indigo-700"
                 >
-                  Expired
+                  Status: Expired
                 </DropdownMenuItem>
               )}
             </DropdownMenuGroup>

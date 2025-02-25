@@ -30,6 +30,12 @@ class BillsServiceClass {
     const response = await this.apiClient.patch("/api/bills", data);
     return response.data;
   }
+  async deleteBill(billId: string): Promise<void> {
+    const response = await this.apiClient.delete("/api/bills", {
+      data: { billId },
+    });
+    return response.data;
+  }
 }
 
 export const BillsService = new BillsServiceClass();

@@ -22,7 +22,7 @@ export async function POST(req: Request) {
     return NextResponse.json(bill);
   } catch (error) {
     return NextResponse.json(
-      { message: "Error to create bills", error },
+      { message: "Error to create bill", error },
       { status: 500 }
     );
   }
@@ -49,7 +49,7 @@ export async function GET(req: Request) {
     return NextResponse.json(billsList);
   } catch (error) {
     return NextResponse.json(
-      { message: "Error to create bills", error },
+      { message: "Error to get bills", error },
       { status: 500 }
     );
   }
@@ -74,7 +74,22 @@ export async function PATCH(req: Request) {
   } catch (error) {
     console.log(error);
     return NextResponse.json(
-      { message: "Error to update bills", error },
+      { message: "Error to update bill", error },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(req: Request) {
+  try {
+    const { billId } = await req.json();
+
+    await db.delete(bills).where(eq(bills.id, billId));
+
+    return NextResponse.json({ message: "Bill deleted successfully" });
+  } catch (error) {
+    return NextResponse.json(
+      { message: "Error to delete bill", error },
       { status: 500 }
     );
   }
