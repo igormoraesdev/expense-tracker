@@ -59,13 +59,14 @@ export async function PATCH(req: Request) {
   try {
     const { billId, bill } = await req.json();
 
+    delete bill.createdAt;
+
     const payload = {
       ...bill,
       amount: parseFloat(bill.amount),
       updatedAt: new Date(),
       dueDate: new Date(bill.dueDate),
     };
-    console.log(bill, payload);
 
     const updatedBill = await updateBillStatusById(billId, payload);
 
