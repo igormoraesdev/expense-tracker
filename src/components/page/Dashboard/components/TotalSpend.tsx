@@ -23,7 +23,7 @@ export const TotalSpend = () => {
         {isLoading ? (
           <Skeleton className="h-[36px] w-[195px] rounded-xl" />
         ) : (
-          <p className="text-3xl font-medium text-indigo-900">{currencyData}</p>
+          <p className="text-3xl font-medium text-red-600">{currencyData}</p>
         )}
       </div>
 
