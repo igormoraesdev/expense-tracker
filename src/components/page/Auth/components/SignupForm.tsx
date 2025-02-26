@@ -7,13 +7,9 @@ import { signIn } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { CustomInput } from "@/components/ui/form/CustomInput";
 import { useRegister } from "@/hooks/api/auth/useRegister";
+import { ArrowLeft, Mail, PhoneCall, Sticker } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import {
-  AiOutlineArrowLeft,
-  AiOutlineMail,
-  AiOutlineSmile,
-} from "react-icons/ai";
 
 type SignupFormProps = {
   onChangeTab: (val: string) => void;
@@ -34,7 +30,14 @@ export function SignupForm({ onChangeTab }: SignupFormProps) {
 
   const handleCreateUser = async (dataForm: SignupFormType) => {
     try {
-      await mutateAsync(dataForm);
+      const payload = {
+        name: dataForm.name,
+        email: dataForm.email,
+        phone: dataForm.phone.replaceAll(/\D/g, ""),
+        password: dataForm.password,
+      };
+
+      await mutateAsync(payload);
 
       toast({
         description: "User created successfully",
@@ -44,6 +47,7 @@ export function SignupForm({ onChangeTab }: SignupFormProps) {
       const signInRes = await signIn("credentials", {
         name: dataForm.name,
         email: dataForm.email,
+        phone: dataForm.phone,
         password: dataForm.password,
         redirect: false,
       });
@@ -67,7 +71,7 @@ export function SignupForm({ onChangeTab }: SignupFormProps) {
             onClick={() => onChangeTab("signin")}
             className="text-indigo-700 font-semibold hover:underline ml-1 whitespace-nowrap"
           >
-            <AiOutlineArrowLeft size={24} />
+            <ArrowLeft size={24} />
           </button>
           <h3 className="text-gray-800 text-3xl font-extrabold">Register</h3>
         </div>
@@ -80,7 +84,17 @@ export function SignupForm({ onChangeTab }: SignupFormProps) {
           placeholder="Name"
           name="name"
           error={errors.name}
-          icon={<AiOutlineSmile className="text-indigo-700" />}
+          icon={<Sticker size={16} className="text-indigo-700" />}
+        />
+        <CustomInput
+          {...register("phone")}
+          masks="number"
+          typeMask="phone"
+          label="Whatsapp"
+          placeholder="(61) 99999-9999"
+          name="phone"
+          error={errors.phone}
+          icon={<PhoneCall size={16} className="text-indigo-700" />}
         />
         <CustomInput
           {...register("email")}
@@ -88,7 +102,7 @@ export function SignupForm({ onChangeTab }: SignupFormProps) {
           placeholder="email@example.com"
           name="email"
           error={errors.email}
-          icon={<AiOutlineMail className="text-indigo-700" />}
+          icon={<Mail size={16} className="text-indigo-700" />}
         />
         <CustomInput
           {...register("password")}

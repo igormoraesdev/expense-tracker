@@ -166,6 +166,7 @@ export const DialogBills = ({
           <CustomInput
             {...register("amount")}
             masks="number"
+            typeMask="currency"
             prefix="R$"
             label="Amount"
             placeholder="1000"

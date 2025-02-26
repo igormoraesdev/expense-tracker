@@ -17,12 +17,14 @@ const authOptions = {
         id: {},
         name: {},
         password: {},
+        phone: {},
       },
       authorize: async (data) => ({
         email: data?.email as string,
         id: data?.id as string,
         name: data?.name as string,
         password: data?.password as string,
+        phone: data?.phone as string,
       }),
     }),
     Google({

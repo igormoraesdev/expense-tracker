@@ -21,4 +21,11 @@ export class Masks {
 
     return `${prefix} ${integerPart},${decimalPart}`;
   }
+  static formatPhoneNumber(value: string) {
+    return value
+      .replace(/\D/g, "")
+      .slice(0, 11)
+      .replace(/^(\d\d)(\d)/g, "($1) $2")
+      .replace(/(\d{5})(\d{4})/, "$1-$2");
+  }
 }

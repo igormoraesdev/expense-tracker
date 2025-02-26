@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
-    const { name, email, password } = await req.json();
+    const { name, email, password, phone } = await req.json();
 
     const existingUser = await getUserByEmail(email);
 
@@ -17,11 +17,14 @@ export async function POST(req: Request) {
       );
     }
 
+    console.log(phone, name, email);
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     await db.insert(users).values({
       name,
       email,
+      phone,
       password: hashedPassword,
     });
 

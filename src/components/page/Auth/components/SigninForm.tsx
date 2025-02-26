@@ -1,5 +1,4 @@
 "use client";
-import { AiOutlineMail } from "react-icons/ai";
 
 import { useToast } from "@/hooks/use-toast";
 import { SigninFormSchema } from "@/lib/validation/signin";
@@ -10,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { CustomInput } from "@/components/ui/form/CustomInput";
 import { Icons } from "@/components/ui/icon";
 import { useSignin } from "@/hooks/api/auth/useSignin";
+import { Mail } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
@@ -79,7 +79,7 @@ export function SigninForm({ onChangeTab }: SigninFormProps) {
           placeholder="email@example.com"
           name="email"
           error={errors.email}
-          icon={<AiOutlineMail className="text-indigo-700" />}
+          icon={<Mail size={16} className="text-indigo-700" />}
         />
         <CustomInput
           {...register("password")}

@@ -1,6 +1,5 @@
-import { AiTwotoneEye, AiTwotoneEyeInvisible } from "react-icons/ai";
-
 import { Masks } from "@/lib/utils";
+import { Eye, EyeOff } from "lucide-react";
 import {
   ChangeEvent,
   InputHTMLAttributes,
@@ -14,7 +13,13 @@ type CustomInputProps = InputHTMLAttributes<HTMLInputElement> & {
   icon?: ReactElement;
   error?: FieldError;
   masks?: "number";
+  typeMask?: "currency" | "phone";
   prefix?: string;
+};
+
+const maskCondition = {
+  currency: Masks.formatNumber,
+  phone: Masks.formatPhoneNumber,
 };
 
 export function CustomInput({
@@ -23,6 +28,7 @@ export function CustomInput({
   error,
   masks,
   prefix = "",
+  typeMask,
   ...rest
 }: CustomInputProps) {
   const isPassword = rest.type === "password";
@@ -31,7 +37,9 @@ export function CustomInput({
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (masks) {
-      event.target.value = Masks.formatNumber(event.target.value, prefix);
+      event.target.value = maskCondition[
+        typeMask as keyof typeof maskCondition
+      ](event.target.value, prefix);
     }
     rest.onChange?.(event);
   };
@@ -62,9 +70,9 @@ export function CustomInput({
             type="button"
           >
             {showPassword ? (
-              <AiTwotoneEye className="w-4 h-4 text-indigo-700" />
+              <Eye size={16} className="w-4 h-4 text-indigo-700" />
             ) : (
-              <AiTwotoneEyeInvisible className="w-4 h-4 text-indigo-700" />
+              <EyeOff size={16} className="w-4 h-4 text-indigo-700" />
             )}
           </button>
         )}
