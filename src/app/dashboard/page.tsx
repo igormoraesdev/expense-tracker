@@ -10,7 +10,7 @@ export default function Dashboard() {
 
   const handleUpdateAuth = useCallback(async () => {
     const user = await getUserByEmail(session.data?.user.email as string);
-    session.update({ userId: user?.id });
+    session.update({ userId: user?.id, ...user });
   }, []);
 
   useEffect(() => {

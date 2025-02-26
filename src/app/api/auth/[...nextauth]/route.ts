@@ -56,6 +56,7 @@ const authOptions = {
         userId: user.id,
         name: user.name,
         email: user.email,
+        phone: user.phone,
       };
     },
     async signIn({
@@ -91,12 +92,14 @@ const authOptions = {
         user: {
           ...session.user,
           userId: token.userId,
+          phone: token.phone,
         },
       };
     },
     async jwt({ user, token, trigger, session }: any) {
       if (trigger === "update") {
         token.userId = session.userId;
+        token.phone = session.phone;
       }
 
       if (user) {
