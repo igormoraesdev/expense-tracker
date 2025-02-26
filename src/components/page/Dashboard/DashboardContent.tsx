@@ -72,7 +72,7 @@ export const DashboardContent = () => {
                 </Button>
               </DialogTrigger>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full ">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full ">
               <BillsGrid />
             </div>
           </div>

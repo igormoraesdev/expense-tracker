@@ -9,8 +9,8 @@ export const BillsGrid = () => {
   const [selectedBill, setSelectedBill] = useState<Bill>();
   return (
     <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-      <BillsList onOpenDialog={setOpenDialog} onSelectBill={setSelectedBill} />
       <HigherExpenseChart />
+      <BillsList onOpenDialog={setOpenDialog} onSelectBill={setSelectedBill} />
       <DialogBills isEdit onOpenDialog={setOpenDialog} bill={selectedBill} />
     </Dialog>
   );

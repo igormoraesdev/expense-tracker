@@ -1,6 +1,6 @@
 "use client";
 
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
 import {
   ChartConfig,
@@ -68,9 +68,9 @@ export const HigherExpenseChart = () => {
   }
 
   return (
-    <div className="flex flex-col order-1 sm:order-2">
-      <h3 className="text-2xl font-bold">Spending by category</h3>
-      <div className="flex flex-col gap-6 py-4">
+    <div className="flex flex-col">
+      <h3 className="text-2xl font-bold mb-4">Spending by category</h3>
+      <div className="flex flex-col gap-6 p-4 border-2 border-indigo-100 rounded-xl shadow-xl">
         {isLoading ? (
           <HighExpenseChartSkeleton />
         ) : (
@@ -79,6 +79,12 @@ export const HigherExpenseChart = () => {
               <CartesianGrid vertical={false} />
               <XAxis
                 dataKey="category"
+                tickLine={false}
+                tickMargin={10}
+                axisLine={false}
+              />
+              <YAxis
+                dataKey="amount"
                 tickLine={false}
                 tickMargin={10}
                 axisLine={false}

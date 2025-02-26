@@ -17,7 +17,7 @@ export const TotalSpend = () => {
   );
 
   return (
-    <div className="flex flex-row justify-between items-center p-6 border-2 border-indigo-200 rounded-2xl w-full max-w-[340px] h-[140px] shadow-xl">
+    <div className="flex flex-row justify-between items-center p-6 border-2 border-indigo-200 rounded-xl w-full max-w-[340px] h-[140px] shadow-xl">
       <div>
         <p className="mb-1 text-sm font-medium">Total spend this month</p>
         {isLoading ? (
