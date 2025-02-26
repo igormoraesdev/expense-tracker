@@ -1,4 +1,4 @@
-import { BillsService } from "@/lib/service/bills";
+import { BillsService } from "@/lib/service";
 
 import { useQuery, UseQueryOptions } from "@tanstack/react-query";
 

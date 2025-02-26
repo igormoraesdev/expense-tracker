@@ -1,4 +1,4 @@
-import { BillsService } from "@/lib/service/bills";
+import { BillsService } from "@/lib/service";
 import { useMutation, UseMutationOptions } from "@tanstack/react-query";
 
 export function useDeleteBill(
