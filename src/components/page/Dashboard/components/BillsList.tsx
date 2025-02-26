@@ -30,7 +30,7 @@ export const BillsList = ({ onOpenDialog, onSelectBill }: BillsListProps) => {
   }
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col order-2 sm:order-1">
       <h3 className="text-2xl font-bold">Bills</h3>
       <div className="flex flex-col gap-6 py-4">
         {isLoading ? (

@@ -2,6 +2,7 @@ import { Dialog } from "@/components/ui/dialog";
 import { useState } from "react";
 import { BillsList } from "./BillsList";
 import { DialogBills } from "./DialogBills";
+import { HigherExpenseChart } from "./HigherExpenseChart";
 
 export const BillsGrid = () => {
   const [openDialog, setOpenDialog] = useState(false);
@@ -9,6 +10,7 @@ export const BillsGrid = () => {
   return (
     <Dialog open={openDialog} onOpenChange={setOpenDialog}>
       <BillsList onOpenDialog={setOpenDialog} onSelectBill={setSelectedBill} />
+      <HigherExpenseChart />
       <DialogBills isEdit onOpenDialog={setOpenDialog} bill={selectedBill} />
     </Dialog>
   );
