@@ -17,17 +17,13 @@ type CategoryBadgeProps = {
 export const CategoryBadge = ({ category }: CategoryBadgeProps) => {
   const categoryRender = useMemo(() => {
     const condition = {
-      [CategoryEnum.Card]: <CreditCard size={20} className="text-indigo-700" />,
-      [CategoryEnum.Food]: <Ham size={20} className="text-indigo-700" />,
-      [CategoryEnum.Health]: (
-        <HeartPulse size={20} className="text-indigo-700" />
-      ),
-      [CategoryEnum.House]: <House size={20} className="text-indigo-700" />,
-      [CategoryEnum.Phone]: <Phone size={20} className="text-indigo-700" />,
-      [CategoryEnum.Utilities]: (
-        <Package size={20} className="text-indigo-700" />
-      ),
-      [CategoryEnum.Other]: <Paperclip size={20} className="text-indigo-700" />,
+      [CategoryEnum.Card]: <CreditCard size={20} className="text-white" />,
+      [CategoryEnum.Food]: <Ham size={20} className="text-white" />,
+      [CategoryEnum.Health]: <HeartPulse size={20} className="text-white" />,
+      [CategoryEnum.House]: <House size={20} className="text-white" />,
+      [CategoryEnum.Phone]: <Phone size={20} className="text-white" />,
+      [CategoryEnum.Utilities]: <Package size={20} className="text-white" />,
+      [CategoryEnum.Other]: <Paperclip size={20} className="text-white" />,
     };
     return condition[category];
   }, [category]);

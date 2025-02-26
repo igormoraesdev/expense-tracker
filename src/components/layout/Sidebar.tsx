@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { Banknote, LayoutDashboard } from "lucide-react";
+import { LayoutDashboard } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -11,11 +11,11 @@ const items = [
     url: "/dashboard",
     icon: LayoutDashboard,
   },
-  {
-    title: "Expenses",
-    url: "/dashboard/expenses",
-    icon: Banknote,
-  },
+  // {
+  //   title: "Expenses",
+  //   url: "/dashboard/expenses",
+  //   icon: Banknote,
+  // },
 ];
 
 export function Sidebar() {
