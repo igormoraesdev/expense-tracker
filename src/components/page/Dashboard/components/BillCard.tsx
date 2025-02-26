@@ -103,7 +103,7 @@ export const BillsCard = ({
                 {bill.description}
               </p>
               <BillBadge bill={bill} />
-              <p className="font-medium">
+              <p className="font-medium text-indigo-900">
                 {new Intl.NumberFormat("pt-BR", {
                   style: "currency",
                   currency: "BRL",
