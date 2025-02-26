@@ -9,7 +9,7 @@ export const BillsCardSkeleton = () => {
           <Skeleton className="h-[20px] w-[60px]" />
           <Skeleton className="h-[22px] w-[60px]" />
           <Skeleton className="h-[22px] w-[60px]" />
-          <Skeleton className="h-[22px] w-[60px]" />
+          <Skeleton className="h-[22px] w-[30px]" />
         </div>
       </div>
     </div>
