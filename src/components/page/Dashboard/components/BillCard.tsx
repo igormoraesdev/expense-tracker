@@ -104,12 +104,14 @@ export const BillsCard = ({
               </p>
               <BillBadge bill={bill} />
             </div>
-            <p className="text-lg text-indigo-900 font-medium">
-              {new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(Number(bill.amount))}
-            </p>
+            <div className="flex flex-1 items-center justify-end mr-4">
+              <p className="text-lg text-indigo-900 font-medium">
+                {new Intl.NumberFormat("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                }).format(Number(bill.amount))}
+              </p>
+            </div>
           </AccordionTrigger>
           <AccordionContent>
             <div className="flex flex-col">
