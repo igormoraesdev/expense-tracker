@@ -12,6 +12,7 @@ import { Controller, FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 import { BillsGrid } from "./components/BillsGrid";
 import { DialogBills } from "./components/DialogBills";
+import { DialogPhone } from "./components/DialogPhone";
 import { TotalSpend } from "./components/TotalSpend";
 
 export const DashboardContent = () => {
@@ -24,13 +25,25 @@ export const DashboardContent = () => {
   });
   const session = useSession();
   const [openDialog, setOpenDialog] = useState(false);
+  const [openDialogPhone, setOpenDialogPhone] = useState(false);
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
   }, []);
 
+  useEffect(() => {
+    if (session.data?.user.userId) {
+      if (!session.data.user.phone) {
+        setOpenDialogPhone(true);
+      }
+    }
+  }, [session.data?.user]);
+
   return (
     <FormProvider {...form}>
+      <Dialog open={openDialogPhone}>
+        <DialogPhone onOpenDialog={setOpenDialogPhone} />
+      </Dialog>
       <Dialog open={openDialog} onOpenChange={setOpenDialog}>
         <section className="bg-white w-full h-full p-8 pt-[120px] sm:pt-8 overflow-y-scroll">
           <div className="flex flex-col gap-2 justify-center items-center h-full md:justify-start md:items-start">

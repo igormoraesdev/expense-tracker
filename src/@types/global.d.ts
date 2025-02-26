@@ -5,9 +5,10 @@ declare global {
     id?: string;
     name: string;
     email: string;
+    phone?: string;
     password: string;
-    createdAt?: string;
-    updatedAt?: string;
+    createdAt?: Date;
+    updatedAt?: Date;
   }
 
   interface SigninFormType {
@@ -58,6 +59,14 @@ declare global {
   interface UpdateBillParam {
     billId: string;
     bill: Bill;
+  }
+  interface UpdateUserParam {
+    userId: string;
+    user: Partial<User>;
+  }
+
+  interface RegisterPhoneFormType {
+    phone: string;
   }
 }
 

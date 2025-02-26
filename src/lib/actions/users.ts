@@ -8,3 +8,13 @@ export const getUserByEmail = async (email: string) => {
     where: eq(users.email, email!),
   });
 };
+
+export const updateUser = async (id: string, user: User) => {
+  const updatedUser = await db
+    .update(users)
+    .set(user)
+    .where(eq(users.id, id))
+    .returning();
+
+  return updatedUser;
+};
