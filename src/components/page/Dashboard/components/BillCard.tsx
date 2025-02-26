@@ -97,15 +97,13 @@ export const BillsCard = ({
       <Accordion type="single" collapsible>
         <AccordionItem value={bill.id as string}>
           <AccordionTrigger className="flex items-center justify-between outline-none hover:no-underline">
-            <div className="flex flex-col sm:flex-row items-baseline sm:items-center gap-4">
+            <div className="flex flex-row items-center gap-4">
               <CategoryBadge category={bill.category as CategoryEnum} />
-              <p className="text-sm font-bold text-wrap max-w-[200px] break-words">
+              <p className="text-xs font-bold text-left text-wrap max-w-[200px] break-words">
                 {bill.description}
               </p>
               <BillBadge bill={bill} />
-            </div>
-            <div className="flex flex-1 items-center justify-end mr-4">
-              <p className="text-lg text-indigo-900 font-medium">
+              <p className="font-medium">
                 {new Intl.NumberFormat("pt-BR", {
                   style: "currency",
                   currency: "BRL",
@@ -114,11 +112,11 @@ export const BillsCard = ({
             </div>
           </AccordionTrigger>
           <AccordionContent>
-            <div className="flex flex-col">
+            <div className="flex flex-col gap-2">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <p className="text-sm font-light">Due Date:</p>
-                  <p className="text-sm sm:text-lg text-indigo-900 font-bold">
+                  <p className="text-sm text-indigo-900 font-medium">
                     {format(new Date(bill.dueDate), "dd/MM/yyyy")}
                   </p>
                 </div>

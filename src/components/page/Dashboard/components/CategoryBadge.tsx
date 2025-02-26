@@ -28,7 +28,7 @@ export const CategoryBadge = ({ category }: CategoryBadgeProps) => {
     return condition[category];
   }, [category]);
   return (
-    <div className="flex items-center justify-center rounded-full h-[32px] w-[32px]  border-[1px] border-indigo-600">
+    <div className="flex items-center justify-center rounded-full">
       {categoryRender}
     </div>
   );
