@@ -7,6 +7,7 @@ import { signIn } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { CustomInput } from "@/components/ui/form/CustomInput";
 import { useRegister } from "@/hooks/api/auth/useRegister";
+import { WhatsappService } from "@/lib/service";
 import { ArrowLeft, Mail, PhoneCall, Sticker } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -53,6 +54,7 @@ export function SignupForm({ onChangeTab }: SignupFormProps) {
       });
 
       if (signInRes?.ok) {
+        await WhatsappService.sendWhatsAppIniialMessage(dataForm.phone);
         router.push("/dashboard");
       }
     } catch (error: any) {

@@ -154,16 +154,17 @@ export const BillsCard = ({
                           Status: Paid
                         </DropdownMenuItem>
                       )}
-                      {bill.status !== StatusEnum.Pending && (
-                        <DropdownMenuItem
-                          onClick={() =>
-                            handleUpdateStatus(bill, StatusEnum.Pending)
-                          }
-                          className="focus:bg-indigo-100 focus:text-indigo-700"
-                        >
-                          Status: Pending
-                        </DropdownMenuItem>
-                      )}
+                      {bill.status !== StatusEnum.Pending &&
+                        bill.status !== StatusEnum.Expired && (
+                          <DropdownMenuItem
+                            onClick={() =>
+                              handleUpdateStatus(bill, StatusEnum.Pending)
+                            }
+                            className="focus:bg-indigo-100 focus:text-indigo-700"
+                          >
+                            Status: Pending
+                          </DropdownMenuItem>
+                        )}
                       {bill.status !== StatusEnum.Expired && (
                         <DropdownMenuItem
                           onClick={() =>

@@ -1,4 +1,5 @@
 import { CategoryEnum, StatusEnum } from "@/lib/entities/bills/enum";
+import { relations } from "drizzle-orm";
 import {
   decimal,
   pgEnum,
@@ -36,3 +37,10 @@ export const bills = pgTable("bills", {
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
+
+export const billsRelations = relations(bills, ({ one }) => ({
+  user: one(users, {
+    fields: [bills.userId],
+    references: [users.id],
+  }),
+}));

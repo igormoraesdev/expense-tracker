@@ -8,6 +8,7 @@ import {
 import { CustomInput } from "@/components/ui/form/CustomInput";
 import { useUpdateUser } from "@/hooks/api/user/useUpdateUser";
 import { useToast } from "@/hooks/use-toast";
+import { WhatsappService } from "@/lib/service";
 import { RegisterPhoneFormSchema } from "@/lib/validation/register-phone";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PhoneCall } from "lucide-react";
@@ -41,10 +42,11 @@ export const DialogPhone = ({ onOpenDialog }: DialogPhoneProps) => {
 
   const handleUpdateUser = async (data: DataForm) => {
     try {
+      const phone = data.phone.replaceAll(/\D/g, "");
       const payload = {
         userId: session.data?.user.userId as string,
         user: {
-          phone: data.phone.replaceAll(/\D/g, ""),
+          phone,
         },
       };
       await mutateAsync(payload);
@@ -53,6 +55,7 @@ export const DialogPhone = ({ onOpenDialog }: DialogPhoneProps) => {
         className: "bg-green-500 text-white",
         duration: 5000,
       });
+      await WhatsappService.sendWhatsAppIniialMessage(phone);
     } catch (error: any) {
       toast({
         className: "bg-red-500 text-white",
