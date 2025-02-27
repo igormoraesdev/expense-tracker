@@ -8,6 +8,14 @@ const authMiddleware = withAuth({
   },
 });
 
+const pathList = [
+  "/_next/",
+  "/images/",
+  "/favicon.ico",
+  "/api/public",
+  "/api/schedule",
+];
+
 export default async function middleware(
   req: NextRequest,
   event: NextFetchEvent
@@ -16,12 +24,9 @@ export default async function middleware(
   const isAuthenticated = !!token;
   const { pathname } = req.nextUrl;
 
-  if (
-    pathname.startsWith("/_next/") ||
-    pathname.startsWith("/images/") ||
-    pathname.startsWith("/favicon.ico") ||
-    pathname.startsWith("/api/public")
-  ) {
+  const condition = pathList.some((path) => pathname.startsWith(path));
+
+  if (condition) {
     return NextResponse.next();
   }
 
