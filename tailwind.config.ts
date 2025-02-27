@@ -11,7 +11,6 @@ export default {
     extend: {
       fontFamily: {
         inter: ['"Inter"', "sans-serif"],
-        dmmono: ['"DM_Mono"', "sans-serif"],
       },
       colors: {
         background: "hsl(var(--background))",
