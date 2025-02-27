@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
   try {
-    console.log("Cron Job ran at:", new Date());
+    console.log("Cron Job ran at:", new Date(), req.url);
 
     return new NextResponse("Cron ran", {
       status: 200,
