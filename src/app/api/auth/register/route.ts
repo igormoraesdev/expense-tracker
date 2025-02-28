@@ -17,8 +17,6 @@ export async function POST(req: Request) {
       );
     }
 
-    console.log(phone, name, email);
-
     const hashedPassword = await bcrypt.hash(password, 10);
 
     await db.insert(users).values({
