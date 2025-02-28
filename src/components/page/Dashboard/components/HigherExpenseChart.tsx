@@ -60,7 +60,7 @@ const CustomTooltip = ({ active, payload }: any) => {
         <span className="font-medium text-indigo-900">{data.category}</span>
       </div>
       <div className="flex items-center justify-between">
-        <span className="text-sm text-indigo-400">Total amount</span>
+        <span className="text-sm text-indigo-400">Gastos total</span>
         <span className="font-semibold text-indigo-900">
           {new Intl.NumberFormat("pt-BR", {
             style: "currency",
