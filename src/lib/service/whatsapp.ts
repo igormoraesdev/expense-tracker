@@ -57,8 +57,10 @@ class WhatsappServiceClass {
         {
           messaging_product: "whatsapp",
           to: `55${to}`,
-          type: "template",
-          text: { name: "welcome", language: { code: "en_US" } },
+          type: "text",
+          text: {
+            body: "*Bem vindo!!!🥳🥳*\n\nQue bom que você escolheu a gente para gerenciar os vencimentos do seus boletos!! \nAgora deixa comigo que sempre que um boleto estiver prestes a vencer eu vou encaminhar ele aqui pra você!!!\n\nQual o seu nome??",
+          },
         },
         {
           headers: {
