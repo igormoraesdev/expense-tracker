@@ -36,7 +36,7 @@ export function SigninForm({ onChangeTab }: SigninFormProps) {
       const user = await mutateAsync(dataForm);
 
       toast({
-        description: "Signin successfully",
+        description: "Login efetuado com sucesso",
         className: "bg-green-500 text-white",
       });
 

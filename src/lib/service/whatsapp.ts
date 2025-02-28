@@ -50,7 +50,7 @@ class WhatsappServiceClass {
       );
     }
   }
-  async sendWhatsAppIniialMessage(to: string) {
+  async sendWhatsAppInitialMessage(to: string) {
     try {
       const response = await axios.post(
         `https://graph.facebook.com/v22.0/${this.phoneNumberId}/messages`,
@@ -72,6 +72,7 @@ class WhatsappServiceClass {
 
       console.log("WhatsApp message sent:", response.data);
     } catch (error: any) {
+      console.log(error);
       console.error(
         "Error sending WhatsApp message:",
         error.response?.data || error.message

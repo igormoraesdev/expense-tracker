@@ -22,6 +22,10 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  env: {
+    META_TOKEN: process.env.META_TOKEN,
+    META_PHONE_NUMBER_ID: process.env.META_PHONE_NUMBER_ID,
+  },
 };
 
 export default nextConfig;

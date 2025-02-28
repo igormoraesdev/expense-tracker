@@ -51,11 +51,11 @@ export const DialogPhone = ({ onOpenDialog }: DialogPhoneProps) => {
       };
       await mutateAsync(payload);
       toast({
-        description: "Phone register successfully",
+        description: "Telefone registrado com sucesso",
         className: "bg-green-500 text-white",
         duration: 5000,
       });
-      await WhatsappService.sendWhatsAppIniialMessage(phone);
+      await WhatsappService.sendWhatsAppInitialMessage(phone);
     } catch (error: any) {
       toast({
         className: "bg-red-500 text-white",

@@ -57,7 +57,7 @@ export const Header = () => {
           {/* User Menu */}
           <DropdownMenu>
             <DropdownMenuTrigger className="flex items-center gap-3 p-2 rounded-xl outline-none transition-all duration-200 hover:bg-white hover:shadow-sm group">
-              <Avatar className="size-10 rounded-lg overflow-hidden border-2 border-indigo-100 bg-indigo-50 transition-shadow duration-200 group-hover:shadow-sm">
+              <Avatar className="flex items-center justify-center size-10 rounded-lg overflow-hidden border-2 border-indigo-100 bg-indigo-50 transition-shadow duration-200 group-hover:shadow-sm">
                 <AvatarImage
                   src={session.data?.user.image as string}
                   alt="Avatar"

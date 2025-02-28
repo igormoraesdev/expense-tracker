@@ -42,7 +42,7 @@ export function SignupForm({ onChangeTab }: SignupFormProps) {
       await mutateAsync(payload);
 
       toast({
-        description: "User created successfully",
+        description: "Usuário criado com sucesso",
         className: "bg-green-500 text-white",
       });
 
@@ -55,7 +55,7 @@ export function SignupForm({ onChangeTab }: SignupFormProps) {
       });
 
       if (signInRes?.ok) {
-        await WhatsappService.sendWhatsAppIniialMessage(dataForm.phone);
+        await WhatsappService.sendWhatsAppInitialMessage(dataForm.phone);
         router.push("/dashboard");
       }
     } catch (error: any) {

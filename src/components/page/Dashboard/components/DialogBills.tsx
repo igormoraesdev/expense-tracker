@@ -103,7 +103,7 @@ export const DialogBills = ({
       }
 
       toast({
-        description: "Bill created successfully",
+        description: "Despesa criada com sucesso",
         className: "bg-green-500 text-white",
         duration: 5000,
       });
