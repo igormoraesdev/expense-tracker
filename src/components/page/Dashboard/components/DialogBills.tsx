@@ -16,6 +16,7 @@ import { Masks } from "@/lib/utils";
 import { CreateBillsFormSchema } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
+import { BanknoteIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -128,81 +129,107 @@ export const DialogBills = ({
     }
   }, [bill]);
 
-  const title = isEdit ? "Update bill" : "Create bill";
+  const title = isEdit ? "Update expense" : "New expense";
   const subtitle = isEdit
-    ? "Update your bill to keep track of your finances"
-    : "Add your expenses to keep track of your finances";
-  const submitButton = isEdit ? "Update bill" : "Create bill";
+    ? "Update your expense details"
+    : "Add a new expense to track your finances";
+  const submitButton = isEdit ? "Update expense" : "Create expense";
 
   const isLoading = isPending ?? isPendingUpdateBill;
 
   return (
-    <DialogContent>
-      <form onSubmit={handleSubmit(handleCreateBill)}>
-        <DialogHeader className="flex items-start">
-          <DialogTitle>{title}</DialogTitle>
-          <DialogDescription>{subtitle}</DialogDescription>
+    <DialogContent className="sm:max-w-[550px] p-0">
+      <div className="px-6 py-4 border-b border-gray-100">
+        <DialogHeader>
+          <DialogTitle className="text-2xl font-bold text-indigo-900">
+            {title}
+          </DialogTitle>
+          <DialogDescription className="text-indigo-600/80 mt-1">
+            {subtitle}
+          </DialogDescription>
         </DialogHeader>
-        <div className="mt-6 flex flex-col gap-4">
-          <Controller
-            control={control}
-            name="dueDate"
-            render={(field) => (
-              <CustomDatePicker
-                label="Due Date"
-                field={field.field}
-                error={errors.dueDate}
-              />
-            )}
-          />
-          <CustomInput
-            {...register("description")}
-            label="Description"
-            placeholder="Description"
-            name="description"
-            error={errors.description}
-          />
+      </div>
 
-          <CustomInput
-            {...register("amount")}
-            masks="number"
-            typeMask="currency"
-            prefix="R$"
-            label="Amount"
-            placeholder="1000"
-            name="amount"
-            error={errors.amount}
-          />
-          <Controller
-            control={control}
-            name="status"
-            render={(field) => (
-              <CustomSelect
-                field={field.field}
-                list={statusList}
-                label="Status"
-                placeholder="Select status"
-                error={errors.status}
+      <form onSubmit={handleSubmit(handleCreateBill)}>
+        <div className="px-6 py-6 space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="col-span-1">
+              <Controller
+                control={control}
+                name="dueDate"
+                render={(field) => (
+                  <CustomDatePicker
+                    label="Due Date"
+                    field={field.field}
+                    error={errors.dueDate}
+                  />
+                )}
               />
-            )}
-          />
-          <Controller
-            control={control}
-            name="category"
-            render={(field) => (
-              <CustomSelect
-                field={field.field}
-                list={categoryList}
-                label="Category"
-                placeholder="Select category"
-                error={errors.category}
+            </div>
+            <div className="col-span-1">
+              <CustomInput
+                {...register("amount")}
+                masks="number"
+                typeMask="currency"
+                prefix="R$"
+                label="Amount"
+                placeholder="Enter amount"
+                name="amount"
+                error={errors.amount}
+                icon={<BanknoteIcon className="w-4 h-4 text-indigo-600" />}
               />
-            )}
-          />
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <CustomInput
+              {...register("description")}
+              label="Description"
+              placeholder="Enter expense description"
+              name="description"
+              error={errors.description}
+            />
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="col-span-1">
+                <Controller
+                  control={control}
+                  name="status"
+                  render={(field) => (
+                    <CustomSelect
+                      field={field.field}
+                      list={statusList}
+                      label="Status"
+                      placeholder="Select status"
+                      error={errors.status}
+                    />
+                  )}
+                />
+              </div>
+              <div className="col-span-1">
+                <Controller
+                  control={control}
+                  name="category"
+                  render={(field) => (
+                    <CustomSelect
+                      field={field.field}
+                      list={categoryList}
+                      label="Category"
+                      placeholder="Select category"
+                      error={errors.category}
+                    />
+                  )}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="px-6 py-4 bg-gray-50 border-t border-gray-100">
           <Button
             isLoading={isLoading}
             disabled={!isValid}
-            className="mt-6 min-h-[41px]"
+            className="w-full h-11 text-sm font-medium transition-all duration-300"
             type="submit"
           >
             {submitButton}

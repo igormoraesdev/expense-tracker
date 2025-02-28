@@ -67,7 +67,7 @@ export default function MonthPicker({
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent>
+      <PopoverContent className="z-[49]">
         <div className="p-3 bg-white">
           <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
             <div className="space-y-4 border-2 border-indigo-200 p-4 rounded-lg">

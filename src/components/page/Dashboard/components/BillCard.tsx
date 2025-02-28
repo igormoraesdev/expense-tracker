@@ -93,17 +93,23 @@ export const BillsCard = ({
   };
 
   return (
-    <div className="grid w-full p-4 bg-white border-2 border-indigo-100 rounded-xl gap-4 shadow-xl">
-      <Accordion type="single" collapsible>
-        <AccordionItem value={bill.id as string}>
-          <AccordionTrigger className="flex items-center justify-between outline-none hover:no-underline">
+    <div className="relative overflow-hidden bg-white rounded-xl border border-indigo-100 transition-all duration-300 hover:shadow-lg hover:border-indigo-300">
+      <div className="absolute top-0 right-0 w-32 h-32 transform translate-x-12 translate-y-[-60%] bg-indigo-50/50 rounded-full" />
+
+      <Accordion type="single" collapsible className="w-full">
+        <AccordionItem value={bill.id as string} className="border-none">
+          <AccordionTrigger className="flex items-center justify-between py-4 px-6 hover:no-underline hover:bg-indigo-50/30">
             <div className="flex flex-row items-center gap-4">
-              <CategoryBadge category={bill.category as CategoryEnum} />
-              <p className="text-xs font-bold text-left text-wrap max-w-[200px] break-words">
-                {bill.description}
-              </p>
-              <BillBadge bill={bill} />
-              <p className="font-medium text-indigo-900">
+              <div className="p-2 bg-indigo-100 rounded-lg">
+                <CategoryBadge category={bill.category as CategoryEnum} />
+              </div>
+              <div className="flex flex-col items-start gap-1">
+                <p className="text-sm font-semibold text-indigo-900 text-left text-wrap max-w-[200px] break-words">
+                  {bill.description}
+                </p>
+                <BillBadge bill={bill} />
+              </div>
+              <p className="font-bold text-lg text-indigo-900">
                 {new Intl.NumberFormat("pt-BR", {
                   style: "currency",
                   currency: "BRL",
@@ -111,36 +117,37 @@ export const BillsCard = ({
               </p>
             </div>
           </AccordionTrigger>
-          <AccordionContent>
-            <div className="flex flex-col gap-2">
+
+          <AccordionContent className="px-6 pb-4">
+            <div className="flex flex-col gap-3 pt-2">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <p className="text-sm font-light">Due Date:</p>
+                  <span className="text-sm text-indigo-400">Due Date:</span>
                   <p className="text-sm text-indigo-900 font-medium">
                     {format(new Date(bill.dueDate), "dd/MM/yyyy")}
                   </p>
                 </div>
                 <DropdownMenu>
-                  <DropdownMenuTrigger asChild className="size-8 rounded-full">
+                  <DropdownMenuTrigger asChild>
                     <Button
-                      variant="default"
-                      size={"icon"}
-                      className="p-1 outline-none justify-self-end"
+                      variant="outline"
+                      size="icon"
+                      className="h-8 w-8 rounded-full border-indigo-200 hover:bg-indigo-50 hover:border-indigo-300"
                     >
-                      <Ellipsis size={20} className="w-[24px] h-[24px]" />
+                      <Ellipsis size={18} className="text-indigo-600" />
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="w-56">
                     <DropdownMenuGroup>
                       <DropdownMenuItem
                         onClick={() => handleEditBill(bill)}
-                        className="focus:bg-indigo-100 focus:text-indigo-700"
+                        className="focus:bg-indigo-50 focus:text-indigo-700 cursor-pointer"
                       >
                         Edit
                       </DropdownMenuItem>
                       <DropdownMenuItem
                         onClick={() => handleDeleteBill(bill)}
-                        className="focus:bg-indigo-100 focus:text-indigo-700"
+                        className="focus:bg-indigo-50 focus:text-indigo-700 cursor-pointer"
                       >
                         Delete
                       </DropdownMenuItem>
@@ -149,7 +156,7 @@ export const BillsCard = ({
                           onClick={() =>
                             handleUpdateStatus(bill, StatusEnum.Paid)
                           }
-                          className="focus:bg-indigo-100 focus:text-indigo-700"
+                          className="focus:bg-indigo-50 focus:text-indigo-700 cursor-pointer"
                         >
                           Status: Paid
                         </DropdownMenuItem>
@@ -160,7 +167,7 @@ export const BillsCard = ({
                             onClick={() =>
                               handleUpdateStatus(bill, StatusEnum.Pending)
                             }
-                            className="focus:bg-indigo-100 focus:text-indigo-700"
+                            className="focus:bg-indigo-50 focus:text-indigo-700 cursor-pointer"
                           >
                             Status: Pending
                           </DropdownMenuItem>
@@ -170,7 +177,7 @@ export const BillsCard = ({
                           onClick={() =>
                             handleUpdateStatus(bill, StatusEnum.Expired)
                           }
-                          className="focus:bg-indigo-100 focus:text-indigo-700"
+                          className="focus:bg-indigo-50 focus:text-indigo-700 cursor-pointer"
                         >
                           Status: Expired
                         </DropdownMenuItem>
