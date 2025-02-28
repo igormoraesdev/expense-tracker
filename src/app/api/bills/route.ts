@@ -2,7 +2,7 @@ import { db } from "@/drizzle";
 import { bills } from "@/drizzle/schema/bills";
 import { updateBillStatusById } from "@/lib/actions/bills";
 import { endOfMonth, startOfMonth } from "date-fns";
-import { and, eq, gte, lt, sql } from "drizzle-orm";
+import { and, eq, gte, lt } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -43,7 +43,7 @@ export async function GET(req: Request) {
         gte(bills.dueDate, startDate),
         lt(bills.dueDate, endDate)
       ),
-      orderBy: sql`CASE WHEN ${bills.status} = 'Expired' THEN 1 ELSE 2 END, ${bills.dueDate} DESC`,
+      // orderBy: sql`CASE WHEN ${bills.status} = 'Expired' THEN 1 ELSE 2 END, ${bills.dueDate} DESC`,
     });
 
     return NextResponse.json(billsList);

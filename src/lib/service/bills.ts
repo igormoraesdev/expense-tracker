@@ -1,3 +1,4 @@
+import { TotalSpendData } from "@/hooks/useDashboardData";
 import { AxiosInstance } from "axios";
 import apiClient from "../infra/http-client";
 
@@ -12,7 +13,7 @@ class BillsServiceClass {
     return response.data;
   }
 
-  async getTotalSpend(params: TotalSpendParams): Promise<number> {
+  async getTotalSpend(params: TotalSpendParams): Promise<TotalSpendData> {
     const response = await this.apiClient.get(
       `/api/bills/total-spend?userId=${params.userId}&date=${params.date}`
     );

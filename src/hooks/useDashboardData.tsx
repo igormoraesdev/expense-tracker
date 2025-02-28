@@ -3,20 +3,28 @@ import { useFormContext } from "react-hook-form";
 import { useGetBills } from "./api/bills/useGetBills";
 import { useGetTotalSpend } from "./api/bills/useGetTotalSpend";
 
+export type TotalSpendData = {
+  totalSpend: string;
+  previousMonth: string;
+  average: string;
+  percentageChange: string;
+};
+
 export const useDashboardData = () => {
   const session = useSession();
   const { watch } = useFormContext();
   const date = watch("date");
 
-  const { data: totalSpend, isLoading: totalSpendLoading } = useGetTotalSpend(
-    {
-      userId: session.data?.user.userId as string,
-      date,
-    },
-    {
-      enabled: !!session.data?.user.userId,
-    }
-  );
+  const { data: totalSpendData, isLoading: totalSpendLoading } =
+    useGetTotalSpend(
+      {
+        userId: session.data?.user.userId as string,
+        date,
+      },
+      {
+        enabled: !!session.data?.user.userId,
+      }
+    );
 
   const { data: bills, isLoading: billsLoading } = useGetBills(
     {
@@ -28,9 +36,10 @@ export const useDashboardData = () => {
     }
   );
 
-  const isLoading = billsLoading || totalSpendLoading || !bills || !totalSpend;
+  const isLoading =
+    billsLoading || totalSpendLoading || !bills || !totalSpendData;
   return {
-    totalSpend,
+    totalSpendData,
     bills,
     isLoading,
   };

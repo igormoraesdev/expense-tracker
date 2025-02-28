@@ -16,7 +16,7 @@ export async function GET(req: Request) {
       subMonths(currentDate, i)
     );
 
-    // Get current month bills
+    // Get current month total
     const currentMonthBills = await db.query.bills.findMany({
       where: and(
         eq(bills.userId, userId),
@@ -25,7 +25,7 @@ export async function GET(req: Request) {
       ),
     });
 
-    // Get previous month bills
+    // Get previous month total
     const previousMonthBills = await db.query.bills.findMany({
       where: and(
         eq(bills.userId, userId),
@@ -65,15 +65,15 @@ export async function GET(req: Request) {
         : 0;
 
     return NextResponse.json({
-      totalSpend: currentTotal.toFixed(2),
-      previousMonth: previousTotal.toFixed(2),
-      average: average.toFixed(2),
-      percentageChange: percentageChange.toFixed(1),
+      currentTotal,
+      previousTotal,
+      average,
+      percentageChange,
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return NextResponse.json(
-      { message: "Error to get total spend", error },
+      { message: "Error getting bill statistics", error },
       { status: 500 }
     );
   }
