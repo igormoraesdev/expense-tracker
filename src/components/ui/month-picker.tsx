@@ -13,9 +13,8 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
-import { PopoverContent } from "@radix-ui/react-popover";
 import { Button, buttonVariants } from "./button";
-import { Popover, PopoverTrigger } from "./popover";
+import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 
 function getStartOfCurrentMonth() {
   return startOfMonth(startOfToday());
@@ -67,8 +66,8 @@ export default function MonthPicker({
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="z-[49]">
-        <div className="p-3 bg-white">
+      <PopoverContent className="w-auto p-0" align="start">
+        <div className="p-3 bg-white rounded-md border border-indigo-100 shadow-lg">
           <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
             <div className="space-y-4 border-2 border-indigo-200 p-4 rounded-lg">
               <div className="relative flex items-center justify-center pt-1">
@@ -124,12 +123,12 @@ export default function MonthPicker({
                     <Button
                       name="day"
                       className={cn(
-                        "bg-indigo-400 inline-flex h-9 w-16 items-center justify-center rounded-md p-0 text-sm font-normal ring-offset-white transition-colors hover:bg-indigo-700 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 aria-selected:opacity-100 dark:ring-offset-slate-950 dark:hover:bg-slate-800 dark:hover:text-slate-50 dark:focus-visible:ring-slate-800",
+                        "bg-indigo-50 text-indigo-700 inline-flex h-9 w-16 items-center justify-center rounded-md p-0 text-sm font-normal transition-colors hover:bg-indigo-100 hover:text-indigo-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 aria-selected:opacity-100",
                         isEqual(month, currentMonth) &&
-                          "bg-indigo-700 text-slate-50 hover:bg-indgo-200 hover:text-white focus:bg-indigo-700 focus:text-white dark:bg-slate-50 dark:text-slate-900 dark:hover:bg-slate-50 dark:hover:text-slate-900 dark:focus:bg-slate-50 dark:focus:text-slate-900",
+                          "bg-indigo-600 text-white hover:bg-indigo-700 hover:text-white focus:bg-indigo-700 focus:text-white",
                         !isEqual(month, currentMonth) &&
                           isEqual(month, getStartOfCurrentMonth()) &&
-                          "bg-indigo-900 text-white dark:bg-slate-800 dark:text-slate-50"
+                          "bg-indigo-100 text-indigo-900"
                       )}
                       disabled={isFuture(month)}
                       role="gridcell"

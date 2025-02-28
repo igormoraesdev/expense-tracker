@@ -5,13 +5,15 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useUpdateBill } from "@/hooks/api/bills/useUpdateBill";
 import { useToast } from "@/hooks/use-toast";
 import { CategoryEnum, StatusEnum } from "@/lib/entities/bills/enum";
 import { format } from "date-fns";
-import { Ellipsis } from "lucide-react";
+import { Check, MoreHorizontal, Pencil, Timer, Trash2 } from "lucide-react";
 import { BillBadge } from "./BillBadge";
 import { CategoryBadge } from "./CategoryBadge";
 
@@ -134,52 +136,67 @@ export const BillsCard = ({
                       size="icon"
                       className="h-8 w-8 rounded-full border-indigo-200 hover:bg-indigo-50 hover:border-indigo-300"
                     >
-                      <Ellipsis size={18} className="text-indigo-600" />
+                      <MoreHorizontal className="h-4 w-4 text-indigo-600" />
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-56">
+                  <DropdownMenuContent align="end" className="w-56 p-2">
+                    <DropdownMenuLabel className="text-xs font-normal text-gray-500">
+                      Actions
+                    </DropdownMenuLabel>
+                    <DropdownMenuSeparator className="my-2" />
                     <DropdownMenuGroup>
                       <DropdownMenuItem
                         onClick={() => handleEditBill(bill)}
-                        className="focus:bg-indigo-50 focus:text-indigo-700 cursor-pointer"
+                        className="gap-2 text-sm rounded-md data-[highlighted]:bg-indigo-50 data-[highlighted]:text-indigo-600 cursor-pointer"
                       >
-                        Edit
+                        <Pencil className="h-4 w-4" />
+                        <span>Edit bill</span>
                       </DropdownMenuItem>
                       <DropdownMenuItem
                         onClick={() => handleDeleteBill(bill)}
-                        className="focus:bg-indigo-50 focus:text-indigo-700 cursor-pointer"
+                        className="gap-2 text-sm rounded-md text-red-600 data-[highlighted]:bg-red-50 data-[highlighted]:text-red-700 cursor-pointer"
                       >
-                        Delete
+                        <Trash2 className="h-4 w-4" />
+                        <span>Delete bill</span>
                       </DropdownMenuItem>
+                    </DropdownMenuGroup>
+
+                    <DropdownMenuSeparator className="my-2" />
+                    <DropdownMenuLabel className="text-xs font-normal text-gray-500">
+                      Status
+                    </DropdownMenuLabel>
+                    <DropdownMenuGroup className="mt-1">
                       {bill.status !== StatusEnum.Paid && (
                         <DropdownMenuItem
                           onClick={() =>
                             handleUpdateStatus(bill, StatusEnum.Paid)
                           }
-                          className="focus:bg-indigo-50 focus:text-indigo-700 cursor-pointer"
+                          className="gap-2 text-sm rounded-md text-emerald-600 data-[highlighted]:bg-emerald-50 data-[highlighted]:text-emerald-700 cursor-pointer"
                         >
-                          Status: Paid
+                          <Check className="h-4 w-4" />
+                          <span>Mark as paid</span>
                         </DropdownMenuItem>
                       )}
-                      {bill.status !== StatusEnum.Pending &&
-                        bill.status !== StatusEnum.Expired && (
-                          <DropdownMenuItem
-                            onClick={() =>
-                              handleUpdateStatus(bill, StatusEnum.Pending)
-                            }
-                            className="focus:bg-indigo-50 focus:text-indigo-700 cursor-pointer"
-                          >
-                            Status: Pending
-                          </DropdownMenuItem>
-                        )}
-                      {bill.status !== StatusEnum.Expired && (
+                      {bill.status === StatusEnum.Paid && (
                         <DropdownMenuItem
                           onClick={() =>
-                            handleUpdateStatus(bill, StatusEnum.Expired)
+                            handleUpdateStatus(bill, StatusEnum.Pending)
                           }
-                          className="focus:bg-indigo-50 focus:text-indigo-700 cursor-pointer"
+                          className="gap-2 text-sm rounded-md text-yellow-600 data-[highlighted]:bg-yellow-50 data-[highlighted]:text-yellow-700 cursor-pointer"
                         >
-                          Status: Expired
+                          <Timer className="h-4 w-4" />
+                          <span>Mark as pending</span>
+                        </DropdownMenuItem>
+                      )}
+                      {bill.status === StatusEnum.Expired && (
+                        <DropdownMenuItem
+                          onClick={() =>
+                            handleUpdateStatus(bill, StatusEnum.Pending)
+                          }
+                          className="gap-2 text-sm rounded-md text-yellow-600 data-[highlighted]:bg-yellow-50 data-[highlighted]:text-yellow-700 cursor-pointer"
+                        >
+                          <Timer className="h-4 w-4" />
+                          <span>Mark as pending</span>
                         </DropdownMenuItem>
                       )}
                     </DropdownMenuGroup>
