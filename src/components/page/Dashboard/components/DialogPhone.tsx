@@ -8,6 +8,7 @@ import {
 import { CustomInput } from "@/components/ui/form/CustomInput";
 import { useUpdateUser } from "@/hooks/api/user/useUpdateUser";
 import { useToast } from "@/hooks/use-toast";
+import { getUserByEmail } from "@/lib/actions/users";
 import { WhatsappService } from "@/lib/service";
 import { RegisterPhoneFormSchema } from "@/lib/validation/register-phone";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -56,6 +57,8 @@ export const DialogPhone = ({ onOpenDialog }: DialogPhoneProps) => {
         duration: 5000,
       });
       await WhatsappService.sendWhatsAppInitialMessage(phone);
+      const user = await getUserByEmail(session.data?.user.email as string);
+      session.update({ userId: user?.id, ...user });
     } catch (error: any) {
       toast({
         className: "bg-red-500 text-white",
@@ -68,10 +71,10 @@ export const DialogPhone = ({ onOpenDialog }: DialogPhoneProps) => {
     <DialogContent className="[&>button]:hidden">
       <form onSubmit={handleSubmit(handleUpdateUser)}>
         <DialogHeader className="flex items-start">
-          <DialogTitle>Register phone</DialogTitle>
+          <DialogTitle>Registrar WhatsApp</DialogTitle>
           <DialogDescription>
-            Register your WhatsApp number to receive notifications about your
-            invoices
+            Registre seu número do WhatsApp para receber notificações sobre suas
+            faturas
           </DialogDescription>
         </DialogHeader>
         <div className="mt-6 flex flex-col gap-4">
@@ -79,11 +82,11 @@ export const DialogPhone = ({ onOpenDialog }: DialogPhoneProps) => {
             {...register("phone")}
             masks="number"
             typeMask="phone"
-            label="Whatsapp"
+            label="WhatsApp"
             placeholder="(61) 99999-9999"
             name="phone"
             error={errors.phone}
-            icon={<PhoneCall size={16} className="text-indigo-700" />}
+            icon={<PhoneCall size={16} className="text-indigo-600" />}
           />
 
           <Button
@@ -93,7 +96,7 @@ export const DialogPhone = ({ onOpenDialog }: DialogPhoneProps) => {
             className="mt-6 min-h-[41px]"
             type="submit"
           >
-            Register number
+            Registrar número
           </Button>
         </div>
       </form>

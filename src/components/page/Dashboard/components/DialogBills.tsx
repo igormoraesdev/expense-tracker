@@ -12,7 +12,7 @@ import { useCreateBills } from "@/hooks/api/bills/useCreateBills";
 import { useUpdateBill } from "@/hooks/api/bills/useUpdateBill";
 import { useToast } from "@/hooks/use-toast";
 import { categoryList, statusList } from "@/lib/entities/bills/enum";
-import { Masks } from "@/lib/utils";
+import { Masks, translateStatus } from "@/lib/utils";
 import { CreateBillsFormSchema } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
@@ -223,6 +223,7 @@ export const DialogBills = ({
                       label="Status"
                       placeholder="Selecione o status"
                       error={errors.status}
+                      translateFn={translateStatus}
                     />
                   )}
                 />

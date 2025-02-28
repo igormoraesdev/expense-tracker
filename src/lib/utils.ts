@@ -1,9 +1,19 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { StatusEnum } from "./entities/bills/enum";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
+export const translateStatus = (status: StatusEnum): string => {
+  const translations = {
+    [StatusEnum.Paid]: "Pago",
+    [StatusEnum.Pending]: "Pendente",
+    [StatusEnum.Expired]: "Expirado",
+  };
+  return translations[status];
+};
 
 export class Masks {
   static formatNumber(value: string, prefix = "") {

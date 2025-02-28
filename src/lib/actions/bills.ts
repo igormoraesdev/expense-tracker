@@ -6,6 +6,13 @@ import { and, eq, gte, lt, or } from "drizzle-orm";
 import { StatusEnum } from "../entities/bills/enum";
 import { WhatsappService } from "../service";
 
+interface GroupedBills {
+  [key: string]: {
+    user: User;
+    bills: Bill[];
+  };
+}
+
 export async function updateBillStatusById(id: string, bill: Partial<Bill>) {
   const updatedBill = await db
     .update(bills)
@@ -66,11 +73,30 @@ export async function sendMessageExpiredBills() {
       )
     );
 
-  const listBills = billsList.map((data) => data.bill);
+  if (billsList.length === 0) {
+    console.log("No bills to send message");
+    return;
+  }
 
-  const user = billsList?.[0]?.user;
-  if (user) {
-    const message = WhatsappService.generateMessage(listBills, user.name);
-    await WhatsappService.sendWhatsAppMessage(user.phone as string, message);
+  const groupedByUser = billsList.reduce<GroupedBills>(
+    (acc, { bill, user }) => {
+      if (!acc[bill.userId as string]) {
+        acc[bill.userId as string] = {
+          user: user as User,
+          bills: [],
+        };
+      }
+      acc[bill.userId as string].bills.push(bill);
+      return acc;
+    },
+    {}
+  );
+
+  for (const userId in groupedByUser) {
+    const { user, bills } = groupedByUser[userId];
+    if (user.phone) {
+      const message = WhatsappService.generateMessage(bills, user.name);
+      await WhatsappService.sendWhatsAppMessage(user.phone, message);
+    }
   }
 }

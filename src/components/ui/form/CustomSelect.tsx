@@ -14,6 +14,7 @@ type CustomSelectProps = {
   list: string[];
   field?: Pick<ControllerRenderProps, "onChange" | "value">;
   error?: FieldError;
+  translateFn?: (value: any) => string;
 };
 
 export const CustomSelect = ({
@@ -22,6 +23,7 @@ export const CustomSelect = ({
   list,
   field,
   error,
+  translateFn,
 }: CustomSelectProps) => {
   return (
     <div className="flex flex-col items-start gap-1">
@@ -34,7 +36,7 @@ export const CustomSelect = ({
           <SelectGroup>
             {list?.map((item) => (
               <SelectItem key={item} value={item}>
-                {item}
+                {translateFn ? translateFn(item) : item}
               </SelectItem>
             ))}
           </SelectGroup>

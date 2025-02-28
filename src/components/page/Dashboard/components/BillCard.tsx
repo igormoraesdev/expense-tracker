@@ -31,6 +31,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { useDeleteBill } from "@/hooks/api/bills/useDeleteBill";
+import { translateStatus } from "@/lib/utils";
 import { useQueryClient } from "@tanstack/react-query";
 import { Dispatch, SetStateAction } from "react";
 
@@ -51,11 +52,13 @@ export const BillsCard = ({
   const { mutateAsync } = useUpdateBill({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["bills"] });
+      queryClient.invalidateQueries({ queryKey: ["total-spend"] });
     },
   });
   const { mutateAsync: mutateAsyncDelete } = useDeleteBill({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["bills"] });
+      queryClient.invalidateQueries({ queryKey: ["total-spend"] });
     },
   });
 
@@ -187,17 +190,27 @@ export const BillsCard = ({
                             className="gap-2 text-sm rounded-md text-emerald-600 data-[highlighted]:bg-emerald-50 data-[highlighted]:text-emerald-700 cursor-pointer"
                           >
                             <Check className="h-4 w-4" />
-                            <span>Marcar como pago</span>
+                            <span>
+                              Marcar como{" "}
+                              {translateStatus(StatusEnum.Paid).toLowerCase()}
+                            </span>
                           </DropdownMenuItem>
-                          <DropdownMenuItem
-                            onClick={() =>
-                              handleUpdateStatus(bill, StatusEnum.Expired)
-                            }
-                            className="gap-2 text-sm rounded-md text-red-600 data-[highlighted]:bg-red-50 data-[highlighted]:text-red-700 cursor-pointer"
-                          >
-                            <ShieldAlert className="h-4 w-4" />
-                            <span>Marcar como expirado</span>
-                          </DropdownMenuItem>
+                          {bill.status !== StatusEnum.Expired && (
+                            <DropdownMenuItem
+                              onClick={() =>
+                                handleUpdateStatus(bill, StatusEnum.Expired)
+                              }
+                              className="gap-2 text-sm rounded-md text-red-600 data-[highlighted]:bg-red-50 data-[highlighted]:text-red-700 cursor-pointer"
+                            >
+                              <ShieldAlert className="h-4 w-4" />
+                              <span>
+                                Marcar como{" "}
+                                {translateStatus(
+                                  StatusEnum.Expired
+                                ).toLowerCase()}
+                              </span>
+                            </DropdownMenuItem>
+                          )}
                         </>
                       )}
                       {bill.status !== StatusEnum.Paid &&
@@ -209,7 +222,12 @@ export const BillsCard = ({
                             className="gap-2 text-sm rounded-md text-yellow-600 data-[highlighted]:bg-yellow-50 data-[highlighted]:text-yellow-700 cursor-pointer"
                           >
                             <Timer className="h-4 w-4" />
-                            <span>Marcar como pendente</span>
+                            <span>
+                              Marcar como{" "}
+                              {translateStatus(
+                                StatusEnum.Pending
+                              ).toLowerCase()}
+                            </span>
                           </DropdownMenuItem>
                         )}
                     </DropdownMenuGroup>
