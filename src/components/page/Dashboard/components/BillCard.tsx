@@ -168,10 +168,15 @@ export const BillsCard = ({
                       </DropdownMenuItem>
                     </DropdownMenuGroup>
 
-                    <DropdownMenuSeparator className="my-2" />
-                    <DropdownMenuLabel className="text-xs font-normal text-gray-500">
-                      Status
-                    </DropdownMenuLabel>
+                    {bill.status !== StatusEnum.Paid &&
+                      bill.status !== StatusEnum.Pending && (
+                        <>
+                          <DropdownMenuSeparator className="my-2" />
+                          <DropdownMenuLabel className="text-xs font-normal text-gray-500">
+                            Status
+                          </DropdownMenuLabel>
+                        </>
+                      )}
                     <DropdownMenuGroup className="mt-1">
                       {bill.status !== StatusEnum.Paid && (
                         <>
@@ -195,17 +200,18 @@ export const BillsCard = ({
                           </DropdownMenuItem>
                         </>
                       )}
-                      {bill.status === StatusEnum.Paid && (
-                        <DropdownMenuItem
-                          onClick={() =>
-                            handleUpdateStatus(bill, StatusEnum.Pending)
-                          }
-                          className="gap-2 text-sm rounded-md text-yellow-600 data-[highlighted]:bg-yellow-50 data-[highlighted]:text-yellow-700 cursor-pointer"
-                        >
-                          <Timer className="h-4 w-4" />
-                          <span>Marcar como pendente</span>
-                        </DropdownMenuItem>
-                      )}
+                      {bill.status !== StatusEnum.Paid &&
+                        bill.status !== StatusEnum.Pending && (
+                          <DropdownMenuItem
+                            onClick={() =>
+                              handleUpdateStatus(bill, StatusEnum.Pending)
+                            }
+                            className="gap-2 text-sm rounded-md text-yellow-600 data-[highlighted]:bg-yellow-50 data-[highlighted]:text-yellow-700 cursor-pointer"
+                          >
+                            <Timer className="h-4 w-4" />
+                            <span>Marcar como pendente</span>
+                          </DropdownMenuItem>
+                        )}
                     </DropdownMenuGroup>
                   </DropdownMenuContent>
                 </DropdownMenu>
