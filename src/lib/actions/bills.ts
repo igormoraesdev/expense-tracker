@@ -56,17 +56,18 @@ export async function sendMessageExpiredBills() {
     .from(bills)
     .innerJoin(users, eq(bills.userId, users.id))
     .where(
-      and(
-        gte(bills.dueDate, today),
-        lt(bills.dueDate, threeDaysFromNow),
-        or(
-          eq(bills.status, StatusEnum.Pending),
-          eq(bills.status, StatusEnum.Expired)
-        )
+      or(
+        and(
+          gte(bills.dueDate, today),
+          lt(bills.dueDate, threeDaysFromNow),
+          eq(bills.status, StatusEnum.Pending)
+        ),
+        eq(bills.status, StatusEnum.Expired)
       )
     );
 
   const listBills = billsList.map((data) => data.bill);
+
   const user = billsList[0].user;
   const message = WhatsappService.generateMessage(listBills, user.name);
   await WhatsappService.sendWhatsAppMessage(user.phone as string, message);
