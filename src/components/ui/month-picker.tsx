@@ -9,6 +9,7 @@ import {
   startOfMonth,
   startOfToday,
 } from "date-fns";
+import { ptBR } from "date-fns/locale";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import * as React from "react";
 
@@ -47,7 +48,7 @@ export default function MonthPicker({
 
   function nextYear() {
     const firstDayNextYear = add(firstDayCurrentYear, { years: 1 });
-    setCurrentYear(format(firstDayNextYear, "yyyy"));
+    setCurrentYear(format(firstDayNextYear, "yyyy", { locale: ptBR }));
   }
 
   return (
@@ -60,7 +61,12 @@ export default function MonthPicker({
           )}
         >
           {currentMonth ? (
-            `${format(currentMonth, "MMMM")} - ${format(currentMonth, "yyyy")}`
+            `${
+              format(currentMonth, "MMMM", { locale: ptBR })
+                .charAt(0)
+                .toUpperCase() +
+              format(currentMonth, "MMMM", { locale: ptBR }).slice(1)
+            } - ${format(currentMonth, "yyyy", { locale: ptBR })}`
           ) : (
             <span>Pick a date</span>
           )}
@@ -77,7 +83,7 @@ export default function MonthPicker({
                   role="presentation"
                   id="month-picker"
                 >
-                  {format(firstDayCurrentYear, "yyyy")}
+                  {format(firstDayCurrentYear, "yyyy", { locale: ptBR })}
                 </div>
                 <div className="flex items-center space-x-1">
                   <button
@@ -140,7 +146,10 @@ export default function MonthPicker({
                       }}
                     >
                       <time dateTime={format(month, "yyyy-MM-dd")}>
-                        {format(month, "MMM")}
+                        {format(month, "MMM", { locale: ptBR })
+                          .charAt(0)
+                          .toUpperCase() +
+                          format(month, "MMM", { locale: ptBR }).slice(1)}
                       </time>
                     </Button>
                   </div>

@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
 import { CalendarIcon } from "lucide-react";
 import React, { useEffect } from "react";
 import { ControllerRenderProps, FieldError } from "react-hook-form";
@@ -54,13 +55,22 @@ export const CustomDatePicker = ({
             {isMonth ? (
               <>
                 {date ? (
-                  `${format(date, "MMMM")} - ${format(date, "yyyy")}`
+                  `${format(date, "MMMM", { locale: ptBR })} - ${format(
+                    date,
+                    "yyyy"
+                  )}`
                 ) : (
-                  <span>Pick a date</span>
+                  <span>Selecione uma data</span>
                 )}
               </>
             ) : (
-              <>{date ? format(date, "PPP") : <span>Pick a date</span>}</>
+              <>
+                {date ? (
+                  format(date, "PPP", { locale: ptBR })
+                ) : (
+                  <span>Selecione uma data</span>
+                )}
+              </>
             )}
           </Button>
         </PopoverTrigger>
@@ -70,6 +80,7 @@ export const CustomDatePicker = ({
             selected={date}
             onSelect={handleSelectDate}
             initialFocus
+            locale={ptBR}
           />
         </PopoverContent>
       </Popover>
