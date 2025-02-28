@@ -45,8 +45,8 @@ export const TotalSpend = () => {
               <DollarSign className="size-6 text-white" />
             </div>
             <div>
-              <h3 className="text-sm font-medium text-white/80">Total Spend</h3>
-              <p className="text-xs text-white/60">This Month</p>
+              <h3 className="text-sm font-medium text-white/80">Total Gasto</h3>
+              <p className="text-xs text-white/60">Este Mês</p>
             </div>
           </div>
           <div className="flex items-center gap-1 px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm">
@@ -83,7 +83,7 @@ export const TotalSpend = () => {
         {/* Stats */}
         <div className="grid grid-cols-2 gap-4 mt-8 pt-8 border-t border-white/10">
           <div>
-            <p className="text-sm text-white/60 mb-1">Previous Month</p>
+            <p className="text-sm text-white/60 mb-1">Mês Anterior</p>
             {isLoading ? (
               <Skeleton className="h-6 w-24 bg-white/10" />
             ) : (
@@ -93,7 +93,7 @@ export const TotalSpend = () => {
             )}
           </div>
           <div>
-            <p className="text-sm text-white/60 mb-1">Average</p>
+            <p className="text-sm text-white/60 mb-1">Média</p>
             {isLoading ? (
               <Skeleton className="h-6 w-24 bg-white/10" />
             ) : (

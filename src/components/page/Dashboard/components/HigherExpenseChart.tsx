@@ -111,12 +111,12 @@ export const HigherExpenseChart = () => {
     return (
       <div className="flex flex-col">
         <h3 className="text-2xl font-bold text-indigo-900">
-          Spending by category
+          Gastos por categoria
         </h3>
         <div className="flex flex-col gap-6 py-2">
           <div className="flex justify-center items-center w-full p-6 sm:p-8 bg-indigo-50 border border-indigo-100 rounded-xl gap-4">
             <p className="text-sm sm:text-lg font-semibold text-indigo-600">
-              No expenses registered
+              Nenhuma despesa registrada
             </p>
           </div>
         </div>
@@ -127,7 +127,7 @@ export const HigherExpenseChart = () => {
   return (
     <div className="flex flex-col">
       <h3 className="text-2xl font-bold text-indigo-900 mb-4">
-        Spending by category
+        Gastos por categoria
       </h3>
       <div className="relative overflow-hidden bg-white rounded-xl border border-indigo-100 transition-all duration-300 hover:shadow-lg hover:border-indigo-300">
         <div className="absolute top-0 right-0 w-32 h-32 transform translate-x-12 translate-y-[-60%] bg-indigo-50/50 rounded-full" />
@@ -177,7 +177,7 @@ export const HigherExpenseChart = () => {
                   tickLine={false}
                   axisLine={false}
                   tick={{ fill: "#6B7280", fontSize: 12 }}
-                  tickMargin={12}
+                  tickMargin={8}
                   tickFormatter={(value) =>
                     new Intl.NumberFormat("pt-BR", {
                       style: "currency",
@@ -187,8 +187,8 @@ export const HigherExpenseChart = () => {
                   }
                 />
                 <ChartTooltip
-                  cursor={{ fill: "rgba(79, 70, 229, 0.1)" }}
                   content={<CustomTooltip />}
+                  cursor={{ fill: "transparent" }}
                 />
                 <Bar
                   dataKey="amount"

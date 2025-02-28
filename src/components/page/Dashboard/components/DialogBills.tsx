@@ -18,7 +18,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
 import { BanknoteIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { Dispatch, SetStateAction, useEffect, useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -129,11 +129,26 @@ export const DialogBills = ({
     }
   }, [bill]);
 
-  const title = isEdit ? "Update expense" : "New expense";
-  const subtitle = isEdit
-    ? "Update your expense details"
-    : "Add a new expense to track your finances";
-  const submitButton = isEdit ? "Update expense" : "Create expense";
+  const title = useMemo(() => {
+    if (isEdit) {
+      return "Editar despesa";
+    }
+    return "Nova despesa";
+  }, [isEdit]);
+
+  const subtitle = useMemo(() => {
+    if (isEdit) {
+      return "Atualize os detalhes da sua despesa";
+    }
+    return "Adicione uma nova despesa ao seu controle financeiro";
+  }, [isEdit]);
+
+  const submitButton = useMemo(() => {
+    if (isEdit) {
+      return "Atualizar despesa";
+    }
+    return "Adicionar despesa";
+  }, [isEdit]);
 
   const isLoading = isPending ?? isPendingUpdateBill;
 
@@ -159,7 +174,7 @@ export const DialogBills = ({
                 name="dueDate"
                 render={(field) => (
                   <CustomDatePicker
-                    label="Due Date"
+                    label="Data de vencimento"
                     field={field.field}
                     error={errors.dueDate}
                   />
@@ -172,8 +187,8 @@ export const DialogBills = ({
                 masks="number"
                 typeMask="currency"
                 prefix="R$"
-                label="Amount"
-                placeholder="Enter amount"
+                label="Valor"
+                placeholder="Digite o valor"
                 name="amount"
                 error={errors.amount}
                 icon={<BanknoteIcon className="w-4 h-4 text-indigo-600" />}
@@ -184,8 +199,8 @@ export const DialogBills = ({
           <div className="space-y-4">
             <CustomInput
               {...register("description")}
-              label="Description"
-              placeholder="Enter expense description"
+              label="Descrição"
+              placeholder="Digite a descrição da despesa"
               name="description"
               error={errors.description}
             />
@@ -200,7 +215,7 @@ export const DialogBills = ({
                       field={field.field}
                       list={statusList}
                       label="Status"
-                      placeholder="Select status"
+                      placeholder="Selecione o status"
                       error={errors.status}
                     />
                   )}
@@ -214,8 +229,8 @@ export const DialogBills = ({
                     <CustomSelect
                       field={field.field}
                       list={categoryList}
-                      label="Category"
-                      placeholder="Select category"
+                      label="Categoria"
+                      placeholder="Selecione a categoria"
                       error={errors.category}
                     />
                   )}

@@ -6,6 +6,7 @@ import { signIn } from "next-auth/react";
 
 import { Button } from "@/components/ui/button";
 import { CustomInput } from "@/components/ui/form/CustomInput";
+import { Icons } from "@/components/ui/icon";
 import { useRegister } from "@/hooks/api/auth/useRegister";
 import { WhatsappService } from "@/lib/service";
 import { ArrowLeft, Mail, PhoneCall, Sticker } from "lucide-react";
@@ -66,61 +67,89 @@ export function SignupForm({ onChangeTab }: SignupFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit(handleCreateUser)}>
-      <div className="mb-8">
-        <div className="flex items-center gap-4">
+    <form onSubmit={handleSubmit(handleCreateUser)} className="space-y-8">
+      <div className="space-y-2">
+        <div className="flex items-center gap-3">
           <button
+            type="button"
             onClick={() => onChangeTab("signin")}
-            className="text-indigo-700 font-semibold hover:underline ml-1 whitespace-nowrap"
+            className="text-indigo-600 hover:text-indigo-500 focus:outline-none transition-colors"
           >
-            <ArrowLeft size={24} />
+            <ArrowLeft size={20} />
           </button>
-          <h3 className="text-gray-800 text-3xl font-extrabold">Register</h3>
+          <h3 className="text-2xl font-bold tracking-tight text-gray-900">
+            Criar conta
+          </h3>
         </div>
-        <p className="text-sm mt-4 text-gray-800">Create your account</p>
+        <p className="text-sm text-gray-500">
+          Preencha os dados abaixo para começar
+        </p>
       </div>
-      <div className="flex flex-col gap-5">
+
+      <div className="space-y-4">
         <CustomInput
           {...register("name")}
-          label="Name"
-          placeholder="Name"
+          label="Nome"
+          placeholder="Seu nome completo"
           name="name"
           error={errors.name}
-          icon={<Sticker size={16} className="text-indigo-700" />}
+          icon={<Sticker size={16} className="text-indigo-600" />}
         />
         <CustomInput
           {...register("phone")}
           masks="number"
           typeMask="phone"
-          label="Whatsapp"
+          label="WhatsApp"
           placeholder="(61) 99999-9999"
           name="phone"
           error={errors.phone}
-          icon={<PhoneCall size={16} className="text-indigo-700" />}
+          icon={<PhoneCall size={16} className="text-indigo-600" />}
         />
         <CustomInput
           {...register("email")}
           label="Email"
-          placeholder="email@example.com"
+          placeholder="seu@email.com"
           name="email"
           error={errors.email}
-          icon={<Mail size={16} className="text-indigo-700" />}
+          icon={<Mail size={16} className="text-indigo-600" />}
         />
         <CustomInput
           {...register("password")}
           type="password"
-          label="Password"
-          placeholder="Password"
+          label="Senha"
+          placeholder="••••••••"
           name="password"
           error={errors.password}
         />
+
         <Button
           disabled={!isValid}
           isLoading={isPending}
           type="submit"
-          className="w-full shadow-xl p-6 text-sm tracking-wide rounded-md text-white bg-indigo-700 focus:outline-none"
+          className="w-full py-2.5 px-4 text-sm font-semibold tracking-wide text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors rounded-lg"
         >
-          Create account
+          Criar conta
+        </Button>
+      </div>
+
+      <div className="relative">
+        <div className="absolute inset-0 flex items-center">
+          <div className="w-full border-t border-gray-200" />
+        </div>
+        <div className="relative flex justify-center text-sm">
+          <span className="px-2 text-gray-500 bg-white">ou continue com</span>
+        </div>
+      </div>
+
+      <div className="mt-6">
+        <Button
+          type="button"
+          onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+          variant="outline"
+          className="w-full flex items-center justify-center gap-3 px-4 py-2.5 text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 border border-gray-300 rounded-lg transition-colors"
+        >
+          <Icons.google className="h-5 w-5" />
+          <span>Google</span>
         </Button>
       </div>
     </form>

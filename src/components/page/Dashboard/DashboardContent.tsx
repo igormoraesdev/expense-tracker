@@ -68,10 +68,10 @@ export const DashboardContent = () => {
                 <div className="w-full mb-8 flex flex-col gap-8 md:gap-0 md:flex-row items-center md:items-start justify-center md:justify-between">
                   <div className="flex flex-col gap-2">
                     <h1 className="text-4xl text-center md:text-left font-bold text-indigo-900">
-                      {`Hi, ${session.data?.user.name}`}
+                      {`Olá, ${session.data?.user.name}`}
                     </h1>
                     <p className="text-indigo-600/80 font-medium">
-                      Track your expenses and stay on budget
+                      Acompanhe suas despesas e mantenha seu orçamento
                     </p>
                   </div>
                   <Controller
@@ -98,7 +98,7 @@ export const DashboardContent = () => {
                     >
                       <Plus className="h-5 w-5 text-indigo-600 transition-transform duration-300 group-hover:rotate-90" />
                       <span className="text-sm font-medium text-indigo-600">
-                        Add new expense
+                        Adicionar nova despesa
                       </span>
                     </Button>
                   </DialogTrigger>

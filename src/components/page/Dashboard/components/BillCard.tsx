@@ -13,7 +13,14 @@ import { useUpdateBill } from "@/hooks/api/bills/useUpdateBill";
 import { useToast } from "@/hooks/use-toast";
 import { CategoryEnum, StatusEnum } from "@/lib/entities/bills/enum";
 import { format } from "date-fns";
-import { Check, MoreHorizontal, Pencil, Timer, Trash2 } from "lucide-react";
+import {
+  Check,
+  MoreHorizontal,
+  Pencil,
+  ShieldAlert,
+  Timer,
+  Trash2,
+} from "lucide-react";
 import { BillBadge } from "./BillBadge";
 import { CategoryBadge } from "./CategoryBadge";
 
@@ -61,7 +68,7 @@ export const BillsCard = ({
         bill: { ...bill, status, updatedAt: new Date() },
       });
       toast({
-        description: "Bill updated successfully",
+        description: "Status atualizado com sucesso",
         className: "bg-green-500 text-white",
         duration: 5000,
       });
@@ -82,7 +89,7 @@ export const BillsCard = ({
     try {
       await mutateAsyncDelete(bill.id as string);
       toast({
-        description: "Bill deleted successfully",
+        description: "Despesa excluída com sucesso",
         className: "bg-green-500 text-white",
         duration: 5000,
       });
@@ -124,7 +131,7 @@ export const BillsCard = ({
             <div className="flex flex-col gap-3 pt-2">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="text-sm text-indigo-400">Due Date:</span>
+                  <span className="text-sm text-indigo-400">Vencimento:</span>
                   <p className="text-sm text-indigo-900 font-medium">
                     {format(new Date(bill.dueDate), "dd/MM/yyyy")}
                   </p>
@@ -141,7 +148,7 @@ export const BillsCard = ({
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-56 p-2">
                     <DropdownMenuLabel className="text-xs font-normal text-gray-500">
-                      Actions
+                      Ações
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator className="my-2" />
                     <DropdownMenuGroup>
@@ -150,14 +157,14 @@ export const BillsCard = ({
                         className="gap-2 text-sm rounded-md data-[highlighted]:bg-indigo-50 data-[highlighted]:text-indigo-600 cursor-pointer"
                       >
                         <Pencil className="h-4 w-4" />
-                        <span>Edit bill</span>
+                        <span>Editar despesa</span>
                       </DropdownMenuItem>
                       <DropdownMenuItem
                         onClick={() => handleDeleteBill(bill)}
                         className="gap-2 text-sm rounded-md text-red-600 data-[highlighted]:bg-red-50 data-[highlighted]:text-red-700 cursor-pointer"
                       >
                         <Trash2 className="h-4 w-4" />
-                        <span>Delete bill</span>
+                        <span>Excluir despesa</span>
                       </DropdownMenuItem>
                     </DropdownMenuGroup>
 
@@ -167,15 +174,26 @@ export const BillsCard = ({
                     </DropdownMenuLabel>
                     <DropdownMenuGroup className="mt-1">
                       {bill.status !== StatusEnum.Paid && (
-                        <DropdownMenuItem
-                          onClick={() =>
-                            handleUpdateStatus(bill, StatusEnum.Paid)
-                          }
-                          className="gap-2 text-sm rounded-md text-emerald-600 data-[highlighted]:bg-emerald-50 data-[highlighted]:text-emerald-700 cursor-pointer"
-                        >
-                          <Check className="h-4 w-4" />
-                          <span>Mark as paid</span>
-                        </DropdownMenuItem>
+                        <>
+                          <DropdownMenuItem
+                            onClick={() =>
+                              handleUpdateStatus(bill, StatusEnum.Paid)
+                            }
+                            className="gap-2 text-sm rounded-md text-emerald-600 data-[highlighted]:bg-emerald-50 data-[highlighted]:text-emerald-700 cursor-pointer"
+                          >
+                            <Check className="h-4 w-4" />
+                            <span>Marcar como pago</span>
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={() =>
+                              handleUpdateStatus(bill, StatusEnum.Expired)
+                            }
+                            className="gap-2 text-sm rounded-md text-red-600 data-[highlighted]:bg-red-50 data-[highlighted]:text-red-700 cursor-pointer"
+                          >
+                            <ShieldAlert className="h-4 w-4" />
+                            <span>Marcar como expirado</span>
+                          </DropdownMenuItem>
+                        </>
                       )}
                       {bill.status === StatusEnum.Paid && (
                         <DropdownMenuItem
@@ -185,18 +203,7 @@ export const BillsCard = ({
                           className="gap-2 text-sm rounded-md text-yellow-600 data-[highlighted]:bg-yellow-50 data-[highlighted]:text-yellow-700 cursor-pointer"
                         >
                           <Timer className="h-4 w-4" />
-                          <span>Mark as pending</span>
-                        </DropdownMenuItem>
-                      )}
-                      {bill.status === StatusEnum.Expired && (
-                        <DropdownMenuItem
-                          onClick={() =>
-                            handleUpdateStatus(bill, StatusEnum.Pending)
-                          }
-                          className="gap-2 text-sm rounded-md text-yellow-600 data-[highlighted]:bg-yellow-50 data-[highlighted]:text-yellow-700 cursor-pointer"
-                        >
-                          <Timer className="h-4 w-4" />
-                          <span>Mark as pending</span>
+                          <span>Marcar como pendente</span>
                         </DropdownMenuItem>
                       )}
                     </DropdownMenuGroup>
