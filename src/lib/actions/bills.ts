@@ -68,7 +68,9 @@ export async function sendMessageExpiredBills() {
 
   const listBills = billsList.map((data) => data.bill);
 
-  const user = billsList[0].user;
-  const message = WhatsappService.generateMessage(listBills, user.name);
-  await WhatsappService.sendWhatsAppMessage(user.phone as string, message);
+  const user = billsList?.[0]?.user;
+  if (user) {
+    const message = WhatsappService.generateMessage(listBills, user.name);
+    await WhatsappService.sendWhatsAppMessage(user.phone as string, message);
+  }
 }
