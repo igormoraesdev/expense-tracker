@@ -70,7 +70,7 @@ export const DashboardContent = () => {
                     <h1 className="text-4xl text-center md:text-left font-bold text-indigo-900">
                       {`Olá, ${session.data?.user.name}`}
                     </h1>
-                    <p className="text-indigo-600/80 font-medium">
+                    <p className="text-indigo-600/80 font-medium text-center md:text-left">
                       Acompanhe suas despesas e mantenha seu orçamento
                     </p>
                   </div>
