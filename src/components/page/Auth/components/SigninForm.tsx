@@ -1,20 +1,24 @@
 "use client";
 
 import { useToast } from "@/hooks/use-toast";
-import { SigninFormSchema } from "@/lib/validation/signin";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { motion } from "framer-motion";
 import { signIn } from "next-auth/react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import { CustomInput } from "@/components/ui/form/CustomInput";
 import { Icons } from "@/components/ui/icon";
 import { useSignin } from "@/hooks/api/auth/useSignin";
+import { SigninFormSchema } from "@/lib/validation";
 import { Mail } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
+
+type SigninFormData = z.infer<typeof SigninFormSchema>;
 
 type SigninFormProps = {
-  onChangeTab: (val: string) => void;
+  onChangeTab: (tab: string) => void;
 };
 
 export function SigninForm({ onChangeTab }: SigninFormProps) {
@@ -22,18 +26,18 @@ export function SigninForm({ onChangeTab }: SigninFormProps) {
     register,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm<SigninFormType>({
+  } = useForm<SigninFormData>({
     resolver: zodResolver(SigninFormSchema),
-    mode: "all",
+    mode: "onChange",
   });
 
   const { toast } = useToast();
   const router = useRouter();
   const { mutateAsync, isPending } = useSignin();
 
-  const handleSignin = async (dataForm: SigninFormType) => {
+  const handleSignin = async (data: SigninFormData) => {
     try {
-      const user = await mutateAsync(dataForm);
+      const user = await mutateAsync(data);
 
       toast({
         description: "Login efetuado com sucesso",
@@ -59,24 +63,20 @@ export function SigninForm({ onChangeTab }: SigninFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit(handleSignin)} className="space-y-8">
-      <div className="space-y-2">
-        <h3 className="text-2xl font-bold tracking-tight text-gray-900">
-          Bem-vindo de volta
-        </h3>
-        <p className="text-sm text-gray-500">
-          {"Não tem uma conta?"}{" "}
-          <button
-            type="button"
-            onClick={() => onChangeTab("signup")}
-            className="text-indigo-600 font-medium hover:text-indigo-500 focus:outline-none focus:underline transition-colors"
-          >
-            Registre-se aqui
-          </button>
-        </p>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="w-full"
+    >
+      <div className="mb-8 text-center">
+        <h2 className="text-2xl font-bold text-slate-900 mb-2">
+          Bem-vindo de volta!
+        </h2>
+        <p className="text-slate-600">Entre com sua conta para continuar</p>
       </div>
 
-      <div className="space-y-4">
+      <form onSubmit={handleSubmit(handleSignin)} className="space-y-6">
         <CustomInput
           {...register("email")}
           label="Email"
@@ -94,37 +94,27 @@ export function SigninForm({ onChangeTab }: SigninFormProps) {
           error={errors.password}
         />
 
-        <div className="flex items-center justify-between">
-          <div className="flex items-center">
-            <input
-              type="checkbox"
-              id="remember"
-              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-            />
-            <label
-              htmlFor="remember"
-              className="ml-2 block text-sm text-gray-500"
-            >
-              Lembrar-me
-            </label>
-          </div>
-          <button
-            type="button"
-            className="text-sm font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline"
-          >
-            Esqueceu a senha?
-          </button>
-        </div>
-
         <Button
-          disabled={!isValid}
           isLoading={isPending}
+          variant="outline"
           type="submit"
-          className="w-full py-2.5 px-4 text-sm font-semibold tracking-wide text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors rounded-lg"
+          disabled={!isValid}
+          className="w-full bg-gradient-to-r from-indigo-600 to-indigo-500 text-white py-6 px-4 rounded-lg font-medium hover:from-indigo-500 hover:to-indigo-600 focus:ring-2 focus:ring-indigo-500/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Entrar
         </Button>
-      </div>
+
+        <p className="text-center text-slate-600 text-sm">
+          Não tem uma conta?{" "}
+          <button
+            type="button"
+            onClick={() => onChangeTab("signup")}
+            className="text-indigo-600 hover:text-indigo-500 font-medium"
+          >
+            Criar conta
+          </button>
+        </p>
+      </form>
 
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
@@ -135,17 +125,17 @@ export function SigninForm({ onChangeTab }: SigninFormProps) {
         </div>
       </div>
 
-      <div className="mt-6">
+      <div className="mt-6 flex items-center justify-center">
         <Button
           type="button"
           onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
           variant="outline"
-          className="w-full flex items-center justify-center gap-3 px-4 py-2.5 text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 border border-gray-300 rounded-lg transition-colors"
+          className="max-w-[130px] h-[48px] w-full flex items-center justify-center gap-3 px-4 py-4 text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 border border-gray-300 rounded-lg transition-colors"
         >
           <Icons.google className="h-5 w-5" />
           <span>Google</span>
         </Button>
       </div>
-    </form>
+    </motion.div>
   );
 }

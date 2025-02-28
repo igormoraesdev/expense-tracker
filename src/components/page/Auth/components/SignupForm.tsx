@@ -1,20 +1,23 @@
 "use client";
 import { useToast } from "@/hooks/use-toast";
-import { SignupFormSchema } from "@/lib/validation/signup";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { motion } from "framer-motion";
 import { signIn } from "next-auth/react";
+import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import { CustomInput } from "@/components/ui/form/CustomInput";
-import { Icons } from "@/components/ui/icon";
 import { useRegister } from "@/hooks/api/auth/useRegister";
 import { WhatsappService } from "@/lib/service";
-import { ArrowLeft, Mail, PhoneCall, Sticker } from "lucide-react";
+import { SignupFormSchema } from "@/lib/validation/signup";
+import { Mail, PhoneCall, Sticker } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
+type SignupFormData = z.infer<typeof SignupFormSchema>;
+
 type SignupFormProps = {
-  onChangeTab: (val: string) => void;
+  onChangeTab: (tab: string) => void;
 };
 
 export function SignupForm({ onChangeTab }: SignupFormProps) {
@@ -22,21 +25,22 @@ export function SignupForm({ onChangeTab }: SignupFormProps) {
     register,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm<SignupFormType>({
+  } = useForm<SignupFormData>({
     resolver: zodResolver(SignupFormSchema),
-    mode: "all",
+    mode: "onChange",
   });
   const { toast } = useToast();
   const router = useRouter();
   const { mutateAsync, isPending } = useRegister();
 
-  const handleCreateUser = async (dataForm: SignupFormType) => {
+  const handleCreateUser = async (data: SignupFormData) => {
     try {
       const payload = {
-        name: dataForm.name,
-        email: dataForm.email,
-        phone: dataForm.phone.replaceAll(/\D/g, ""),
-        password: dataForm.password,
+        name: data.name,
+        email: data.email,
+        phone: data.phone.replaceAll(/\D/g, ""),
+        password: data.password,
+        confirmPassword: data.confirmPassword,
       };
 
       await mutateAsync(payload);
@@ -47,15 +51,15 @@ export function SignupForm({ onChangeTab }: SignupFormProps) {
       });
 
       const signInRes = await signIn("credentials", {
-        name: dataForm.name,
-        email: dataForm.email,
-        phone: dataForm.phone,
-        password: dataForm.password,
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        password: data.password,
         redirect: false,
       });
 
       if (signInRes?.ok) {
-        await WhatsappService.sendWhatsAppInitialMessage(dataForm.phone);
+        await WhatsappService.sendWhatsAppInitialMessage(data.phone);
         router.push("/dashboard");
       }
     } catch (error: any) {
@@ -67,91 +71,86 @@ export function SignupForm({ onChangeTab }: SignupFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit(handleCreateUser)} className="space-y-8">
-      <div className="space-y-2">
-        <div className="flex items-center gap-3">
-          <button
-            type="button"
-            onClick={() => onChangeTab("signin")}
-            className="text-indigo-600 hover:text-indigo-500 focus:outline-none transition-colors"
+    <form onSubmit={handleSubmit(handleCreateUser)}>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="w-full"
+      >
+        <div className="mb-8 text-center">
+          <h2 className="text-2xl font-bold text-slate-900 mb-2">
+            Crie sua conta
+          </h2>
+          <p className="text-slate-600">
+            Comece a controlar suas finanças hoje mesmo
+          </p>
+        </div>
+        <div className="space-y-4">
+          <CustomInput
+            {...register("name")}
+            label="Nome"
+            placeholder="Seu nome completo"
+            name="name"
+            error={errors.name}
+            icon={<Sticker size={16} className="text-indigo-600" />}
+          />
+          <CustomInput
+            {...register("phone")}
+            masks="number"
+            typeMask="phone"
+            label="WhatsApp"
+            placeholder="(61) 99999-9999"
+            name="phone"
+            error={errors.phone}
+            icon={<PhoneCall size={16} className="text-indigo-600" />}
+          />
+          <CustomInput
+            {...register("email")}
+            label="Email"
+            placeholder="seu@email.com"
+            name="email"
+            error={errors.email}
+            icon={<Mail size={16} className="text-indigo-600" />}
+          />
+          <CustomInput
+            {...register("password")}
+            type="password"
+            label="Senha"
+            placeholder="••••••••"
+            name="password"
+            error={errors.password}
+          />
+          <CustomInput
+            {...register("confirmPassword")}
+            type="password"
+            label="Confirmar Senha"
+            placeholder="••••••••"
+            name="confirmPassword"
+            error={errors.confirmPassword}
+          />
+          <Button
+            isLoading={isPending}
+            variant="outline"
+            type="submit"
+            disabled={!isValid}
+            className="w-full bg-gradient-to-r from-indigo-600 to-indigo-500 text-white py-6 px-4 rounded-lg font-medium hover:from-indigo-500 hover:to-indigo-600 focus:ring-2 focus:ring-indigo-500/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <ArrowLeft size={20} />
-          </button>
-          <h3 className="text-2xl font-bold tracking-tight text-gray-900">
             Criar conta
-          </h3>
+          </Button>
+
+          <p className="text-center text-slate-600 text-sm">
+            Já tem uma conta?{" "}
+            <button
+              type="button"
+              onClick={() => onChangeTab("signin")}
+              className="text-indigo-600 hover:text-indigo-500 font-medium"
+            >
+              Fazer login
+            </button>
+          </p>
         </div>
-        <p className="text-sm text-gray-500">
-          Preencha os dados abaixo para começar
-        </p>
-      </div>
-
-      <div className="space-y-4">
-        <CustomInput
-          {...register("name")}
-          label="Nome"
-          placeholder="Seu nome completo"
-          name="name"
-          error={errors.name}
-          icon={<Sticker size={16} className="text-indigo-600" />}
-        />
-        <CustomInput
-          {...register("phone")}
-          masks="number"
-          typeMask="phone"
-          label="WhatsApp"
-          placeholder="(61) 99999-9999"
-          name="phone"
-          error={errors.phone}
-          icon={<PhoneCall size={16} className="text-indigo-600" />}
-        />
-        <CustomInput
-          {...register("email")}
-          label="Email"
-          placeholder="seu@email.com"
-          name="email"
-          error={errors.email}
-          icon={<Mail size={16} className="text-indigo-600" />}
-        />
-        <CustomInput
-          {...register("password")}
-          type="password"
-          label="Senha"
-          placeholder="••••••••"
-          name="password"
-          error={errors.password}
-        />
-
-        <Button
-          disabled={!isValid}
-          isLoading={isPending}
-          type="submit"
-          className="w-full py-2.5 px-4 text-sm font-semibold tracking-wide text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors rounded-lg"
-        >
-          Criar conta
-        </Button>
-      </div>
-
-      <div className="relative">
-        <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-gray-200" />
-        </div>
-        <div className="relative flex justify-center text-sm">
-          <span className="px-2 text-gray-500 bg-white">ou continue com</span>
-        </div>
-      </div>
-
-      <div className="mt-6">
-        <Button
-          type="button"
-          onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
-          variant="outline"
-          className="w-full flex items-center justify-center gap-3 px-4 py-2.5 text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 border border-gray-300 rounded-lg transition-colors"
-        >
-          <Icons.google className="h-5 w-5" />
-          <span>Google</span>
-        </Button>
-      </div>
+      </motion.div>
     </form>
   );
 }

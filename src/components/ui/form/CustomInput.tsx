@@ -53,9 +53,8 @@ export function CustomInput({
         <input
           id={label}
           {...rest}
-          // value={value}
           onChange={handleChange}
-          className="w-full py-2 rounded-sm bg-background placeholder:text-foreground-faded border border-border-faded transition duration-300 ease focus:outline-none focus:border-indigo-700 pl-4 pr-9 placeholder:text-sm"
+          className="w-full py-3 rounded-sm bg-background placeholder:text-foreground-faded border border-border-faded transition duration-300 ease focus:outline-none focus:border-indigo-700 pl-4 pr-9 placeholder:text-sm"
           type={showPassword ? "text" : rest.type}
         />
         {icon && (

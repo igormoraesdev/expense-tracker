@@ -21,6 +21,7 @@ declare global {
     email: string;
     password: string;
     phone: string;
+    confirmPassword: string;
   }
 
   type ResponseSignin = User;

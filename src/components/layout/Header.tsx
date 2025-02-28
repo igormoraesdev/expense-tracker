@@ -11,9 +11,9 @@ import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { Bell, ChevronRight, LayoutDashboard, LogOut } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Logo } from "../Logo";
 
 const navigationItems = [
   {
@@ -38,13 +38,7 @@ export const Header = () => {
     <>
       <header className="sticky top-0 z-[50] flex items-center justify-between w-full h-[100px] px-6 bg-gradient-to-r from-white to-indigo-50/30 border-b border-indigo-100/50 backdrop-blur-sm">
         <div className="md:hidden">
-          <Image
-            src="/images/logo.svg"
-            alt="Logo"
-            width={162}
-            height={50}
-            className="transition-transform duration-200 hover:scale-[0.98]"
-          />
+          <Logo className="mx-auto" />
         </div>
 
         <div className="flex items-center gap-6 ml-auto">

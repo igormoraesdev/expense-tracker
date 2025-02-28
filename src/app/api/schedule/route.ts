@@ -1,7 +1,4 @@
-import {
-  sendMessageExpiredBills,
-  updateExpiredBills,
-} from "@/lib/actions/bills";
+import { sendMessageExpiredBills } from "@/lib/actions/bills";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
@@ -16,7 +13,7 @@ export async function GET(req: Request) {
     console.log("Cron Job ran at:", new Date(), req.url);
 
     await sendMessageExpiredBills();
-    await updateExpiredBills();
+    // await updateExpiredBills();
 
     return new NextResponse("Cron ran", {
       status: 200,

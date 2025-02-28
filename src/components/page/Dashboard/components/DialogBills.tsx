@@ -48,6 +48,7 @@ export const DialogBills = ({
   const { mutateAsync, isPending } = useCreateBills({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["bills"] });
+      queryClient.invalidateQueries({ queryKey: ["total-spend"] });
       reset({
         amount: "",
         description: "",
@@ -61,6 +62,7 @@ export const DialogBills = ({
     useUpdateBill({
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ["bills"] });
+        queryClient.invalidateQueries({ queryKey: ["total-spend"] });
         reset({
           amount: "",
           description: "",
@@ -98,15 +100,19 @@ export const DialogBills = ({
           },
         };
         await mutateAsyncUpdateBill(payload);
+        toast({
+          description: "Despesa atualizada com sucesso",
+          className: "bg-green-500 text-white",
+          duration: 5000,
+        });
       } else {
         await mutateAsync(payload);
+        toast({
+          description: "Despesa criada com sucesso",
+          className: "bg-green-500 text-white",
+          duration: 5000,
+        });
       }
-
-      toast({
-        description: "Despesa criada com sucesso",
-        className: "bg-green-500 text-white",
-        duration: 5000,
-      });
 
       onOpenDialog(false);
     } catch (error: any) {
@@ -150,7 +156,7 @@ export const DialogBills = ({
     return "Adicionar despesa";
   }, [isEdit]);
 
-  const isLoading = isPending ?? isPendingUpdateBill;
+  const isLoading = isPending || isPendingUpdateBill;
 
   return (
     <DialogContent className="sm:max-w-[550px] p-0">
@@ -242,6 +248,7 @@ export const DialogBills = ({
 
         <div className="px-6 py-4 bg-gray-50 border-t border-gray-100">
           <Button
+            variant="outline"
             isLoading={isLoading}
             disabled={!isValid}
             className="w-full h-11 text-sm font-medium transition-all duration-300"

@@ -1,9 +1,9 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { ChevronRight, LayoutDashboard } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Logo } from "../Logo";
 
 const items = [
   {
@@ -27,13 +27,7 @@ export function Sidebar() {
     <div className="flex flex-col h-full w-full bg-gradient-to-br from-white via-white to-indigo-50/20">
       {/* Header */}
       <div className="flex items-center h-[100px] px-6 border-b border-indigo-100/50 bg-white/50 backdrop-blur-sm">
-        <Image
-          src="/images/logo.svg"
-          alt="Logo"
-          width={162}
-          height={50}
-          className="transition-transform duration-200 hover:scale-[0.98]"
-        />
+        <Logo className="mx-auto" />
       </div>
 
       {/* Navigation */}

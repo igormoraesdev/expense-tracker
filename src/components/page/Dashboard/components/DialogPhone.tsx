@@ -87,6 +87,7 @@ export const DialogPhone = ({ onOpenDialog }: DialogPhoneProps) => {
           />
 
           <Button
+            variant="outline"
             isLoading={isPending}
             disabled={!isValid}
             className="mt-6 min-h-[41px]"

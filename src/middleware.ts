@@ -6,6 +6,20 @@ const authMiddleware = withAuth({
   pages: {
     signIn: "/auth",
   },
+  callbacks: {
+    authorized({ req, token }) {
+      const { pathname } = req.nextUrl;
+
+      if (pathname === "/" && token) {
+        return false;
+      } else if (pathname === "/" && !token) {
+        return true;
+      }
+      if (pathname === "/auth") return true;
+
+      return !!token;
+    },
+  },
 });
 
 const pathList = [

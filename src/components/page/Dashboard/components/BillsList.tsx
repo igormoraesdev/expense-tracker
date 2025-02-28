@@ -15,7 +15,7 @@ export const BillsList = ({ onOpenDialog, onSelectBill }: BillsListProps) => {
   if (Number(bills?.length) <= 0) {
     return (
       <div className="flex flex-col">
-        <h3 className="text-2xl font-bold text-indigo-900 mb-4">Despesas</h3>
+        <h3 className="text-2xl font-bold text-indigo-900">Despesas</h3>
         <div className="flex flex-col gap-6 py-2">
           <div className="flex justify-center items-center w-full p-6 sm:p-8 bg-indigo-50 border border-indigo-100 rounded-xl gap-4">
             <p className="text-sm sm:text-lg font-semibold text-indigo-600">
