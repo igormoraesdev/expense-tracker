@@ -1,6 +1,5 @@
 "use client";
 import { useDashboardData } from "@/hooks/useDashboardData";
-import { StatusEnum } from "@/lib/entities/bills/enum";
 import { Dispatch, Fragment, SetStateAction } from "react";
 import { BillsCard } from "./BillCard";
 import { BillsCardSkeleton } from "./BillsCardSkeleton";
@@ -13,10 +12,7 @@ type BillsListProps = {
 export const BillsList = ({ onOpenDialog, onSelectBill }: BillsListProps) => {
   const { bills, isLoading } = useDashboardData();
 
-  if (
-    Number(bills?.filter((item) => item.status !== StatusEnum.Paid)?.length) <=
-    0
-  ) {
+  if (Number(bills?.length) <= 0) {
     return (
       <div className="flex flex-col">
         <h3 className="text-2xl font-bold text-indigo-900 mb-4">Despesas</h3>
