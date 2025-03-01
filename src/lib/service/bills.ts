@@ -13,6 +13,14 @@ class BillsServiceClass {
     return response.data;
   }
 
+  async createBillsByLastMonth(date: Date, userId: string): Promise<Bill[]> {
+    const response = await this.apiClient.post("/api/bills/month", {
+      date,
+      userId,
+    });
+    return response.data;
+  }
+
   async getTotalSpend(params: TotalSpendParams): Promise<TotalSpendData> {
     const response = await this.apiClient.get(
       `/api/bills/total-spend?userId=${params.userId}&date=${params.date}`

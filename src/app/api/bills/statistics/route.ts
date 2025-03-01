@@ -1,7 +1,5 @@
-import { db } from "@/drizzle";
-import { bills } from "@/drizzle/schema/bills";
+import { getBillsByMonth } from "@/lib/actions/bills";
 import { endOfMonth, startOfMonth, subMonths } from "date-fns";
-import { and, eq, gte, lt } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
@@ -16,34 +14,25 @@ export async function GET(req: Request) {
       subMonths(currentDate, i)
     );
 
-    // Get current month total
-    const currentMonthBills = await db.query.bills.findMany({
-      where: and(
-        eq(bills.userId, userId),
-        gte(bills.dueDate, startOfMonth(currentDate)),
-        lt(bills.dueDate, endOfMonth(currentDate))
-      ),
-    });
+    const currentMonthBills = await getBillsByMonth(
+      startOfMonth(currentDate),
+      endOfMonth(currentDate),
+      userId
+    );
 
-    // Get previous month total
-    const previousMonthBills = await db.query.bills.findMany({
-      where: and(
-        eq(bills.userId, userId),
-        gte(bills.dueDate, startOfMonth(previousDate)),
-        lt(bills.dueDate, endOfMonth(previousDate))
-      ),
-    });
+    const previousMonthBills = await getBillsByMonth(
+      startOfMonth(previousDate),
+      endOfMonth(previousDate),
+      userId
+    );
 
-    // Get last 6 months bills for average
     const last6MonthsBills = await Promise.all(
       last6Months.map(async (month) => {
-        const monthBills = await db.query.bills.findMany({
-          where: and(
-            eq(bills.userId, userId),
-            gte(bills.dueDate, startOfMonth(month)),
-            lt(bills.dueDate, endOfMonth(month))
-          ),
-        });
+        const monthBills = await getBillsByMonth(
+          startOfMonth(month),
+          endOfMonth(month),
+          userId
+        );
         return monthBills.reduce((acc, bill) => acc + Number(bill.amount), 0);
       })
     );
@@ -58,7 +47,6 @@ export async function GET(req: Request) {
     );
     const average = last6MonthsBills.reduce((acc, total) => acc + total, 0) / 6;
 
-    // Calculate percentage change
     const percentageChange =
       previousTotal > 0
         ? ((currentTotal - previousTotal) / previousTotal) * 100

@@ -1,8 +1,8 @@
 import { db } from "@/drizzle";
 import { bills } from "@/drizzle/schema/bills";
-import { updateBillStatusById } from "@/lib/actions/bills";
+import { getBillsByMonth, updateBillStatusById } from "@/lib/actions/bills";
 import { endOfMonth, startOfMonth } from "date-fns";
-import { and, eq, gte, lt } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -37,13 +37,7 @@ export async function GET(req: Request) {
     const startDate = startOfMonth(new Date(date));
     const endDate = endOfMonth(new Date(date));
 
-    const billsList = await db.query.bills.findMany({
-      where: and(
-        eq(bills.userId, userId),
-        gte(bills.dueDate, startDate),
-        lt(bills.dueDate, endDate)
-      ),
-    });
+    const billsList = await getBillsByMonth(startDate, endDate, userId);
 
     return NextResponse.json(billsList);
   } catch (error) {

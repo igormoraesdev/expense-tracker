@@ -100,3 +100,17 @@ export async function sendMessageExpiredBills() {
     }
   }
 }
+
+export async function getBillsByMonth(
+  startDate: Date,
+  endDate: Date,
+  userId: string
+) {
+  return await db.query.bills.findMany({
+    where: and(
+      eq(bills.userId, userId),
+      gte(bills.dueDate, startDate),
+      lt(bills.dueDate, endDate)
+    ),
+  });
+}
