@@ -1,4 +1,4 @@
-import { Masks } from "@/lib/utils";
+import { Masks } from "@/lib/utils/masks";
 import { Eye, EyeOff } from "lucide-react";
 import {
   ChangeEvent,
