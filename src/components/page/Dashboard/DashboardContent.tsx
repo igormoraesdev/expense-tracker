@@ -5,9 +5,11 @@ import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import MonthPicker from "@/components/ui/month-picker";
 import { DashboardFormSchema } from "@/lib/validation/dashboard";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { format } from "date-fns";
 import { Plus } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 import { BillsGrid } from "./components/BillsGrid";
@@ -16,16 +18,55 @@ import { DialogPhone } from "./components/DialogPhone";
 import { TotalSpend } from "./components/TotalSpend";
 
 export const DashboardContent = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const currentMonth = searchParams.get("month");
+  const currentYear = searchParams.get("year");
+  const [openDialog, setOpenDialog] = useState(false);
+  const [openDialogPhone, setOpenDialogPhone] = useState(false);
+  const session = useSession();
+
+  const date = new Date();
+
+  const defaultDate = useMemo(() => {
+    if (currentMonth && currentYear) {
+      date.setMonth(Number(currentMonth) - 1);
+      date.setFullYear(Number(currentYear));
+      return date;
+    }
+    return new Date();
+  }, [currentMonth, currentYear]);
+
   const form = useForm<z.infer<typeof DashboardFormSchema>>({
     resolver: zodResolver(DashboardFormSchema),
     mode: "all",
     defaultValues: {
-      date: new Date(),
+      date: defaultDate as Date,
     },
   });
-  const session = useSession();
-  const [openDialog, setOpenDialog] = useState(false);
-  const [openDialogPhone, setOpenDialogPhone] = useState(false);
+
+  useEffect(() => {
+    if (!currentMonth) {
+      const today = new Date();
+      const monthParam = format(today, "MM");
+      const yearParam = format(today, "yyyy");
+      updateURL(monthParam, yearParam);
+    }
+  }, [currentMonth]);
+
+  const updateURL = (monthParam: string, yearParam: string) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("month", monthParam);
+    params.set("year", yearParam);
+    router.push(`?${params.toString()}`);
+  };
+
+  const handleMonthChange = (date: Date, onChange: (date: Date) => void) => {
+    const monthParam = format(date, "MM");
+    const yearParam = format(date, "yyyy");
+    updateURL(monthParam, yearParam);
+    onChange(date);
+  };
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
@@ -46,7 +87,6 @@ export const DashboardContent = () => {
       </Dialog>
       <Dialog open={openDialog} onOpenChange={setOpenDialog}>
         <section className="relative min-h-screen bg-gradient-to-b from-white to-indigo-50/30">
-          {/* Background Pattern */}
           <div className="absolute inset-0 z-0">
             <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-indigo-50/50 to-transparent" />
             <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-indigo-50/50 to-transparent" />
@@ -59,12 +99,9 @@ export const DashboardContent = () => {
               }}
             />
           </div>
-
-          {/* Main Content */}
           <div className="relative w-full h-full px-6 py-8 sm:px-8 sm:py-8">
             <div className="mx-auto">
               <div className="flex flex-col gap-2">
-                {/* Header Section */}
                 <div className="w-full mb-8 flex flex-col gap-8 md:gap-0 md:flex-row items-center md:items-start justify-center md:justify-between">
                   <div className="flex flex-col gap-2">
                     <h1 className="text-4xl text-center md:text-left font-bold text-indigo-900">
@@ -80,15 +117,15 @@ export const DashboardContent = () => {
                     render={({ field }) => (
                       <MonthPicker
                         currentMonth={field.value}
-                        onMonthChange={field.onChange}
+                        onMonthChange={(date) =>
+                          handleMonthChange(date, field.onChange)
+                        }
                       />
                     )}
                   />
                 </div>
-
-                {/* Total Spend Section */}
                 <div className="flex mb-16 flex-col md:flex-row items-center gap-6 w-full">
-                  <div className="flex-1">
+                  <div className="flex-1 w-full">
                     <TotalSpend />
                   </div>
                   <DialogTrigger asChild>
@@ -103,8 +140,6 @@ export const DashboardContent = () => {
                     </Button>
                   </DialogTrigger>
                 </div>
-
-                {/* Grid Section */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
                   <BillsGrid />
                 </div>

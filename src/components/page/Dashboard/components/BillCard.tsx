@@ -9,9 +9,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useDeleteBill } from "@/hooks/api/bills/useDeleteBill";
 import { useUpdateBill } from "@/hooks/api/bills/useUpdateBill";
 import { useToast } from "@/hooks/use-toast";
 import { CategoryEnum, StatusEnum } from "@/lib/entities/bills/enum";
+import { translateStatus } from "@/lib/utils";
+import { useQueryClient } from "@tanstack/react-query";
 import { format } from "date-fns";
 import {
   Check,
@@ -21,19 +24,9 @@ import {
   Timer,
   Trash2,
 } from "lucide-react";
+import { Dispatch, SetStateAction } from "react";
 import { BillBadge } from "./BillBadge";
 import { CategoryBadge } from "./CategoryBadge";
-
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { useDeleteBill } from "@/hooks/api/bills/useDeleteBill";
-import { translateStatus } from "@/lib/utils";
-import { useQueryClient } from "@tanstack/react-query";
-import { Dispatch, SetStateAction } from "react";
 
 type BillsCardProps = {
   bill: Bill;
@@ -108,136 +101,124 @@ export const BillsCard = ({
     <div className="relative overflow-hidden bg-white rounded-xl border border-indigo-100 transition-all duration-300 hover:shadow-lg hover:border-indigo-300">
       <div className="absolute top-0 right-0 w-32 h-32 transform translate-x-12 translate-y-[-60%] bg-indigo-50/50 rounded-full" />
 
-      <Accordion type="single" collapsible className="w-full">
-        <AccordionItem value={bill.id as string} className="border-none">
-          <AccordionTrigger className="flex items-center justify-between py-4 px-6 hover:no-underline hover:bg-indigo-50/30">
-            <div className="flex flex-row items-center gap-4">
-              <div className="p-2 bg-indigo-100 rounded-lg">
-                <CategoryBadge category={bill.category as CategoryEnum} />
-              </div>
-              <div className="flex flex-col items-start gap-1">
-                <p className="text-sm font-semibold text-indigo-900 text-left text-wrap max-w-[200px] break-words">
-                  {bill.description}
-                </p>
-                <BillBadge bill={bill} />
-              </div>
-              <p className="font-bold text-lg text-indigo-900">
-                {new Intl.NumberFormat("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                }).format(Number(bill.amount))}
-              </p>
+      <div className="p-6">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex flex-row items-center gap-4">
+            <div className="p-2 bg-indigo-100 rounded-lg">
+              <CategoryBadge category={bill.category as CategoryEnum} />
             </div>
-          </AccordionTrigger>
+            <div className="flex flex-col items-start gap-1">
+              <p className="text-sm font-semibold text-indigo-900 text-left text-wrap max-w-[200px] break-words">
+                {bill.description}
+              </p>
+              <BillBadge bill={bill} />
+            </div>
+            <p className="font-bold text-lg text-indigo-900">
+              {new Intl.NumberFormat("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              }).format(Number(bill.amount))}
+            </p>
+          </div>
+        </div>
 
-          <AccordionContent className="px-6 pb-4">
-            <div className="flex flex-col gap-3 pt-2">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm text-indigo-400">Vencimento:</span>
-                  <p className="text-sm text-indigo-900 font-medium">
-                    {format(new Date(bill.dueDate), "dd/MM/yyyy")}
-                  </p>
-                </div>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      className="h-8 w-8 rounded-full border-indigo-200 hover:bg-indigo-50 hover:border-indigo-300"
-                    >
-                      <MoreHorizontal className="h-4 w-4 text-indigo-600" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-56 p-2">
-                    <DropdownMenuLabel className="text-xs font-normal text-gray-500">
-                      Ações
-                    </DropdownMenuLabel>
+        <div className="flex items-center justify-between gap-2 pt-2 border-t border-indigo-100">
+          <div className="flex items-center gap-1">
+            <span className="text-sm text-indigo-400">Vencimento:</span>
+            <p className="text-sm text-indigo-900 font-medium">
+              {format(new Date(bill.dueDate), "dd/MM/yyyy")}
+            </p>
+          </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="outline"
+                size="icon"
+                className="h-8 w-8 rounded-full border-indigo-200 hover:bg-indigo-50 hover:border-indigo-300"
+              >
+                <MoreHorizontal className="h-4 w-4 text-indigo-600" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56 p-2">
+              <DropdownMenuLabel className="text-xs font-normal text-gray-500">
+                Ações
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator className="my-2" />
+              <DropdownMenuGroup>
+                <DropdownMenuItem
+                  onClick={() => handleEditBill(bill)}
+                  className="gap-2 text-sm rounded-md data-[highlighted]:bg-indigo-50 data-[highlighted]:text-indigo-600 cursor-pointer"
+                >
+                  <Pencil className="h-4 w-4" />
+                  <span>Editar despesa</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => handleDeleteBill(bill)}
+                  className="gap-2 text-sm rounded-md text-red-600 data-[highlighted]:bg-red-50 data-[highlighted]:text-red-700 cursor-pointer"
+                >
+                  <Trash2 className="h-4 w-4" />
+                  <span>Excluir despesa</span>
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+
+              {bill.status !== StatusEnum.Paid &&
+                bill.status !== StatusEnum.Pending && (
+                  <>
                     <DropdownMenuSeparator className="my-2" />
-                    <DropdownMenuGroup>
+                    <DropdownMenuLabel className="text-xs font-normal text-gray-500">
+                      Status
+                    </DropdownMenuLabel>
+                  </>
+                )}
+              <DropdownMenuGroup className="mt-1">
+                {bill.status !== StatusEnum.Paid && (
+                  <>
+                    <DropdownMenuItem
+                      onClick={() => handleUpdateStatus(bill, StatusEnum.Paid)}
+                      className="gap-2 text-sm rounded-md text-emerald-600 data-[highlighted]:bg-emerald-50 data-[highlighted]:text-emerald-700 cursor-pointer"
+                    >
+                      <Check className="h-4 w-4" />
+                      <span>
+                        Marcar como{" "}
+                        {translateStatus(StatusEnum.Paid).toLowerCase()}
+                      </span>
+                    </DropdownMenuItem>
+                    {bill.status !== StatusEnum.Expired && (
                       <DropdownMenuItem
-                        onClick={() => handleEditBill(bill)}
-                        className="gap-2 text-sm rounded-md data-[highlighted]:bg-indigo-50 data-[highlighted]:text-indigo-600 cursor-pointer"
-                      >
-                        <Pencil className="h-4 w-4" />
-                        <span>Editar despesa</span>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem
-                        onClick={() => handleDeleteBill(bill)}
+                        onClick={() =>
+                          handleUpdateStatus(bill, StatusEnum.Expired)
+                        }
                         className="gap-2 text-sm rounded-md text-red-600 data-[highlighted]:bg-red-50 data-[highlighted]:text-red-700 cursor-pointer"
                       >
-                        <Trash2 className="h-4 w-4" />
-                        <span>Excluir despesa</span>
+                        <ShieldAlert className="h-4 w-4" />
+                        <span>
+                          Marcar como{" "}
+                          {translateStatus(StatusEnum.Expired).toLowerCase()}
+                        </span>
                       </DropdownMenuItem>
-                    </DropdownMenuGroup>
-
-                    {bill.status !== StatusEnum.Paid &&
-                      bill.status !== StatusEnum.Pending && (
-                        <>
-                          <DropdownMenuSeparator className="my-2" />
-                          <DropdownMenuLabel className="text-xs font-normal text-gray-500">
-                            Status
-                          </DropdownMenuLabel>
-                        </>
-                      )}
-                    <DropdownMenuGroup className="mt-1">
-                      {bill.status !== StatusEnum.Paid && (
-                        <>
-                          <DropdownMenuItem
-                            onClick={() =>
-                              handleUpdateStatus(bill, StatusEnum.Paid)
-                            }
-                            className="gap-2 text-sm rounded-md text-emerald-600 data-[highlighted]:bg-emerald-50 data-[highlighted]:text-emerald-700 cursor-pointer"
-                          >
-                            <Check className="h-4 w-4" />
-                            <span>
-                              Marcar como{" "}
-                              {translateStatus(StatusEnum.Paid).toLowerCase()}
-                            </span>
-                          </DropdownMenuItem>
-                          {bill.status !== StatusEnum.Expired && (
-                            <DropdownMenuItem
-                              onClick={() =>
-                                handleUpdateStatus(bill, StatusEnum.Expired)
-                              }
-                              className="gap-2 text-sm rounded-md text-red-600 data-[highlighted]:bg-red-50 data-[highlighted]:text-red-700 cursor-pointer"
-                            >
-                              <ShieldAlert className="h-4 w-4" />
-                              <span>
-                                Marcar como{" "}
-                                {translateStatus(
-                                  StatusEnum.Expired
-                                ).toLowerCase()}
-                              </span>
-                            </DropdownMenuItem>
-                          )}
-                        </>
-                      )}
-                      {bill.status !== StatusEnum.Paid &&
-                        bill.status !== StatusEnum.Pending && (
-                          <DropdownMenuItem
-                            onClick={() =>
-                              handleUpdateStatus(bill, StatusEnum.Pending)
-                            }
-                            className="gap-2 text-sm rounded-md text-yellow-600 data-[highlighted]:bg-yellow-50 data-[highlighted]:text-yellow-700 cursor-pointer"
-                          >
-                            <Timer className="h-4 w-4" />
-                            <span>
-                              Marcar como{" "}
-                              {translateStatus(
-                                StatusEnum.Pending
-                              ).toLowerCase()}
-                            </span>
-                          </DropdownMenuItem>
-                        )}
-                    </DropdownMenuGroup>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
-            </div>
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
+                    )}
+                  </>
+                )}
+                {bill.status !== StatusEnum.Paid &&
+                  bill.status !== StatusEnum.Pending && (
+                    <DropdownMenuItem
+                      onClick={() =>
+                        handleUpdateStatus(bill, StatusEnum.Pending)
+                      }
+                      className="gap-2 text-sm rounded-md text-yellow-600 data-[highlighted]:bg-yellow-50 data-[highlighted]:text-yellow-700 cursor-pointer"
+                    >
+                      <Timer className="h-4 w-4" />
+                      <span>
+                        Marcar como{" "}
+                        {translateStatus(StatusEnum.Pending).toLowerCase()}
+                      </span>
+                    </DropdownMenuItem>
+                  )}
+              </DropdownMenuGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      </div>
     </div>
   );
 };

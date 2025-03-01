@@ -19,7 +19,7 @@ export const useDashboardData = () => {
     useGetTotalSpend(
       {
         userId: session.data?.user.userId as string,
-        date,
+        date: new Date(date),
       },
       {
         enabled: !!session.data?.user.userId,
@@ -29,7 +29,7 @@ export const useDashboardData = () => {
   const { data: bills, isLoading: billsLoading } = useGetBills(
     {
       userId: session.data?.user.userId as string,
-      date,
+      date: new Date(date),
     },
     {
       enabled: !!session.data?.user.userId,

@@ -12,7 +12,7 @@ export async function GET(req: Request) {
 
     const currentDate = new Date(date);
     const previousDate = subMonths(currentDate, 1);
-    const last6Months = Array.from({ length: 6 }, (_, i) =>
+    const last3Months = Array.from({ length: 3 }, (_, i) =>
       subMonths(currentDate, i)
     );
 
@@ -35,8 +35,8 @@ export async function GET(req: Request) {
     });
 
     // Get last 6 months bills for average
-    const last6MonthsBills = await Promise.all(
-      last6Months.map(async (month) => {
+    const last3MonthsBills = await Promise.all(
+      last3Months.map(async (month) => {
         const monthBills = await db.query.bills.findMany({
           where: and(
             eq(bills.userId, userId),
@@ -56,7 +56,7 @@ export async function GET(req: Request) {
       (acc, bill) => acc + Number(bill.amount),
       0
     );
-    const average = last6MonthsBills.reduce((acc, total) => acc + total, 0) / 6;
+    const average = last3MonthsBills.reduce((acc, total) => acc + total, 0) / 3;
 
     // Calculate percentage change
     const percentageChange =

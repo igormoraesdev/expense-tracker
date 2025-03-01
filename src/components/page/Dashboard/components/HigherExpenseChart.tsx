@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/chart";
 import { useDashboardData } from "@/hooks/useDashboardData";
 import { CategoryEnum } from "@/lib/entities/bills/enum";
+import { translateCategory } from "@/lib/utils";
 import {
   CreditCard,
   Ham,
@@ -45,7 +46,7 @@ const CATEGORY_ICONS = {
 };
 
 // Custom tooltip component
-const CustomTooltip = ({ active, payload }: any) => {
+const CustomTooltip = ({ active, payload, translateFn }: any) => {
   if (!active || !payload?.length) return null;
 
   const data = payload[0].payload;
@@ -57,7 +58,9 @@ const CustomTooltip = ({ active, payload }: any) => {
         <div className="p-1.5 bg-indigo-50 rounded-md">
           <Icon className="w-4 h-4 text-indigo-600" />
         </div>
-        <span className="font-medium text-indigo-900">{data.category}</span>
+        <span className="font-medium text-indigo-900">
+          {translateFn(data.category as CategoryEnum)}
+        </span>
       </div>
       <div className="flex items-center justify-between">
         <span className="text-sm text-indigo-400">Gastos total</span>
@@ -138,7 +141,7 @@ export const HigherExpenseChart = () => {
           ) : (
             <ChartContainer
               config={chartConfig}
-              className="min-h-[400px] w-full"
+              className="min-h-[300px] sm:min-h-[400px] h-full w-full"
             >
               <BarChart data={groupedByCategory}>
                 <defs>
@@ -187,7 +190,7 @@ export const HigherExpenseChart = () => {
                   }
                 />
                 <ChartTooltip
-                  content={<CustomTooltip />}
+                  content={<CustomTooltip translateFn={translateCategory} />}
                   cursor={{ fill: "transparent" }}
                 />
                 <Bar

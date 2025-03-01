@@ -32,7 +32,7 @@ export default function MonthPicker({
 }: MonthPickerProps) {
   const [isOpen, setisOpen] = React.useState(false);
   const [currentYear, setCurrentYear] = React.useState(
-    format(currentMonth, "yyyy")
+    currentMonth ? format(currentMonth, "yyyy") : format(new Date(), "yyyy")
   );
   const firstDayCurrentYear = parse(currentYear, "yyyy", new Date());
 

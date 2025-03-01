@@ -1,5 +1,6 @@
 import axios from "axios";
 import { format } from "date-fns";
+import { StatusEnum } from "../entities/bills/enum";
 
 class WhatsappServiceClass {
   readonly phoneNumberId = process.env.META_PHONE_NUMBER_ID!;
@@ -10,18 +11,24 @@ class WhatsappServiceClass {
     const listMessage = billsList
       .map(
         (bill) =>
-          `📌 ${bill.description} - Vence em ${format(
-            bill.dueDate,
-            "dd/MM/yyyy"
-          )} - ${new Intl.NumberFormat("pt-BR", {
-            style: "currency",
-            currency: "BRL",
-          }).format(Number(bill.amount))}`
+          `📌 ${bill.description} - ${
+            bill.status === StatusEnum.Pending
+              ? "Vence em"
+              : bill.status === StatusEnum.Expired
+              ? "Expirou"
+              : "Vencimento em 3 dias"
+          } ${format(bill.dueDate, "dd/MM/yyyy")} - ${new Intl.NumberFormat(
+            "pt-BR",
+            {
+              style: "currency",
+              currency: "BRL",
+            }
+          ).format(Number(bill.amount))}`
       )
       .join("\n");
     const message = `Oi ${name}, estou passando para te avisar sobre o vencimento dos seus boletos \n\n`;
 
-    return `🔔 *Lembrete de Contas a Vencer*\n\n${message}${listMessage}\n\n💡 Não deixe suas contas vencerem!`;
+    return `🔔 *Lembrete de Contas*\n\n${message}${listMessage}\n\n💡 Não deixe suas contas vencerem!`;
   }
 
   async sendWhatsAppMessage(to: string, message: string) {
