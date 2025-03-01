@@ -43,7 +43,6 @@ export async function GET(req: Request) {
         gte(bills.dueDate, startDate),
         lt(bills.dueDate, endDate)
       ),
-      // orderBy: sql`CASE WHEN ${bills.status} = 'Expired' THEN 1 ELSE 2 END, ${bills.dueDate} DESC`,
     });
 
     return NextResponse.json(billsList);
