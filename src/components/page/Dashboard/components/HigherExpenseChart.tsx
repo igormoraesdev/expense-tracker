@@ -141,7 +141,7 @@ export const HigherExpenseChart = () => {
           ) : (
             <ChartContainer
               config={chartConfig}
-              className="min-h-[600px] sm:min-h-[400px] h-full w-full"
+              className="min-h-[400px] h-full w-full"
             >
               <BarChart data={groupedByCategory}>
                 <defs>
