@@ -42,16 +42,13 @@ export const Header = () => {
         </div>
 
         <div className="flex items-center gap-6 ml-auto">
-          {/* Notifications */}
           <button className="relative flex items-center justify-center size-10 rounded-xl text-indigo-950/70 hover:text-indigo-600 hover:bg-white hover:shadow-sm transition-all duration-200">
             <Bell size={20} />
             <span className="absolute top-2 right-2 size-2 bg-indigo-500 rounded-full" />
           </button>
-
-          {/* User Menu */}
           <DropdownMenu>
             <DropdownMenuTrigger className="flex items-center gap-3 p-2 rounded-xl outline-none transition-all duration-200 hover:bg-white hover:shadow-sm group">
-              <Avatar className="flex items-center justify-center size-10 rounded-lg overflow-hidden border-2 border-indigo-100 bg-indigo-50 transition-shadow duration-200 group-hover:shadow-sm">
+              <Avatar className="flex items-center justify-center size-10 rounded-full overflow-hidden border-2 border-indigo-100 bg-indigo-50 transition-shadow duration-200 group-hover:shadow-sm">
                 <AvatarImage
                   src={session.data?.user.image as string}
                   alt="Avatar"
@@ -70,7 +67,6 @@ export const Header = () => {
                 </span>
               </div>
             </DropdownMenuTrigger>
-
             <DropdownMenuContent align="end" className="w-56 mt-2">
               <DropdownMenuLabel className="text-xs font-medium text-indigo-950/50">
                 Minha Conta
@@ -87,8 +83,6 @@ export const Header = () => {
           </DropdownMenu>
         </div>
       </header>
-
-      {/* Mobile Navigation */}
       <nav className="md:hidden sticky top-[100px] z-[50] w-full bg-white border-b border-indigo-100/50 shadow-sm">
         <div className="flex items-center gap-2 px-4 py-3 overflow-x-auto scrollbar-none">
           {navigationItems.map((item, index) => (
