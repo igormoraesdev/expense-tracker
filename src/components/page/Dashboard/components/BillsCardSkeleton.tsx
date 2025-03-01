@@ -2,39 +2,30 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export const BillsCardSkeleton = () => {
   return (
-    <div className="w-full p-4 border-2 border-indigo-100 rounded-xl bg-white">
-      {/* Header Section */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          {/* Icon and Title */}
-          <div className="flex items-center gap-3">
-            <Skeleton className="size-10 rounded-lg" /> {/* Icon */}
-            <div className="flex flex-col gap-1.5">
-              <Skeleton className="h-5 w-32" /> {/* Title */}
-              <Skeleton className="h-3.5 w-24" /> {/* Subtitle */}
-            </div>
-          </div>
+    <div className="relative overflow-hidden bg-white rounded-xl border border-indigo-100 transition-all duration-300 hover:shadow-lg hover:border-indigo-300">
+      <div className="absolute top-0 right-0 w-32 h-32 transform translate-x-12 translate-y-[-60%] bg-indigo-50/50 rounded-full" />
 
-          {/* Status Badges */}
-          <div className="flex items-center gap-2">
-            <Skeleton className="h-6 w-20 rounded-full" />{" "}
-            {/* Category Badge */}
-            <Skeleton className="h-6 w-16 rounded-full" /> {/* Status Badge */}
+      <div className="p-6">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex flex-row items-center gap-4">
+            <div className="p-2 bg-indigo-100 rounded-lg">
+              <Skeleton className="size-6" />
+            </div>
+            <div className="flex flex-col items-start gap-1">
+              <Skeleton className="h-5 w-32" />
+              <Skeleton className="h-5 w-24 rounded-full" />
+            </div>
+
+            <Skeleton className="h-7 w-28" />
           </div>
         </div>
 
-        {/* Menu Button */}
-        <Skeleton className="size-8 rounded-lg" />
-      </div>
-
-      {/* Expandable Content */}
-      <div className="mt-4 px-2">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Skeleton className="h-4 w-16" /> {/* Due Date Label */}
-            <Skeleton className="h-4 w-24" /> {/* Due Date Value */}
+        <div className="flex items-center justify-between gap-2 pt-2 border-t border-indigo-100">
+          <div className="flex items-center gap-1">
+            <Skeleton className="h-4 w-20" />
+            <Skeleton className="h-4 w-24" />
           </div>
-          <Skeleton className="h-6 w-24" /> {/* Amount */}
+          <Skeleton className="h-8 w-8 rounded-full" />
         </div>
       </div>
     </div>

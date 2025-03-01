@@ -131,6 +131,7 @@ export function SignupForm({ onChangeTab }: SignupFormProps) {
           />
           <Button
             isLoading={isPending}
+            loadingColor="text-white"
             variant="outline"
             type="submit"
             disabled={!isValid}

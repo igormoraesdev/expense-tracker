@@ -96,6 +96,7 @@ export function SigninForm({ onChangeTab }: SigninFormProps) {
 
         <Button
           isLoading={isPending}
+          loadingColor="text-white"
           variant="outline"
           type="submit"
           disabled={!isValid}
