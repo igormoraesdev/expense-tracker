@@ -12,7 +12,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
 }) => {
   return (
     <div
-      className="container mx-auto px-4 py-20 relative mt-32 relative z-10"
+      className="container mx-auto px-4 py-20 relative"
       id="planos"
       ref={planosRef}
     >
