@@ -79,10 +79,8 @@ export function SignupForm({ onChangeTab }: SignupFormProps) {
         className="w-full"
       >
         <div className="mb-8 text-center">
-          <h2 className="text-2xl font-bold text-slate-900 mb-2">
-            Crie sua conta
-          </h2>
-          <p className="text-slate-600">
+          <h2 className="text-2xl font-bold text-white mb-2">Crie sua conta</h2>
+          <p className="text-indigo-200">
             Comece a controlar suas finanças hoje mesmo
           </p>
         </div>
@@ -93,7 +91,8 @@ export function SignupForm({ onChangeTab }: SignupFormProps) {
             placeholder="Seu nome completo"
             name="name"
             error={errors.name}
-            icon={<Sticker size={16} className="text-indigo-600" />}
+            icon={<Sticker size={16} className="text-indigo-300" />}
+            className="bg-white/10 border-white/20 text-white placeholder:text-indigo-200/60"
           />
           <CustomInput
             {...register("phone")}
@@ -103,7 +102,8 @@ export function SignupForm({ onChangeTab }: SignupFormProps) {
             placeholder="(61) 99999-9999"
             name="phone"
             error={errors.phone}
-            icon={<PhoneCall size={16} className="text-indigo-600" />}
+            icon={<PhoneCall size={16} className="text-indigo-300" />}
+            className="bg-white/10 border-white/20 text-white placeholder:text-indigo-200/60"
           />
           <CustomInput
             {...register("email")}
@@ -111,7 +111,8 @@ export function SignupForm({ onChangeTab }: SignupFormProps) {
             placeholder="seu@email.com"
             name="email"
             error={errors.email}
-            icon={<Mail size={16} className="text-indigo-600" />}
+            icon={<Mail size={16} className="text-indigo-300" />}
+            className="bg-white/10 border-white/20 text-white placeholder:text-indigo-200/60"
           />
           <CustomInput
             {...register("password")}
@@ -120,6 +121,7 @@ export function SignupForm({ onChangeTab }: SignupFormProps) {
             placeholder="••••••••"
             name="password"
             error={errors.password}
+            className="bg-white/10 border-white/20 text-white placeholder:text-indigo-200/60"
           />
           <CustomInput
             {...register("confirmPassword")}
@@ -128,6 +130,7 @@ export function SignupForm({ onChangeTab }: SignupFormProps) {
             placeholder="••••••••"
             name="confirmPassword"
             error={errors.confirmPassword}
+            className="bg-white/10 border-white/20 text-white placeholder:text-indigo-200/60"
           />
           <Button
             isLoading={isPending}
@@ -135,17 +138,17 @@ export function SignupForm({ onChangeTab }: SignupFormProps) {
             variant="outline"
             type="submit"
             disabled={!isValid}
-            className="w-full bg-gradient-to-r from-indigo-600 to-indigo-500 text-white py-6 px-4 rounded-lg font-medium hover:from-indigo-500 hover:to-indigo-600 focus:ring-2 focus:ring-indigo-500/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-gradient-to-r from-indigo-600 to-indigo-500 text-white py-6 px-4 rounded-lg font-medium hover:from-indigo-500 hover:to-indigo-600 focus:ring-2 focus:ring-indigo-500/40 transition-all disabled:opacity-50 disabled:cursor-not-allowed border-none shadow-[0_4px_12px_rgba(67,56,202,0.3)]"
           >
             Criar conta
           </Button>
 
-          <p className="text-center text-slate-600 text-sm">
+          <p className="text-center text-indigo-200 text-sm">
             Já tem uma conta?{" "}
             <button
               type="button"
               onClick={() => onChangeTab("signin")}
-              className="text-indigo-600 hover:text-indigo-500 font-medium"
+              className="text-indigo-300 hover:text-white font-medium transition-colors"
             >
               Fazer login
             </button>

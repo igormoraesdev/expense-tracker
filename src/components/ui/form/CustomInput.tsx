@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import { Masks } from "@/lib/utils/masks";
 import { Eye, EyeOff } from "lucide-react";
 import {
@@ -29,6 +30,7 @@ export function CustomInput({
   masks,
   prefix = "",
   typeMask,
+  className,
   ...rest
 }: CustomInputProps) {
   const isPassword = rest.type === "password";
@@ -46,7 +48,7 @@ export function CustomInput({
 
   return (
     <div className="flex flex-col items-start gap-1">
-      <label htmlFor={label} className="text-sm text-indigo-700">
+      <label htmlFor={label} className="text-sm text-indigo-200">
         {label}
       </label>
       <div className="w-full relative flex items-center">
@@ -54,7 +56,10 @@ export function CustomInput({
           id={label}
           {...rest}
           onChange={handleChange}
-          className="w-full py-3 rounded-sm bg-background placeholder:text-foreground-faded border border-border-faded transition duration-300 ease focus:outline-none focus:border-indigo-700 pl-4 pr-9 placeholder:text-sm"
+          className={cn(
+            "w-full py-3 rounded-sm bg-background placeholder:text-foreground-faded border border-border-faded transition duration-300 ease focus:outline-none focus:border-indigo-700 pl-4 pr-9 placeholder:text-sm",
+            className
+          )}
           type={showPassword ? "text" : rest.type}
         />
         {icon && (
@@ -69,15 +74,15 @@ export function CustomInput({
             type="button"
           >
             {showPassword ? (
-              <Eye size={16} className="w-4 h-4 text-indigo-700" />
+              <Eye size={16} className="w-4 h-4 text-indigo-300" />
             ) : (
-              <EyeOff size={16} className="w-4 h-4 text-indigo-700" />
+              <EyeOff size={16} className="w-4 h-4 text-indigo-300" />
             )}
           </button>
         )}
       </div>
       {error && (
-        <span className="mt-4 text-destructive text-xs">{error.message}</span>
+        <span className="mt-2 text-red-400 text-xs">{error.message}</span>
       )}
     </div>
   );

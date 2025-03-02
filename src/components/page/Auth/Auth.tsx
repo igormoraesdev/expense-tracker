@@ -17,32 +17,53 @@ export function Auth() {
   }, [tab]);
 
   return (
-    <div className="w-full min-h-screen bg-white">
+    <div className="w-full min-h-screen bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 overflow-hidden">
       <div className="w-full min-h-screen flex flex-col lg:flex-row">
-        {/* Left side - Form */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-          className="w-full lg:w-1/2 flex justify-center items-center p-8 lg:p-16 bg-white"
-        >
-          <div className="w-full max-w-md">
-            <Logo className="mx-auto mb-8" color="#4F46E5" />
-            <div className="w-full">{renderTabs}</div>
-          </div>
-        </motion.div>
+        <div className="w-full lg:w-1/2 flex justify-center items-center p-8 lg:p-16 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="w-full max-w-md bg-white/10 backdrop-blur-xl rounded-2xl p-8 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.1)] relative overflow-hidden"
+          >
+            <div className="absolute -top-40 -right-40 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl" />
+            <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl" />
 
-        {/* Right side - Image/Pattern */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          className="hidden lg:flex w-1/2 h-screen bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 items-center justify-center p-16 relative overflow-hidden"
-        >
-          {/* Background gradient effect */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.15),transparent_100%)]" />
+            <Logo className="mx-auto mb-8" color="#ffffff" />
+            <div className="w-full relative z-10">{renderTabs}</div>
+          </motion.div>
+        </div>
 
-          {/* Content */}
+        <div className="hidden lg:flex w-1/2 h-screen items-center justify-center p-16 relative overflow-hidden">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.2),transparent_100%)]" />
+          <div className="absolute w-full h-full bg-[url('/images/grid.svg')] opacity-20" />
+
+          <motion.div
+            animate={{
+              y: [0, 15, 0],
+              rotate: [0, 5, 0],
+            }}
+            transition={{
+              repeat: Infinity,
+              duration: 8,
+              ease: "easeInOut",
+            }}
+            className="absolute top-1/4 right-1/4 w-64 h-64 rounded-full bg-gradient-to-r from-purple-500/20 to-indigo-500/20 blur-2xl"
+          />
+
+          <motion.div
+            animate={{
+              y: [0, -20, 0],
+              rotate: [0, -5, 0],
+            }}
+            transition={{
+              repeat: Infinity,
+              duration: 10,
+              ease: "easeInOut",
+              delay: 1,
+            }}
+            className="absolute bottom-1/3 left-1/3 w-48 h-48 rounded-full bg-gradient-to-r from-blue-500/20 to-cyan-500/20 blur-2xl"
+          />
           <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -66,12 +87,8 @@ export function Auth() {
               Gerencie suas despesas, acompanhe seus gastos e alcance seus
               objetivos financeiros.
             </motion.p>
-
-            {/* Decorative circles */}
-            <div className="absolute -top-40 -right-40 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl" />
-            <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl" />
           </motion.div>
-        </motion.div>
+        </div>
       </div>
     </div>
   );
