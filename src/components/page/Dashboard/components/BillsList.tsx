@@ -6,7 +6,7 @@ import { useDashboardData } from "@/hooks/useDashboardData";
 import { useQueryClient } from "@tanstack/react-query";
 import { subMonths } from "date-fns";
 import { motion } from "framer-motion";
-import { CalendarClock } from "lucide-react";
+import { CalendarClock, List } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { Dispatch, Fragment, SetStateAction } from "react";
 import { BillsCard } from "./BillCard";
@@ -49,8 +49,13 @@ export const BillsList = ({ onOpenDialog, onSelectBill }: BillsListProps) => {
 
   if (Number(bills?.length) <= 0) {
     return (
-      <div className="flex flex-col">
-        <h3 className="text-2xl font-bold text-indigo-900">Despesas</h3>
+      <div className="flex flex-col order-2 sm:order-1">
+        <div className="flex items-center gap-4 mb-6">
+          <div className="flex items-center justify-center size-10 rounded-xl bg-indigo-100 shadow-sm">
+            <List className="size-5 text-indigo-600" strokeWidth={1.5} />
+          </div>
+          <h3 className="text-2xl font-bold text-indigo-900">Despesas</h3>
+        </div>
         <div className="flex flex-col gap-6 py-2">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -109,8 +114,13 @@ export const BillsList = ({ onOpenDialog, onSelectBill }: BillsListProps) => {
   }
 
   return (
-    <div className="flex flex-col">
-      <h3 className="text-2xl font-bold text-indigo-900 mb-4">Despesas</h3>
+    <div className="flex flex-col order-1 sm:order-2">
+      <div className="flex items-center gap-4 mb-6">
+        <div className="flex items-center justify-center size-10 rounded-xl bg-indigo-100 shadow-sm">
+          <List className="size-5 text-indigo-600" strokeWidth={1.5} />
+        </div>
+        <h3 className="text-2xl font-bold text-indigo-900">Despesas</h3>
+      </div>
       <div className="grid grid-cols-1 2xl:grid-cols-2 gap-8">
         {isLoading ? (
           <>

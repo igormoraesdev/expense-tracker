@@ -18,7 +18,7 @@ export const translateStatus = (status: StatusEnum): string => {
 export const translateCategory = (category: CategoryEnum): string => {
   const translations = {
     [CategoryEnum.Food]: "Alimentação",
-    [CategoryEnum.Card]: "Cartão de crédito",
+    [CategoryEnum.Card]: "Cartão",
     [CategoryEnum.Health]: "Saúde",
     [CategoryEnum.House]: "Casa",
     [CategoryEnum.Phone]: "Telefone",
@@ -26,4 +26,12 @@ export const translateCategory = (category: CategoryEnum): string => {
     [CategoryEnum.Other]: "Outros",
   };
   return translations[category];
+};
+
+export const formatCurrency = (value: number, isCompact = false) => {
+  return new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+    notation: isCompact ? "compact" : "standard",
+  }).format(value);
 };
