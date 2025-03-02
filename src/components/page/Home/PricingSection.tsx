@@ -11,11 +11,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
   planosRef,
 }) => {
   return (
-    <div
-      className="container mx-auto px-4 py-20 relative"
-      id="planos"
-      ref={planosRef}
-    >
+    <section className="px-4 py-20 relative" id="planos" ref={planosRef}>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -151,6 +147,6 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
           </Link>
         </motion.div>
       </div>
-    </div>
+    </section>
   );
 };
