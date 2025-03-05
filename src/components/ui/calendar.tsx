@@ -45,13 +45,12 @@ function Calendar({
         ),
         day: cn(
           buttonVariants({ variant: "ghost" }),
-          "h-8 w-8 p-0 font-normal aria-selected:opacity-100 text-indigo-100 hover:bg-indigo-700 hover:text-white"
+          "h-8 w-8 p-0 font-normal aria-selected:opacity-100 text-white hover:bg-indigo-200 hover:text-indigo-700"
         ),
         day_range_start: "day-range-start",
         day_range_end: "day-range-end",
-        day_selected:
-          "bg-indigo-700 text-white hover:bg-indigo-700 focus:bg-indigo-700 focus:text-indigo-100",
-        day_today: "text-white border-2 border-indigo-700",
+        day_selected: "bg-indigo-900 hover:bg-indigo-900 hover:text-white",
+        day_today: "bg-indigo-700 border-2 border-indigo-200 text-white",
         day_outside:
           "day-outside text-gray-400 bg-transparent aria-selected:bg-accent/50 aria-selected:text-muted-foreground",
         day_disabled: "bg-gray-100 opacity-50",

@@ -48,7 +48,7 @@ export const CustomDatePicker = ({
             variant={"outline"}
             className={cn(
               "rounded-full w-[248px] h-[56px] p-4 text-left font-normal relative group gap-1 justify-start",
-              "bg-indigo-950/50 backdrop-blur-xl border border-indigo-200 text-indigo-200 hover:bg-indigo-950/70"
+              "bg-indigo-700 backdrop-blur-xl border border-indigo-200 text-white hover:bg-indigo-700/80"
             )}
           >
             <CalendarIcon className="w-4 h-4 text-indigo-300 mr-2" />
@@ -77,7 +77,7 @@ export const CustomDatePicker = ({
           align="start"
         >
           <Calendar
-            className="p-4 bg-indigo-950/50 backdrop-blur-xl shadow-lg rounded-md"
+            className="p-4 bg-indigo-700 backdrop-blur-xl shadow-lg rounded-md"
             mode="single"
             selected={date}
             onSelect={handleSelectDate}
