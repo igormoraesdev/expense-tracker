@@ -8,35 +8,15 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
+import { menuItems } from "@/lib/utils/constants";
 import { Avatar, AvatarFallback } from "@radix-ui/react-avatar";
 import { motion } from "framer-motion";
-import {
-  Bell,
-  ChevronRight,
-  LayoutDashboard,
-  LogOut,
-  SparklesIcon,
-} from "lucide-react";
+import { Bell, ChevronRight, LogOut } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Logo } from "../Logo";
-
-const navigationItems = [
-  {
-    title: "Dashboard",
-    url: "/dashboard",
-    icon: LayoutDashboard,
-    description: "Visão geral das suas finanças",
-  },
-  {
-    title: "Dashboard Novo",
-    url: "/dashboard/new",
-    icon: SparklesIcon,
-    description: "Layout moderno das suas finanças",
-  },
-];
 
 export const Header = () => {
   const session = useSession();
@@ -111,7 +91,7 @@ export const Header = () => {
       </header>
       <nav className="md:hidden sticky top-[90px] z-[50] w-full bg-white/10 backdrop-blur-xl border-b border-white/20 text-white bg-gradient-to-r from-slate-950 via-indigo-950 to-slate-900 shadow-md">
         <div className="flex items-center gap-2 px-4 py-3 overflow-x-auto scrollbar-none">
-          {navigationItems.map((item, index) => (
+          {menuItems.map((item, index) => (
             <Link
               key={index}
               href={item.url}

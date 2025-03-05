@@ -48,7 +48,7 @@ export const CustomDatePicker = ({
             variant={"outline"}
             className={cn(
               "rounded-full w-[248px] h-[56px] p-4 text-left font-normal relative group gap-1 justify-start",
-              "bg-white/10 backdrop-blur-xl border-white/20 text-white hover:bg-white/20"
+              "bg-white/10 backdrop-blur-xl border border-white/20 text-white hover:bg-white/20"
             )}
           >
             <CalendarIcon className="w-4 h-4 text-indigo-300 mr-2" />

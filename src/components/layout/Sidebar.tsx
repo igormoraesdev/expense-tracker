@@ -1,25 +1,11 @@
 "use client";
 import { cn } from "@/lib/utils";
+import { menuItems } from "@/lib/utils/constants";
 import { motion } from "framer-motion";
-import { ChevronRight, LayoutDashboard, ReceiptText } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Logo } from "../Logo";
-
-const items = [
-  {
-    title: "Dashboard",
-    url: "/dashboard",
-    icon: LayoutDashboard,
-    description: "Visão geral das suas finanças",
-  },
-  {
-    title: "Despesas",
-    url: "/dashboard/bills",
-    icon: ReceiptText,
-    description: "Gerencie suas despesas",
-  },
-];
 
 export function Sidebar() {
   const pathname = usePathname();
@@ -36,7 +22,7 @@ export function Sidebar() {
             Principal
           </h2>
         </div>
-        {items.map((item, index) => (
+        {menuItems.map((item, index) => (
           <motion.div
             key={index}
             initial={{ opacity: 0, x: -10 }}
