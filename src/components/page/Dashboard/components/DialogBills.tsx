@@ -160,13 +160,13 @@ export const DialogBills = ({
   const isLoading = isPending || isPendingUpdateBill;
 
   return (
-    <DialogContent className="sm:max-w-[550px] p-0">
-      <div className="px-6 py-4 border-b border-gray-100">
-        <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-indigo-900">
+    <DialogContent className="sm:max-w-[550px] p-0 bg-white/10 backdrop-blur-xl border-indigo-100/20 shadow-lg rounded-md overflow-hidden">
+      <div className="px-6 py-4 border-b border-indigo-100/20">
+        <DialogHeader className="">
+          <DialogTitle className="text-2xl font-bold text-indigo-100">
             {title}
           </DialogTitle>
-          <DialogDescription className="text-indigo-600/80 mt-1">
+          <DialogDescription className="text-indigo-400 mt-1">
             {subtitle}
           </DialogDescription>
         </DialogHeader>
@@ -198,7 +198,8 @@ export const DialogBills = ({
                 placeholder="Digite o valor"
                 name="amount"
                 error={errors.amount}
-                icon={<BanknoteIcon className="w-4 h-4 text-indigo-600" />}
+                icon={<BanknoteIcon size={16} className="text-indigo-300" />}
+                className="bg-white/10 border-white/20 text-white placeholder:text-indigo-200/60"
               />
             </div>
           </div>
@@ -209,6 +210,7 @@ export const DialogBills = ({
               label="Descrição"
               placeholder="Digite a descrição da despesa"
               name="description"
+              className="bg-white/10 border-white/20 text-white placeholder:text-indigo-200/60"
               error={errors.description}
             />
 
@@ -249,12 +251,12 @@ export const DialogBills = ({
           </div>
         </div>
 
-        <div className="px-6 py-4 bg-gray-50 border-t border-gray-100">
+        <div className="flex items-center justify-center px-6 py-4 border-t border-indigo-100/20">
           <Button
             variant="outline"
             isLoading={isLoading}
             disabled={!isValid}
-            className="w-full h-11 text-sm font-medium transition-all duration-300"
+            className="bg-indigo-700 hover:bg-indigo-600 focus:bg-indigo-600 text-white rounded-full h-10 px-4"
             type="submit"
           >
             {submitButton}

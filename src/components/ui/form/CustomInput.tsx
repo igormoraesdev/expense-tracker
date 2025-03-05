@@ -57,7 +57,7 @@ export function CustomInput({
           {...rest}
           onChange={handleChange}
           className={cn(
-            "w-full py-3 rounded-sm bg-background placeholder:text-foreground-faded border border-border-faded transition duration-300 ease focus:outline-none focus:border-indigo-700 pl-4 pr-9 placeholder:text-sm",
+            "w-full min-h-[56px] rounded-sm bg-background placeholder:text-foreground-faded border border-border-faded transition duration-300 ease focus:outline-none focus:border-indigo-700 pl-4 pr-9 placeholder:text-sm",
             className
           )}
           type={showPassword ? "text" : rest.type}

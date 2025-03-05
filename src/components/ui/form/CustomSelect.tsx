@@ -27,15 +27,15 @@ export const CustomSelect = ({
 }: CustomSelectProps) => {
   return (
     <div className="flex flex-col items-start gap-1">
-      <label className="text-sm text-indigo-700">{label}</label>
+      <label className="text-sm text-indigo-200">{label}</label>
       <Select onValueChange={field?.onChange} defaultValue={field?.value}>
-        <SelectTrigger className="w-full">
-          <SelectValue placeholder={placeholder} />
+        <SelectTrigger className="w-full bg-white/10 border-white/20 text-white placeholder:text-indigo-200/60 min-h-[56px] h-full">
+          <SelectValue className="text-indigo-200" placeholder={placeholder} />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="bg-indigo-950/50 backdrop-blur-xl border border-white/20 shadow-lg rounded-md">
           <SelectGroup>
             {list?.map((item) => (
-              <SelectItem key={item} value={item}>
+              <SelectItem className="text-white" key={item} value={item}>
                 {translateFn ? translateFn(item) : item}
               </SelectItem>
             ))}

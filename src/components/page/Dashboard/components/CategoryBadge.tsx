@@ -18,21 +18,27 @@ type CategoryBadgeProps = {
 
 export const CategoryBadge = ({ category, className }: CategoryBadgeProps) => {
   const categoryRender = useMemo(() => {
-    const iconClass = cn("text-indigo-600", className || "size-4");
+    const iconClass = cn("text-indigo-300", className);
     const condition = {
-      [CategoryEnum.Card]: <CreditCard className={iconClass} strokeWidth={1.5} />,
+      [CategoryEnum.Card]: (
+        <CreditCard className={iconClass} strokeWidth={1.5} />
+      ),
       [CategoryEnum.Food]: <Ham className={iconClass} strokeWidth={1.5} />,
-      [CategoryEnum.Health]: <HeartPulse className={iconClass} strokeWidth={1.5} />,
+      [CategoryEnum.Health]: (
+        <HeartPulse className={iconClass} strokeWidth={1.5} />
+      ),
       [CategoryEnum.House]: <House className={iconClass} strokeWidth={1.5} />,
       [CategoryEnum.Phone]: <Phone className={iconClass} strokeWidth={1.5} />,
-      [CategoryEnum.Utilities]: <Package className={iconClass} strokeWidth={1.5} />,
-      [CategoryEnum.Other]: <Paperclip className={iconClass} strokeWidth={1.5} />,
+      [CategoryEnum.Utilities]: (
+        <Package className={iconClass} strokeWidth={1.5} />
+      ),
+      [CategoryEnum.Other]: (
+        <Paperclip className={iconClass} strokeWidth={1.5} />
+      ),
     };
     return condition[category];
   }, [category]);
   return (
-    <div className="flex items-center justify-center">
-      {categoryRender}
-    </div>
+    <div className="flex items-center justify-center">{categoryRender}</div>
   );
 };

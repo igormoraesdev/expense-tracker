@@ -4,7 +4,7 @@ import { users } from "@/drizzle/schema/users";
 import { addDays, startOfDay } from "date-fns";
 import { and, eq, gte, lt, or } from "drizzle-orm";
 import { StatusEnum } from "../entities/bills/enum";
-import { WhatsappService } from "../service";
+import { WhatsappService } from "../service/whatsapp";
 
 interface GroupedBills {
   [key: string]: {
