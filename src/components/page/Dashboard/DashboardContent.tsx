@@ -24,7 +24,7 @@ export const DashboardContent = () => {
   const currentYear = searchParams.get("year");
   const [openDialog, setOpenDialog] = useState(false);
   const [openDialogPhone, setOpenDialogPhone] = useState(false);
-  const [selectedBill, setSelectedBill] = useState<Bill>();
+  const [selectedBill, setSelectedBill] = useState<Bill | undefined>(undefined);
   const session = useSession();
 
   const date = new Date();
@@ -169,7 +169,11 @@ export const DashboardContent = () => {
             </motion.div> */}
           </div>
         </div>
-        <DialogBills onOpenDialog={setOpenDialog} bill={selectedBill} />
+        <DialogBills
+          onOpenDialog={setOpenDialog}
+          bill={selectedBill}
+          isEdit={!!selectedBill}
+        />
       </Dialog>
     </FormProvider>
   );

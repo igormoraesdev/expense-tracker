@@ -15,7 +15,7 @@ import { NextBillContent } from "./NextBillContent";
 
 type NextBillsListProps = {
   onOpenDialog: (open: boolean) => void;
-  onSelectBill: (bill: Bill) => void;
+  onSelectBill: (bill: Bill | undefined) => void;
 };
 
 export const NextBillsList = ({
@@ -95,7 +95,12 @@ export const NextBillsList = ({
               Despesas que vencem em breve
             </CardDescription>
           </div>
-          <DialogTrigger asChild>
+          <DialogTrigger
+            onClick={() => {
+              onSelectBill(undefined);
+            }}
+            asChild
+          >
             <Button className="bg-indigo-700 hover:bg-indigo-600 focus:bg-indigo-600 text-white rounded-full h-10 px-4">
               <Plus className="h-4 w-4 mr-2" />
               Nova
