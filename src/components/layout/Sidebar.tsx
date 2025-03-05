@@ -12,7 +12,7 @@ export function Sidebar() {
   const isActive = (url: string) => pathname === url;
 
   return (
-    <div className="flex flex-col h-full w-full bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 text-white border-r-2 border-indigo-100/20">
+    <div className="flex flex-col h-full w-full bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 text-white border-r border-indigo-100/20">
       <div className="flex items-center h-[90px] px-6">
         <Logo className="mx-auto" color="#c7d2fe" />
       </div>
@@ -70,7 +70,7 @@ export function Sidebar() {
           </motion.div>
         ))}
       </div>
-      <div className="p-4 mt-auto border-t-2 border-indigo-100/20 bg-gradient-to-t from-indigo-950/40 to-transparent">
+      <div className="p-4 mt-auto border-t border-indigo-100/20 bg-gradient-to-t from-indigo-950/40 to-transparent">
         <div className="flex items-center justify-center">
           <span className="text-xs text-indigo-200">
             Expense Tracker © {new Date().getFullYear()}

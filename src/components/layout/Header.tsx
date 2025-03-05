@@ -30,7 +30,7 @@ export const Header = () => {
 
   return (
     <>
-      <header className="sticky top-0 z-[50] flex items-center justify-between w-full h-[90px] px-6 bg-white/10 backdrop-blur-xl border-b-2 border-indigo-100/20 text-white bg-gradient-to-r from-slate-950 via-indigo-950 to-slate-900 shadow-lg">
+      <header className="sticky top-0 z-[50] flex items-center justify-between w-full h-[90px] px-6 bg-white/10 backdrop-blur-xl border-b border-indigo-100/20 text-white bg-gradient-to-r from-slate-950 via-indigo-950 to-slate-900 shadow-lg">
         <div className="md:hidden">
           <Logo className="mx-auto" color="#c7d2fe" />
         </div>
