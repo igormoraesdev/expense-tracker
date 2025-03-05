@@ -47,7 +47,7 @@ export const CustomDatePicker = ({
           <Button
             variant={"outline"}
             className={cn(
-              "rounded-full w-[248px] h-[56px] p-4 text-left font-normal relative group gap-1 justify-start",
+              "rounded-full w-[242px] h-[56px] p-4 text-left font-normal relative group gap-1 justify-start",
               "bg-indigo-700 backdrop-blur-xl border border-indigo-200 text-white hover:bg-indigo-600 focus:bg-indigo-600"
             )}
           >
