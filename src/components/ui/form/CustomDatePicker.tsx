@@ -47,8 +47,8 @@ export const CustomDatePicker = ({
           <Button
             variant={"outline"}
             className={cn(
-              "rounded-full w-[248px] h-[56px] p-4 text-left font-normal relative group gap-1 justify-start"
-              // "bg-white/10 backdrop-blur-xl border border-white/20 text-white hover:bg-white/20"
+              "rounded-full w-[248px] h-[56px] p-4 text-left font-normal relative group gap-1 justify-start",
+              "bg-white/10 backdrop-blur-xl border border-white/20 text-white hover:bg-white/20"
             )}
           >
             <CalendarIcon className="w-4 h-4 text-indigo-300 mr-2" />
@@ -73,7 +73,7 @@ export const CustomDatePicker = ({
           </Button>
         </PopoverTrigger>
         <PopoverContent
-          className="w-auto p-0 z-[50] overflow-hidden border-2 border-white/20"
+          className="w-auto p-0 z-[51] overflow-hidden border-2 border-white/20"
           align="start"
         >
           <Calendar
