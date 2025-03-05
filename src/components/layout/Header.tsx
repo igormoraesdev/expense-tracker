@@ -54,6 +54,7 @@ export const Header = () => {
                     src={session.data?.user.image as string}
                     alt="Avatar"
                     className="object-cover z-10"
+                    priority
                   />
                 ) : (
                   <AvatarFallback className="flex items-center justify-center text-sm font-medium text-indigo-100 bg-white/10">
