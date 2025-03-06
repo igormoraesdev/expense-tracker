@@ -59,7 +59,7 @@ export const TotalMonthSpend = () => {
         <CardContent>
           <div className="text-4xl font-bold mb-2 text-indigo-100">
             <div className="flex flex-col">
-              <div className="flex flex-col items-center justify-between p-5  rounded-lg ">
+              <div className="flex flex-col items-center justify-between rounded-lg ">
                 <div className="w-full flex flex-1 gap-4 items-center justify-between pb-7">
                   <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                     <div className="h-10 w-10 rounded-full bg-indigo-500/20 flex items-center justify-center mr-3">
@@ -79,7 +79,7 @@ export const TotalMonthSpend = () => {
                   </div>
                 </div>
                 <div className="w-full flex gap-5 pt-7 border-t border-white/10">
-                  <div className="rounded-xl p-1 sm:p-4 transition-all duration-300 hover:bg-indigo-400/10">
+                  <div className="rounded-xl pl-4 lg:pl-0 p-1 sm:p-4 transition-all duration-300 hover:bg-indigo-400/10">
                     {isLoading ? (
                       <div className="flex flex-col gap-5">
                         <Skeleton className="h-[20px] w-[110px] bg-white/10 rounded-md" />

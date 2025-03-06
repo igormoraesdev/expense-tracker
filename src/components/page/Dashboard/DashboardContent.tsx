@@ -89,14 +89,14 @@ export const DashboardContent = () => {
       <Dialog open={openDialog} onOpenChange={setOpenDialog}>
         <div className="w-full min-h-screen overflow-hidden">
           <div className="w-full min-h-screen p-8 lg:p-16">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8 justify-items-center sm:justify-items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8 justify-items-center sm:justify-items-start">
               <TotalMonthSpend />
               <MainCategory />
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
-                className="w-full h-full col-span-1 flex items-center justify-center order-1 sm:order-3"
+                className="w-full h-full col-span-1 flex items-center justify-start order-1 sm:order-3"
               >
                 <Controller
                   control={form.control}
