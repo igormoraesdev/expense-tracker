@@ -81,7 +81,6 @@ export const CustomDatePicker = ({
             mode="single"
             selected={date}
             onSelect={handleSelectDate}
-            initialFocus
             locale={ptBR}
           />
         </PopoverContent>
