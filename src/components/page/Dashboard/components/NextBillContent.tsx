@@ -101,13 +101,13 @@ export const NextBillContent = ({
     const diffInDays = differenceInDays(dueDate, today);
 
     if (diffInDays === 0) {
-      return "Vence hoje • ";
+      return "Vence hoje";
     } else if (diffInDays === 1) {
-      return "Vence amanhã • ";
+      return "Vence amanhã";
     } else if (diffInDays > 1) {
-      return `Vence em ${diffInDays} dias • `;
+      return `Vence em ${diffInDays} dias`;
     } else {
-      return `Venceu há ${Math.abs(diffInDays)} dias • `;
+      return `Venceu há ${Math.abs(diffInDays)} dias`;
     }
   };
   return (
@@ -115,21 +115,27 @@ export const NextBillContent = ({
       key={bill.id}
       className="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10"
     >
-      <div className="flex items-center">
-        <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-indigo-500/20 flex items-center justify-center mr-3">
+      <div className="flex items-center w-full">
+        <div className="max-h-[25px] sm:max-h-10 max-w-[25px] sm:max-w-10 h-[30px] w-[30px] sm:h-10 sm:w-10 rounded-full bg-indigo-500/20 flex items-center justify-center mr-5">
           <CategoryBadge
             category={bill.category as CategoryEnum}
-            className="size-4 sm:size-6"
+            className="size-3 sm:size-6"
           />
         </div>
-        <div>
-          <p className="font-medium text-white">{bill.description}</p>
-          <div className="flex flex-col md:flex-row items-start md:items-center gap-2">
-            <p className="text-xs text-indigo-200">
-              {formatDate(new Date(bill.dueDate))}
+        <div className="w-full flex flex-col gap-2">
+          <div className="w-full flex items-center justify-between">
+            <p className="font-medium text-white">{bill.description}</p>
+            <p className="font-semibold text-indigo-100">
+              {formatCurrency(Number(bill.amount))}
             </p>
+          </div>
+          <p className="text-xs text-indigo-200">
+            {formatDate(new Date(bill.dueDate))}
+          </p>
+          <div className="w-full flex items-center justify-between">
             <Badge
               className={cn(
+                "text-xs text-center w-fit",
                 bill.status === StatusEnum.Pending &&
                   "bg-yellow-500/20 text-yellow-500",
                 bill.status === StatusEnum.Paid &&
@@ -140,7 +146,6 @@ export const NextBillContent = ({
             >
               {translateStatus(bill.status as StatusEnum)}
             </Badge>
-
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
@@ -236,9 +241,6 @@ export const NextBillContent = ({
           </div>
         </div>
       </div>
-      <p className="font-semibold text-indigo-100">
-        {formatCurrency(Number(bill.amount))}
-      </p>
     </div>
   );
 };

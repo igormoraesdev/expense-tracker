@@ -145,7 +145,7 @@ export default function MonthPicker({
                   <Button
                     name="month"
                     className={cn(
-                      "w-full h-10 rounded-md text-sm font-medium transition-all",
+                      "w-full h-10 rounded-md text-sm font-medium transition-all border-2 border-indigo-500/30",
                       isEqual(month, currentMonth)
                         ? "bg-indigo-700 text-white hover:bg-indigo-700 shadow-md"
                         : "bg-indigo-500/30 text-indigo-100 hover:bg-indigo-700 hover:text-white",

@@ -1,7 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { menuItems } from "@/lib/utils/constants";
-import { motion } from "framer-motion";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -22,13 +21,8 @@ export function Sidebar() {
             Principal
           </h2>
         </div>
-        {menuItems.map((item, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.3, delay: index * 0.1 }}
-          >
+        {menuItems.map((item) => (
+          <div key={item.description}>
             <Link
               href={item.url}
               className={cn(
@@ -67,7 +61,7 @@ export function Sidebar() {
                 )}
               />
             </Link>
-          </motion.div>
+          </div>
         ))}
       </div>
       <div className="p-4 mt-auto border-t border-indigo-100/20 bg-gradient-to-t from-indigo-950/40 to-transparent">

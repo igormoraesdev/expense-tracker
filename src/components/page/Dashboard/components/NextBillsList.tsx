@@ -33,20 +33,20 @@ export const NextBillsList = ({
               key={item}
               className="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10"
             >
-              <div className="flex items-center">
+              <div className="flex items-center w-full">
                 <Skeleton className="bg-white/10 h-10 w-10 rounded-full" />
-                <div className="flex flex-col ml-3 space-y-2">
-                  <div className="flex items-center gap-2">
+                <div className="flex flex-col ml-3 space-y-2 gap-2 w-full">
+                  <div className="w-full flex items-center justify-between">
+                    <Skeleton className="bg-white/10 h-3 w-24 rounded" />
                     <Skeleton className="bg-white/10 h-3 w-24 rounded" />
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Skeleton className="bg-white/10 h-3 w-24 rounded" />
+                  <Skeleton className="bg-white/10 h-3 w-24 rounded" />
+                  <div className="w-full flex items-center justify-between">
                     <Skeleton className="bg-white/10 h-3 w-16 rounded" />
                     <Skeleton className="bg-white/10 h-[32px] w-[32px] rounded-full" />
                   </div>
                 </div>
               </div>
-              <Skeleton className="h-5 w-20 bg-white/10 rounded animate-pulse" />
             </div>
           ))}
         </div>
