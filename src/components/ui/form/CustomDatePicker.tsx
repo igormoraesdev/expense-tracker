@@ -73,11 +73,11 @@ export const CustomDatePicker = ({
           </Button>
         </PopoverTrigger>
         <PopoverContent
-          className="w-auto p-0 z-[51] overflow-hidden border-2 border-white/20"
+          className="mt-2 w-auto p-0 z-[51] overflow-hidden"
           align="start"
         >
           <Calendar
-            className="p-4 bg-indigo-700 backdrop-blur-xl shadow-lg rounded-md"
+            className="p-4 bg-indigo-950/50 backdrop-blur-xl border-indigo-100/20 shadow-lg rounded-md"
             mode="single"
             selected={date}
             onSelect={handleSelectDate}

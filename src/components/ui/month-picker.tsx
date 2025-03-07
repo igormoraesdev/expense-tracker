@@ -58,21 +58,21 @@ export default function MonthPicker({
           variant={"outline"}
           className={cn(
             "rounded-full w-[248px] h-[56px] p-4 justify-between text-left font-normal relative group",
-            "bg-white/10 backdrop-blur-xl border-white/20 text-white hover:bg-white/20"
+            "bg-indigo-700 backdrop-blur-xl border border-indigo-200 text-white hover:bg-indigo-600 focus:bg-indigo-600"
           )}
         >
           <div className="flex items-center">
-            <Calendar className="h-4 w-4 text-indigo-300 mr-2" />
+            <Calendar className="h-4 w-4 text-white mr-2" />
             {currentMonth ? (
               <span className="flex items-center">
-                <span className="text-indigo-100 font-medium">
+                <span className="text-white">
                   {format(currentMonth, "MMMM", { locale: ptBR })
                     .charAt(0)
                     .toUpperCase() +
                     format(currentMonth, "MMMM", { locale: ptBR }).slice(1)}
                 </span>
-                <span className="mx-1 text-indigo-300">-</span>
-                <span className="text-indigo-200">
+                <span className="mx-1 text-white">-</span>
+                <span className="text-white">
                   {format(currentMonth, "yyyy", { locale: ptBR })}
                 </span>
               </span>

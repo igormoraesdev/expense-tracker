@@ -101,7 +101,7 @@ export const NextBillsList = ({
             }}
             asChild
           >
-            <Button className="bg-indigo-700 hover:bg-indigo-600 focus:bg-indigo-600 text-white rounded-full h-10 px-4">
+            <Button className="bg-indigo-700 backdrop-blur-xl border border-indigo-200 text-white hover:bg-indigo-600 focus:bg-indigo-600 rounded-full h-10 px-4">
               <Plus className="h-4 w-4 mr-2" />
               Nova
             </Button>
