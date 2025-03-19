@@ -10,7 +10,7 @@ import { useCountAnimation } from "@/hooks/useCountAnimation";
 import { useDashboardData } from "@/hooks/useDashboardData";
 import { cn, formatCurrency } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { DollarSign, TrendingUp, Wallet } from "lucide-react";
+import { DollarSign, TrendingDown, TrendingUp, Wallet } from "lucide-react";
 import { useMemo } from "react";
 
 export const TotalMonthSpend = () => {
@@ -36,7 +36,7 @@ export const TotalMonthSpend = () => {
     [animatedTotal]
   );
 
-  const isNegative = percentageChange < 0;
+  const isNegative = percentageChange <= 0;
 
   return (
     <motion.div
@@ -125,7 +125,7 @@ export const TotalMonthSpend = () => {
                 ) : (
                   <>
                     {isNegative ? (
-                      <TrendingUp className="size-3.5 text-green-200" />
+                      <TrendingDown className="size-3.5 text-green-200" />
                     ) : (
                       <TrendingUp className="size-3.5 text-red-200" />
                     )}
