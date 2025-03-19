@@ -32,11 +32,14 @@ import { CategoryBadge } from "../../Dashboard/components/CategoryBadge";
 export const ExpensesList = () => {
   const [page, setPage] = useState(1);
   const session = useSession();
-  const { data, isLoading } = useGetAllBills({
-    userId: session.data?.user.userId as string,
-    page,
-    limit: 10,
-  });
+  const { data, isLoading } = useGetAllBills(
+    {
+      userId: session.data?.user.userId as string,
+      page,
+      limit: 10,
+    },
+    { enabled: !!session.data?.user.userId }
+  );
 
   if (isLoading) {
     return (

@@ -16,11 +16,14 @@ import { useSession } from "next-auth/react";
 import { useMemo } from "react";
 export const TotalSpend = () => {
   const session = useSession();
-  const { data, isLoading } = useGetAllBills({
-    userId: session.data?.user.userId as string,
-    page: 1,
-    limit: 10,
-  });
+  const { data, isLoading } = useGetAllBills(
+    {
+      userId: session.data?.user.userId as string,
+      page: 1,
+      limit: 10,
+    },
+    { enabled: !!session.data?.user.userId }
+  );
 
   const animatedTotal = useCountAnimation(Number(data?.totalSpend) || 0);
 
