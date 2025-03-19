@@ -35,6 +35,13 @@ class BillsServiceClass {
     return response.data;
   }
 
+  async getAllBills(params: AllBillsParams): Promise<AllBillsResponse> {
+    const response = await this.apiClient.get(
+      `/api/bills/all?userId=${params.userId}&page=${params.page}&limit=${params.limit}`
+    );
+    return response.data;
+  }
+
   async updateBill(data: UpdateBillParam): Promise<Bill> {
     const response = await this.apiClient.patch("/api/bills", data);
     return response.data;

@@ -51,6 +51,23 @@ declare global {
     date: Date;
   }
 
+  interface AllBillsParams {
+    userId: string;
+    page: number;
+    limit: number;
+  }
+
+  interface AllBillsResponse {
+    bills: Bill[];
+    totalSpend: number;
+    pagination: {
+      total: number;
+      page: number;
+      limit: number;
+      totalPages: number;
+    };
+  }
+
   type BillsListParams = TotalSpendParams;
 
   interface DashboardFormType {

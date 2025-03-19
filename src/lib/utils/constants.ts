@@ -11,7 +11,7 @@ export const menuItems = [
   },
   {
     title: "Despesas",
-    url: "/dashboard/bills",
+    url: "/dashboard/expenses",
     icon: ReceiptText,
     description: "Gerencie suas despesas",
   },

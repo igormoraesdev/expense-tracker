@@ -119,54 +119,6 @@ export const DashboardContent = () => {
               />
               <ChartByCategory />
             </div>
-
-            {/* <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.6 }}
-            >
-              <Card className="bg-white/10 backdrop-blur-xl border-white/20 text-white overflow-hidden relative">
-                <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl" />
-                <CardHeader className="flex flex-row items-center justify-between">
-                  <div>
-                    <CardTitle>Histórico de Despesas</CardTitle>
-                    <CardDescription className="text-indigo-200">
-                      Últimas despesas cadastradas
-                    </CardDescription>
-                  </div>
-                  <Button className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-full h-10 px-4">
-                    Ver todas
-                  </Button>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {[1, 2, 3, 4].map((item) => (
-                      <div
-                        key={item}
-                        className="flex items-center justify-between p-4 bg-white/5 rounded-lg border border-white/10"
-                      >
-                        <div className="flex items-center">
-                          <div className="h-12 w-12 rounded-full bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center mr-4">
-                            <Wallet className="h-6 w-6 text-white" />
-                          </div>
-                          <div>
-                            <p className="font-medium text-white">
-                              Compras no supermercado
-                            </p>
-                            <p className="text-sm text-indigo-200">
-                              Alimentação • {format(new Date(), "dd/MM/yyyy")}
-                            </p>
-                          </div>
-                        </div>
-                        <p className="font-semibold text-indigo-100">
-                          - R$ 350,00
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div> */}
           </div>
         </div>
         <DialogBills
