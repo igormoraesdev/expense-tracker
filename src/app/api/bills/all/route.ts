@@ -54,7 +54,7 @@ export async function GET(req: Request) {
     });
   } catch (error) {
     return NextResponse.json(
-      { message: "Error to get bills", error },
+      { message: "Error to get all bills", error },
       { status: 500 }
     );
   }
