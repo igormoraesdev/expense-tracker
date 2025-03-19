@@ -52,7 +52,7 @@ export const TotalSpend = () => {
             <div className="flex flex-col">
               <div className="flex flex-col items-center justify-between rounded-lg ">
                 <div className="w-full flex flex-1 gap-4 items-center justify-between pb-7">
-                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                  <div className="flex flex-row items-start sm:items-center gap-4">
                     <div className="h-10 w-10 rounded-full bg-indigo-500 flex items-center justify-center mr-3">
                       {isLoading ? (
                         <Skeleton className="h-5 w-5 bg-white/10 rounded-md" />
