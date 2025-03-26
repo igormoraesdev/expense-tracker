@@ -9,12 +9,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useDeleteBill } from "@/hooks/api/bills/useDeleteBill";
-import { useUpdateBill } from "@/hooks/api/bills/useUpdateBill";
-import { useToast } from "@/hooks/use-toast";
+import { useBills } from "@/hooks/useBills";
 import { CategoryEnum, StatusEnum } from "@/lib/entities/bills/enum";
 import { cn, formatCurrency, translateStatus } from "@/lib/utils";
-import { useQueryClient } from "@tanstack/react-query";
 import { differenceInDays } from "date-fns";
 import {
   Check,
@@ -37,63 +34,10 @@ export const NextBillContent = ({
   onOpenDialog,
   onSelectBill,
 }: NextBillContentProps) => {
-  const queryClient = useQueryClient();
-  const { toast } = useToast();
-
-  const { mutateAsync } = useUpdateBill({
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["bills"] });
-      queryClient.invalidateQueries({ queryKey: ["total-spend"] });
-    },
+  const { handleUpdateStatus, handleEditBill, handleDeleteBill } = useBills({
+    onOpenDialog,
+    onSelectBill,
   });
-  const { mutateAsync: mutateAsyncDelete } = useDeleteBill({
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["bills"] });
-      queryClient.invalidateQueries({ queryKey: ["total-spend"] });
-    },
-  });
-
-  const handleUpdateStatus = async (bill: Bill, status: StatusEnum) => {
-    try {
-      const id = bill.id as string;
-
-      await mutateAsync({
-        billId: id,
-        bill: { ...bill, status, updatedAt: new Date() },
-      });
-      toast({
-        description: "Status atualizado com sucesso",
-        className: "bg-green-500 text-white",
-        duration: 5000,
-      });
-    } catch (error: any) {
-      toast({
-        className: "bg-red-500 text-white",
-        description: error.message,
-      });
-    }
-  };
-
-  const handleEditBill = (bill: Bill) => {
-    onOpenDialog(true);
-    onSelectBill(bill);
-  };
-
-  const handleDeleteBill = async (bill: Bill) => {
-    try {
-      await mutateAsyncDelete(bill.id as string);
-      toast({
-        description: "Despesa excluída com sucesso",
-        className: "bg-green-500 text-white",
-        duration: 5000,
-      });
-    } catch (error: any) {
-      toast({
-        className: "bg-red-500 text-white",
-        description: error.message,
-      });
-    }
-  };
 
   const formatDate = (date: Date) => {
     const dueDate = new Date(date);
@@ -226,7 +170,7 @@ export const NextBillContent = ({
                         onClick={() =>
                           handleUpdateStatus(bill, StatusEnum.Pending)
                         }
-                        className="gap-2 text-sm rounded-md text-yellow-600 data-[highlighted]:bg-yellow-50 data-[highlighted]:text-yellow-700 cursor-pointer transition-colors duration-200"
+                        className="gap-2 text-sm rounded-md  cursor-pointer transition-colors duration-200"
                       >
                         <Timer className="h-4 w-4" strokeWidth={1.5} />
                         <span>

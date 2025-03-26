@@ -64,6 +64,7 @@ export const DialogBills = ({
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ["bills"] });
         queryClient.invalidateQueries({ queryKey: ["total-spend"] });
+        queryClient.invalidateQueries({ queryKey: ["all-bills"] });
         reset({
           amount: "",
           description: "",
