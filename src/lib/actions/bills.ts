@@ -50,7 +50,7 @@ export async function updateExpiredBills() {
 
 export async function sendMessageExpiredBills() {
   const today = startOfDay(new Date());
-  const threeDaysFromNow = startOfDay(addDays(today, 3));
+  const threeDaysFromNow = startOfDay(addDays(today, 5));
 
   const billsList = await db
     .select({

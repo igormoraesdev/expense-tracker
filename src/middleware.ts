@@ -22,13 +22,7 @@ const authMiddleware = withAuth({
   },
 });
 
-const pathList = [
-  "/_next/",
-  "/images/",
-  "/favicon.ico",
-  "/api/public",
-  "/api/schedule",
-];
+const pathList = ["/_next/", "/images/", "/favicon.ico", "/api"];
 
 export default async function middleware(
   req: NextRequest,
