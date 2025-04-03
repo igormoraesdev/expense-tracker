@@ -88,7 +88,7 @@ export const DashboardContent = () => {
       </Dialog>
       <Dialog open={openDialog} onOpenChange={setOpenDialog}>
         <div className="w-full min-h-screen overflow-hidden">
-          <div className="w-full min-h-screen p-8 lg:p-16">
+          <div className="container mx-auto w-full min-h-screen p-8 lg:p-16">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8 justify-items-center sm:justify-items-start">
               <TotalMonthSpend />
               <MainCategory />
