@@ -17,7 +17,8 @@ const buttonVariants = cva(
           "font-bold border border-indigo-200 shadow-sm text-indigo-700 hover:bg-indigo-200",
         secondary:
           "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
+        ghost:
+          "border border-indigo-500 text-indigo-200 hover:bg-indigo-500 hover:text-white",
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
@@ -63,11 +64,10 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         {...props}
       >
-        {isLoading ? (
+        {isLoading && (
           <LoaderCircle className={cn("w-4 h-4 animate-spin", loadingColor)} />
-        ) : (
-          props.children
         )}
+        {props.children}
       </Comp>
     );
   }
