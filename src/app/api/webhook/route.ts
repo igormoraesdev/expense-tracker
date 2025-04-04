@@ -1,4 +1,8 @@
-import { NextRequest } from "next/server";
+import { db } from "@/drizzle";
+import { users } from "@/drizzle/schema/users";
+import { whatsapp } from "@/drizzle/schema/whatsapp";
+import { eq } from "drizzle-orm";
+import { NextRequest, NextResponse } from "next/server";
 
 const VERIFY_TOKEN = process.env.WHATSAPP_VERIFY_TOKEN;
 
@@ -42,9 +46,24 @@ export async function POST(req: NextRequest) {
 
       // Se for o botão de Opt-in, registrar o usuário
       if (buttonPayload === "Sim, quero receber") {
-        console.log(`✅ ${userName} aceitou receber notificações!`);
+        const userPhone = userNumber.replace("55", "").replace(/^61/, "619");
+        const user = await db.query.users.findFirst({
+          where: eq(users.phone, userPhone),
+        });
 
-        // Aqui você pode salvar no banco de dados ou acionar outra lógica
+        if (!user) {
+          console.warn(`⚠️ Usuário com telefone ${userPhone} não encontrado`);
+          return NextResponse.json({ success: false });
+        }
+
+        await db.insert(whatsapp).values({
+          userId: user.id,
+          optedIn: true,
+        });
+
+        console.log(
+          `✅ Opt-in salvo para usuário ${user.name} (${userNumber})`
+        );
       }
     }
 
