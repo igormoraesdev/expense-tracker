@@ -174,7 +174,7 @@ export const DialogBills = ({
       className="sm:max-w-[550px] p-0 bg-white/10 backdrop-blur-xl border-indigo-100/20 shadow-lg rounded-md overflow-hidden"
     >
       <div className="px-6 py-4 border-b border-indigo-100/20">
-        <DialogHeader className="">
+        <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-indigo-100">
             {title}
           </DialogTitle>

@@ -68,11 +68,16 @@ export const DialogPhone = ({ onOpenDialog }: DialogPhoneProps) => {
   };
 
   return (
-    <DialogContent className="[&>button]:hidden">
-      <form onSubmit={handleSubmit(handleUpdateUser)}>
+    <DialogContent className="[&>button]:hidden sm:max-w-[550px] p-0 bg-white/10 backdrop-blur-xl border-indigo-100/20 shadow-lg rounded-md overflow-hidden">
+      <form
+        onSubmit={handleSubmit(handleUpdateUser)}
+        className="px-6 py-4 border-b border-indigo-100/20"
+      >
         <DialogHeader className="flex items-start">
-          <DialogTitle>Registrar WhatsApp</DialogTitle>
-          <DialogDescription>
+          <DialogTitle className="text-2xl font-bold text-indigo-100">
+            Registrar WhatsApp
+          </DialogTitle>
+          <DialogDescription className="text-indigo-400 mt-1">
             Registre seu número do WhatsApp para receber notificações sobre suas
             faturas
           </DialogDescription>
@@ -80,6 +85,7 @@ export const DialogPhone = ({ onOpenDialog }: DialogPhoneProps) => {
         <div className="mt-6 flex flex-col gap-4">
           <CustomInput
             {...register("phone")}
+            className="bg-white/10 border-white/20 text-white placeholder:text-indigo-200/60"
             masks="number"
             typeMask="phone"
             label="WhatsApp"
@@ -93,7 +99,7 @@ export const DialogPhone = ({ onOpenDialog }: DialogPhoneProps) => {
             variant="outline"
             isLoading={isPending}
             disabled={!isValid}
-            className="mt-6 min-h-[41px]"
+            className="mt-6 w-full bg-indigo-700 hover:bg-indigo-600 focus:bg-indigo-600 text-white rounded-full h-10 px-4"
             type="submit"
           >
             Registrar número
