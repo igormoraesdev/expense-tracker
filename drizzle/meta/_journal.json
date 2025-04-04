@@ -15,6 +15,13 @@
       "when": 1740586991906,
       "tag": "0001_secret_wolverine",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1743724430520,
+      "tag": "0002_neat_micromacro",
+      "breakpoints": true
     }
   ]
 }
