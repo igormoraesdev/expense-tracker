@@ -50,8 +50,8 @@ export const useBills = ({ onOpenDialog, onSelectBill }: UseBillsProps) => {
   };
 
   const handleEditBill = (bill: Bill) => {
-    onOpenDialog(true);
     onSelectBill(bill);
+    onOpenDialog(true);
   };
 
   const handleDeleteBill = async (bill: Bill) => {
