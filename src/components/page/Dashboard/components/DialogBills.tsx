@@ -269,7 +269,7 @@ export const DialogBills = ({
             isLoading={isLoading}
             disabled={!isValid}
             loadingColor="text-white"
-            className="w-full bg-indigo-700 hover:bg-indigo-600 focus:bg-indigo-600 text-white rounded-full h-10 px-4"
+            className="w-full font-normal bg-indigo-700 hover:bg-indigo-600 focus:bg-indigo-600 text-white rounded-full h-10 px-4"
             type="submit"
           >
             {submitButton}

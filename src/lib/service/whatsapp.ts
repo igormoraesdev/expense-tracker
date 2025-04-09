@@ -1,45 +1,48 @@
 import axios from "axios";
 import { format } from "date-fns";
-import { StatusEnum } from "../entities/bills/enum";
 
 class WhatsappServiceClass {
   readonly phoneNumberId = process.env.META_PHONE_NUMBER_ID!;
   readonly accessToken = process.env.META_TOKEN!;
   constructor() {}
 
-  generateMessage(billsList: Bill[], name: string): string {
-    const listMessage = billsList
-      .map(
-        (bill) =>
-          `📌 ${bill.description} - ${
-            bill.status === StatusEnum.Pending
-              ? "Vence em"
-              : bill.status === StatusEnum.Expired
-              ? "Expirou"
-              : "Vencimento em 3 dias"
-          } ${format(bill.dueDate, "dd/MM/yyyy")} - ${new Intl.NumberFormat(
-            "pt-BR",
-            {
-              style: "currency",
-              currency: "BRL",
-            }
-          ).format(Number(bill.amount))}`
-      )
-      .join("\n");
-    const message = `Oi ${name}, estou passando para te avisar sobre o vencimento dos seus boletos \n\n`;
+  async sendReminderTemplate(to: string, name: string, bills: Bill[]) {
+    const contasFormatadas = bills.slice(0, 5).map((bill) => {
+      const descricao = bill.description;
+      const vencimento = format(bill.dueDate, "dd/MM/yyyy");
+      const valor = new Intl.NumberFormat("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      }).format(Number(bill.amount));
 
-    return `🔔 *Lembrete de Contas*\n\n${message}${listMessage}\n\n💡 Não deixe suas contas vencerem!`;
-  }
+      return `📌 ${descricao} - 📅 *${vencimento}* - 💰*${valor}*`;
+    });
 
-  async sendWhatsAppMessage(to: string, message: string) {
+    const parameters = [
+      { type: "text", text: name?.trim() || "Cliente" },
+      ...Array.from({ length: 5 }, (_, i) => ({
+        type: "text",
+        text: contasFormatadas[i] || " ",
+      })),
+    ];
+
     try {
       const response = await axios.post(
         `https://graph.facebook.com/v22.0/${this.phoneNumberId}/messages`,
         {
           messaging_product: "whatsapp",
           to: `55${to}`,
-          type: "text",
-          text: { body: message },
+          type: "template",
+          template: {
+            name: "notificacao_contas",
+            language: { code: "pt_BR" },
+            components: [
+              {
+                type: "body",
+                parameters,
+              },
+            ],
+          },
         },
         {
           headers: {
@@ -49,14 +52,15 @@ class WhatsappServiceClass {
         }
       );
 
-      console.log("WhatsApp message sent:", response.data);
-    } catch (error: any) {
+      console.log("Template enviado:", response.data);
+    } catch (err: any) {
       console.error(
-        "Error sending WhatsApp message:",
-        error.response?.data || error.message
+        "Erro ao enviar template:",
+        err.response?.data || err.message
       );
     }
   }
+
   async sendWhatsAppInitialMessage(to: string) {
     try {
       const response = await axios.post(
@@ -75,7 +79,7 @@ class WhatsappServiceClass {
         }
       );
 
-      console.log("WhatsApp message sent:", response.data);
+      console.log("Mensagem enviada com sucesso:", response.data);
     } catch (error: any) {
       console.log(error);
       console.error(

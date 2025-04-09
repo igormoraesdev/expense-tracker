@@ -42,8 +42,11 @@ export const NextBillContent = ({
   const formatDate = (date: Date) => {
     const dueDate = new Date(date);
     const today = new Date();
-    const diffInDays = differenceInDays(dueDate, today);
+    const diffInDays = differenceInDays(dueDate, today) + 1;
 
+    if (bill.status === StatusEnum.Paid) {
+      return "Pago";
+    }
     if (diffInDays === 0) {
       return "Vence hoje";
     } else if (diffInDays === 1) {
@@ -54,6 +57,7 @@ export const NextBillContent = ({
       return `Venceu há ${Math.abs(diffInDays)} dias`;
     }
   };
+
   return (
     <div
       key={bill.id}

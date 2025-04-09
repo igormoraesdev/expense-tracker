@@ -13,18 +13,18 @@ export async function GET(req: Request) {
       });
     }
 
-    console.log("Cron Job ran at:", new Date(), req.url);
+    console.log("Cron Job rodado em:", new Date(), req.url);
 
     await sendMessageExpiredBills();
     await updateExpiredBills();
 
-    return new NextResponse("Cron ran", {
+    return new NextResponse("Cron rodado com sucesso", {
       status: 200,
     });
   } catch (error) {
     console.log(error);
     return NextResponse.json(
-      { message: "Error to get total spend", error },
+      { message: "Erro ao rodar cron", error },
       { status: 500 }
     );
   }

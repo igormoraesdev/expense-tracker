@@ -25,7 +25,7 @@ export async function updateExpiredBills() {
   });
 
   if (expiredBills.length === 0) {
-    console.log("No expired bills to update");
+    console.log("Nenhuma conta vencida para atualizar");
     return;
   }
 
@@ -39,7 +39,9 @@ export async function updateExpiredBills() {
     )
   );
 
-  console.log(`Updated ${expiredBills.length} to status "expired".`);
+  console.log(
+    `Atualizadas ${expiredBills.length} contas para status "vencida".`
+  );
 }
 
 export async function sendMessageExpiredBills() {
@@ -95,9 +97,9 @@ export async function sendMessageExpiredBills() {
 
   for (const userId in groupedByUser) {
     const { user, bills } = groupedByUser[userId];
+
     if (user.phone) {
-      const message = WhatsappService.generateMessage(bills, user.name);
-      await WhatsappService.sendWhatsAppMessage(user.phone, message);
+      await WhatsappService.sendReminderTemplate(user.phone, user.name, bills);
     }
   }
 }
