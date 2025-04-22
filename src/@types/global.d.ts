@@ -1,5 +1,5 @@
 import { bills } from "@/drizzle/schema/bills";
-import { Plans } from "@/lib/entities/plans/enum";
+import { plans } from "@/drizzle/schema/plans";
 
 declare global {
   interface User {
@@ -88,19 +88,7 @@ declare global {
     phone: string;
   }
 
-  interface Plan {
-    id: Plans;
-    name: string;
-    price: string;
-    priceId: string;
-    period: string;
-    description: string;
-    features: string[];
-    isPopular: boolean;
-    icon: React.ReactNode;
-    bgGradient: string;
-    accentColor: string;
-  }
+  type Plans = typeof plans.$inferSelect;
 }
 
 export {};

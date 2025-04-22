@@ -1,5 +1,5 @@
-export enum Plans {
-  FREE = "FREE",
-  PREMIUM_MONTHLY = "PREMIUM_MONTHLY",
-  PREMIUM_ANNUAL = "PREMIUM_ANNUAL",
+export enum PlansEnum {
+  Gratuito = "Gratuito",
+  "Premium Mensal" = "Premium Mensal",
+  "Premium Anual" = "Premium Anual",
 }

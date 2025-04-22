@@ -3,11 +3,12 @@ import {
   pgTable,
   text,
   timestamp,
+  uuid,
   varchar,
 } from "drizzle-orm/pg-core";
 
 export const plans = pgTable("plans", {
-  id: varchar("id").primaryKey(),
+  id: uuid("id").defaultRandom().primaryKey(),
   name: varchar("name").notNull(),
   price: varchar("price").notNull(),
   priceId: varchar("price_id").notNull(),
@@ -16,5 +17,3 @@ export const plans = pgTable("plans", {
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
-
-export type Plan = typeof plans.$inferSelect;

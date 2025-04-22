@@ -24,6 +24,11 @@ class PlansServiceClass {
     );
     return response.data;
   }
+
+  async getPlans(): Promise<Plans[]> {
+    const response = await this.apiClient.get("/api/plans");
+    return response.data;
+  }
 }
 
 export const PlansService = new PlansServiceClass();
