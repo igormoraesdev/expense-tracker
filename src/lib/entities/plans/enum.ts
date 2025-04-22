@@ -1,0 +1,5 @@
+export enum Plans {
+  FREE = "FREE",
+  PREMIUM_MONTHLY = "PREMIUM_MONTHLY",
+  PREMIUM_ANNUAL = "PREMIUM_ANNUAL",
+}

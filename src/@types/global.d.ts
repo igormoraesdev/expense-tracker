@@ -1,4 +1,5 @@
 import { bills } from "@/drizzle/schema/bills";
+import { Plans } from "@/lib/entities/plans/enum";
 
 declare global {
   interface User {
@@ -85,6 +86,20 @@ declare global {
 
   interface RegisterPhoneFormType {
     phone: string;
+  }
+
+  interface Plan {
+    id: Plans;
+    name: string;
+    price: string;
+    priceId: string;
+    period: string;
+    description: string;
+    features: string[];
+    isPopular: boolean;
+    icon: React.ReactNode;
+    bgGradient: string;
+    accentColor: string;
   }
 }
 

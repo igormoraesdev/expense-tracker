@@ -12,7 +12,7 @@ import {
 import { useBills } from "@/hooks/useBills";
 import { CategoryEnum, StatusEnum } from "@/lib/entities/bills/enum";
 import { cn, formatCurrency, translateStatus } from "@/lib/utils";
-import { differenceInDays } from "date-fns";
+import { differenceInDays, format } from "date-fns";
 import {
   Check,
   MoreHorizontal,
@@ -47,12 +47,15 @@ export const NextBillContent = ({
     if (bill.status === StatusEnum.Paid) {
       return "Pago";
     }
+
     if (diffInDays === 0) {
       return "Vence hoje";
     } else if (diffInDays === 1) {
       return "Vence amanhã";
     } else if (diffInDays > 1) {
       return `Vence em ${diffInDays} dias`;
+    } else if (diffInDays === -1) {
+      return "Venceu ontem";
     } else {
       return `Venceu há ${Math.abs(diffInDays)} dias`;
     }
@@ -81,19 +84,24 @@ export const NextBillContent = ({
             {formatDate(new Date(bill.dueDate))}
           </p>
           <div className="w-full flex items-center justify-between">
-            <Badge
-              className={cn(
-                "text-xs text-center w-fit",
-                bill.status === StatusEnum.Pending &&
-                  "bg-yellow-500/20 text-yellow-500",
-                bill.status === StatusEnum.Paid &&
-                  "bg-green-500/20 text-green-500",
-                bill.status === StatusEnum.Expired &&
-                  "bg-red-500/20 text-red-500"
-              )}
-            >
-              {translateStatus(bill.status as StatusEnum)}
-            </Badge>
+            <div className="flex items-center gap-2">
+              <Badge
+                className={cn(
+                  "text-xs text-center w-fit",
+                  bill.status === StatusEnum.Pending &&
+                    "bg-yellow-500/20 text-yellow-500",
+                  bill.status === StatusEnum.Paid &&
+                    "bg-green-500/20 text-green-500",
+                  bill.status === StatusEnum.Expired &&
+                    "bg-red-500/20 text-red-500"
+                )}
+              >
+                {translateStatus(bill.status as StatusEnum)}
+              </Badge>
+              <p className="text-xs text-indigo-200">
+                {format(new Date(bill.dueDate), "dd/MM/yyyy")}
+              </p>
+            </div>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
