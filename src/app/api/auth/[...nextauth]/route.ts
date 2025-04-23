@@ -57,6 +57,7 @@ const authOptions = {
         name: user.name,
         email: user.email,
         phone: user.phone,
+        planId: user.planId,
       };
     },
     async signIn({
@@ -93,6 +94,7 @@ const authOptions = {
           ...session.user,
           userId: token.userId,
           phone: token.phone,
+          planId: token.planId,
         },
       };
     },
@@ -100,10 +102,11 @@ const authOptions = {
       if (trigger === "update") {
         token.userId = session.userId;
         token.phone = session.phone;
+        token.planId = session.planId;
       }
 
       if (user) {
-        return { ...token, userId: user.id };
+        return { ...token, userId: user.id, planId: user.planId };
       }
       return token;
     },

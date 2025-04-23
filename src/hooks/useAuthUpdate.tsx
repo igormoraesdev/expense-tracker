@@ -24,7 +24,7 @@ export const useAuthUpdate = () => {
   }, [session]);
 
   useEffect(() => {
-    if (session.data?.user.email) {
+    if (session.status === "authenticated" && session.data?.user.email) {
       updateAuth();
     }
   }, []);

@@ -1,21 +1,28 @@
 "use client";
 
 import { Skeleton } from "@/components/ui/skeleton";
-import { useGetPlans } from "@/hooks/api/plans/useGetPlans";
-import { PlansEnum } from "@/lib/entities/plans/enum";
-import { useState } from "react";
+import { useAuthUpdate } from "@/hooks/useAuthUpdate";
+import { useDetectTypeUser } from "@/hooks/useDetectTypeUser";
+import { plansItem } from "@/lib/utils/constants";
+import { useMemo } from "react";
 import { PlanBar } from "./components/PlanBar";
 import { PlanCard } from "./components/PlanCard";
 import { PlanFaq } from "./components/PlanFaq";
 export function PlansContent() {
-  const [currentPlan] = useState<PlansEnum>(PlansEnum.Gratuito);
-  const [selectedPlan, setSelectedPlan] = useState<Plans | null>(null);
-  const { data: plans, isLoading } = useGetPlans();
+  const { plans, isPending } = useDetectTypeUser();
+  const { session } = useAuthUpdate();
+
+  const currentPlan = useMemo(() => {
+    const plan = session?.data?.user.planId;
+    return plan ? plansItem[plan as keyof typeof plansItem] : null;
+  }, [session]);
+
+  const loading = isPending || !currentPlan;
 
   return (
     <div className="container flex flex-col mx-auto p-6 gap-10">
       {/* Seção do plano atual */}
-      <PlanBar currentPlan={currentPlan} />
+      <PlanBar currentPlan={currentPlan} isLoading={loading} />
 
       {/* Título e descrição */}
       <div className="flex flex-col gap-4 text-center">
@@ -30,7 +37,7 @@ export function PlansContent() {
 
       {/* Cards de planos */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-4">
-        {isLoading ? (
+        {isPending ? (
           <>
             {Array.from({ length: 3 }).map((_, index) => (
               <Skeleton
@@ -46,13 +53,7 @@ export function PlansContent() {
           </>
         ) : (
           plans?.map((plan) => (
-            <PlanCard
-              key={plan.id}
-              plan={plan}
-              selectedPlan={selectedPlan}
-              currentPlan={currentPlan}
-              onSelectPlan={setSelectedPlan}
-            />
+            <PlanCard key={plan.id} plan={plan} currentPlan={currentPlan} />
           ))
         )}
       </div>

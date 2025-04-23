@@ -90,8 +90,15 @@ export const Header = () => {
           </DropdownMenu>
         </div>
       </header>
-      <nav className="md:hidden sticky top-[90px] z-[50] w-full bg-white/10 backdrop-blur-xl border-b border-white/20 text-white bg-gradient-to-r from-slate-950 via-indigo-950 to-slate-900 shadow-md">
-        <div className="flex items-center gap-2 px-4 py-3 overflow-x-auto scrollbar-none">
+
+      <nav className="md:hidden sticky top-[90px] z-[50] w-full bg-white/10 backdrop-blur-xl border-b border-white/20 text-white bg-gradient-to-r from-slate-950 via-indigo-950 to-slate-900 shadow-md overflow-x-auto">
+        <div
+          className="flex items-center gap-2 px-4 py-3 overflow-x-auto"
+          style={{
+            scrollbarWidth: "thin",
+            scrollbarColor: "#E0E7FF",
+          }}
+        >
           {menuItems.map((item, index) => (
             <Link
               key={index}

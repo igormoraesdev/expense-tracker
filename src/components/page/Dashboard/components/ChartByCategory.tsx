@@ -67,7 +67,9 @@ const CustomTooltip = ({ active, payload }: any) => {
         </span>
       </div>
       <div className="flex items-center justify-between bg-indigo-50/50 p-2.5 rounded-lg border border-indigo-100/50 mt-2">
-        <span className="text-sm font-medium text-indigo-500">Porcentagem</span>
+        <span className="text-sm font-medium text-indigo-500 mr-4">
+          Porcentagem
+        </span>
         <span className="font-bold text-indigo-900">
           {data.percentage.toFixed(1)}%
         </span>

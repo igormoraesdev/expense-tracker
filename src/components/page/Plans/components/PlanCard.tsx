@@ -9,7 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { PlansEnum } from "@/lib/entities/plans/enum";
+import { PlansEnum, PlansIdEnum } from "@/lib/entities/plans/enum";
 import { PlansService } from "@/lib/service/plans";
 import { loadStripe } from "@stripe/stripe-js/pure";
 import { cx } from "class-variance-authority";
@@ -17,16 +17,17 @@ import { Calendar, Check, CreditCard, Crown, Zap } from "lucide-react";
 
 interface PlanCardProps {
   plan: Plans;
-  selectedPlan: Plans | null;
-  currentPlan: PlansEnum;
-  onSelectPlan: (plan: Plans) => void;
+  currentPlan: {
+    title: string;
+    id: PlansIdEnum;
+  } | null;
 }
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string
 );
 
-export function PlanCard({ plan, currentPlan, onSelectPlan }: PlanCardProps) {
+export function PlanCard({ plan, currentPlan }: PlanCardProps) {
   const handleFetchCheckout = async () => {
     try {
       const res = await PlansService.checkoutSession(plan.priceId);
@@ -38,7 +39,6 @@ export function PlanCard({ plan, currentPlan, onSelectPlan }: PlanCardProps) {
   };
 
   const handleClickPlan = () => {
-    onSelectPlan(plan);
     handleFetchCheckout();
   };
 
@@ -89,10 +89,10 @@ export function PlanCard({ plan, currentPlan, onSelectPlan }: PlanCardProps) {
       <Card
         className={cx(
           "relative min-h-[530px] flex flex-col border-indigo-300/20 bg-white/5 backdrop-blur-sm hover:bg-indigo-900/10 transition-all duration-300 overflow-hidden",
-          plan.name === currentPlan && "ring-4 ring-emerald-600"
+          plan.id === currentPlan?.id && "ring-4 ring-emerald-600"
         )}
       >
-        {plan.name === currentPlan && (
+        {plan.id === currentPlan?.id && (
           <div className="absolute -right-10 top-5 transform rotate-45 w-40 bg-gradient-to-b from-emerald-400 to-emerald-900 text-white text-md py-1 text-center font-semibold shadow-lg">
             Ativo
           </div>
@@ -151,17 +151,17 @@ export function PlanCard({ plan, currentPlan, onSelectPlan }: PlanCardProps) {
 
         <CardFooter className="relative z-10 mt-auto pt-4">
           <Button
-            variant={plan.name === currentPlan ? "outline" : "default"}
+            variant={plan.id === currentPlan?.id ? "outline" : "default"}
             className={cx(
               "w-full shadow-lg",
-              plan.name === currentPlan
+              plan.id === currentPlan?.id
                 ? "bg-transparent border-indigo-400/50 text-indigo-400 hover:bg-indigo-400/10"
                 : `${planItem.accentColor} text-white hover:opacity-90`
             )}
-            disabled={plan.name === currentPlan}
+            disabled={plan.id === currentPlan?.id}
             onClick={handleClickPlan}
           >
-            {plan.name === currentPlan ? "Plano Atual" : "Assinar Plano"}
+            {plan.id === currentPlan?.id ? "Plano Atual" : "Assinar Plano"}
           </Button>
         </CardFooter>
       </Card>
