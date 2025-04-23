@@ -10,12 +10,17 @@ export default async function Success({
 
   if (!session_id) return redirect("/plans");
 
-  const { status, customer_details } = await stripe.checkout.sessions.retrieve(
-    session_id,
-    {
+  const { status, customer_details, customer } =
+    await stripe.checkout.sessions.retrieve(session_id, {
       expand: ["line_items", "payment_intent"],
-    }
-  );
+    });
+
+  const subscriptions = await stripe.subscriptions.list({
+    customer: customer as string,
+    status: "active",
+  });
+
+  console.log(subscriptions);
 
   const customerEmail = customer_details?.email as string;
 
